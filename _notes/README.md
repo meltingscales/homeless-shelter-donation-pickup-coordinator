@@ -25,5 +25,5 @@ the app.
 # Shelters I'm considering
 
 ## North Side Housing and Supportive Services
-[:link:](http://www.northsidehousing.org/)
+[(:link:) Link to site](http://www.northsidehousing.org/)
 - 4.7 :star: s
