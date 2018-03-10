@@ -1,19 +1,22 @@
-[Sketches](_sketches)
-[Notes on shelters](_notes)
 
-This application will (once developed) help to coordinate picking up
-to-be-donated goods from people who wish to donate them.
-
-It will achieve this by letting donaters and shelters essentially cooperate with
-each other over this platform.
 <!-- TOC depthFrom:1 depthTo:6 withLinks:1 updateOnSave:1 orderedList:0 -->
 
+- [Other pages](#other-pages)
 - [For those who dislike reading or have little time](#for-those-who-dislike-reading-or-have-little-time)
 - [For donaters](#for-donaters)
 - [For shelters](#for-shelters)
 
 <!-- /TOC -->
 
+This application will (once developed) help to coordinate picking up
+to-be-donated goods from people who wish to donate them.
+
+It will achieve this by letting donaters and shelters essentially cooperate with
+each other over this platform.
+
+# Other pages
+- [Sketches](_sketches)
+- [Notes on shelters](_notes)
 
 # For those who dislike reading or have little time
 - Working on an application for a comms course at IIT
