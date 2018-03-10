@@ -2,14 +2,25 @@
 
 This application will (once developed) help to coordinate picking up
 to-be-donated goods from people who wish to donate them.
+
+It will achieve this by letting donaters and shelters essentially cooperate with
+each other over this platform.
 <!-- TOC depthFrom:1 depthTo:6 withLinks:1 updateOnSave:1 orderedList:0 -->
 
+- [For those who dislike reading or have little time](#for-those-who-dislike-reading-or-have-little-time)
 - [For donaters](#for-donaters)
 - [For shelters](#for-shelters)
 
 <!-- /TOC -->
-It will achieve this by letting donaters and shelters essentially cooperate with
-each other over this platform.
+
+
+# For those who dislike reading or have little time
+- Working on an application for a comms course at IIT
+- Will help coordinate picking up donated goods from civilians:
+  - Lets donaters publish their location and what they will donate publicly to various organizations
+  - When pickup vehicle is collecting, it (can be) visible to those who want to donate
+  - Lets orgs plan routes based off of available donations
+  - Donaters can see what organizations need which items
 
 # For donaters
 - List what items they wish to donate
