@@ -1,4 +1,4 @@
-[Sketches](tree/master/_sketches)
+[Sketches](_sketches)
 
 This application will (once developed) help to coordinate picking up
 to-be-donated goods from people who wish to donate them.
