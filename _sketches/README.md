@@ -12,6 +12,6 @@ This is a listing of what the UI may look like.
 
 ## Whilst driving 1
 
-![x](driver_view_1.jpg)
+![App view of a van driver's map with their route intersecting people who wish to donate goods to the shelter.](driver_view_1.jpg)
 
 # Donater views
