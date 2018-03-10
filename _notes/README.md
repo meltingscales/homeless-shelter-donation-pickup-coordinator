@@ -28,7 +28,7 @@ application, register themselves, put their stuff up, etc.
 
 | Day      | Time       |
 | -------- | ---------- |
-| M        | 9AM-5PM    |
+| M-F      | 9AM-5PM    |
 
 ## Chicago Coalition for the Homeless
 [(:link:) Link to site](http://www.chicagohomeless.org/)
@@ -37,7 +37,7 @@ application, register themselves, put their stuff up, etc.
 
 | Day      | Time       |
 | -------- | ---------- |
-| M        | 9AM-5PM    |
+| M-F      | 9AM-5PM    |
 
 ## Sarah's Circle
 [(:link:) Link to site](https://www.sarahs-circle.org/)
@@ -57,4 +57,4 @@ application, register themselves, put their stuff up, etc.
 
 | Day      | Time       |
 | -------- | ---------- |
-| M        | 9AM-5PM    |
+| M-F      | 9AM-5PM    |
