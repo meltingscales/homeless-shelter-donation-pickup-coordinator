@@ -1,4 +1,5 @@
 [Sketches](_sketches)
+[Notes on shelters](_notes)
 
 This application will (once developed) help to coordinate picking up
 to-be-donated goods from people who wish to donate them.
