@@ -55,7 +55,7 @@ urlpatterns = [
         name='restaurant_create'),
 
     # Edit restaurant details, ex.: /restaurantapp/restaurants/1/edit/
-    path(r'restaurants/<int:pkr>/edit/',
+    path(r'restaurants/<int:pk>/edit/',
         UpdateView.as_view(
             model=Restaurant,
             template_name='restaurantapp/form.html',
