@@ -24,5 +24,5 @@ app_name = "donationcoordinator"
 urlpatterns = [
     path('', views.index),
     path('admin/', admin.site.urls),
-    path('donator/', include(donaterinventory.urls, None)),
+    path('donator/', include(donaterinventory.urls)),
 ]
