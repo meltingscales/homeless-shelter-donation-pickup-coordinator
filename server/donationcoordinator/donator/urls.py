@@ -30,7 +30,7 @@ urlpatterns = [
     url(r'^$', views.index),
 
     # List latest 5 restaurants: /donator/
-    url(r'restaurants/$',
+    path('restaurants/',
         ListView.as_view(
             queryset=Restaurant.objects.filter(date__lte=timezone.now()).order_by('date')[:5],
             context_object_name='latest_restaurant_list',
@@ -38,7 +38,7 @@ urlpatterns = [
         name='restaurant_list'),
 
     # Restaurant details, ex.: /donator/restaurants/1/
-    url(r'restaurants/(?P<pk>\d+)/$',
+    path(r'restaurants/<int:pk>/',
         RestaurantDetail.as_view(),
         name='restaurant_detail'),
 
@@ -51,7 +51,7 @@ urlpatterns = [
 
     # Create a restaurant, /donator/restaurants/create/
     url(r'restaurants/create/',
-        RestaurantCreate.as_view(success_url='cOOLBRO'),
+        RestaurantCreate.as_view(),
         name='restaurant_create'),
 
     # Edit restaurant details, ex.: /donator/restaurants/1/edit/
