@@ -5,13 +5,23 @@
     <title>Title</title>
 </head>
 <body>
-<p>random numbers:</p>
-{% if test %}
+<nav>
+    <ul>
+        <li><a href="{% url 'root' %}">Home</a></li>
+        <li><a href="{% url 'login' %}">Login</a></li>
+        <li><a href="{% url 'logout' %}">Logout</a></li>
+    </ul>
+</nav>
+<main><p>random numbers:</p>
+    {% if test %}
     <ul>
         {% for number in test %}
-        <li><a>{{ number }}</a></li>
+        <li>
+            <a>{{ number }}</a>
+        </li>
         {% endfor %}
     </ul>
-{% endif %}
+    {% endif %}
+</main>
 </body>
 </html>
