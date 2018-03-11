@@ -9,6 +9,8 @@
 	- [Sarah's Circle](#sarahs-circle)
 	- [Deborah's Place](#deborahs-place)
 	- [Lincoln Park Community Services](#lincoln-park-community-services)
+- [Shelters I've talked to](#shelters-ive-talked-to)
+	- [TODO](#todo)
 
 <!-- /TOC -->
 
@@ -100,3 +102,8 @@ application, register themselves, put their stuff up, etc.
 
 - 4.6 :star: s, 34 reviews.
 
+# Shelters I've talked to
+
+## TODO
+
+- Actually do this.
