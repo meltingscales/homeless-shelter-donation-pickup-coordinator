@@ -20,9 +20,9 @@ each other over this platform.
 
 # For those who dislike reading or have little time
 - Working on an application for a comms course at IIT
-- Will help coordinate picking up donated goods from civilians:
+- Will coordinate picking up donated goods from civilians:
   - Lets donaters publish their location and what they will donate publicly to various organizations
-  - When pickup vehicle is collecting, it (can be) visible to those who want to donate
+  - When pickup vehicle is collecting, their route (can be) visible to those who want to donate
   - Lets orgs plan routes based off of available donations
   - Donaters can see what organizations need which items
 
