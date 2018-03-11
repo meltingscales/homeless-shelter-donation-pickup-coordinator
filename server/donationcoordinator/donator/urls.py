@@ -38,7 +38,7 @@ urlpatterns = [
         name='restaurant_list'),
 
     # Restaurant details, ex.: /donator/restaurants/1/
-    url(r'restaurants/(?P<pk>\d+)/\$',
+    url(r'restaurants/(?P<pk>\d+)/$',
         RestaurantDetail.as_view(),
         name='restaurant_detail'),
 
@@ -63,22 +63,22 @@ urlpatterns = [
         name='restaurant_edit'),
 
     # Create a restaurant dish, ex.: /donator/restaurants/1/dishes/create/
-    url(r'restaurants/(?P<pk>\\d+)/dishes/create/',
+    url(r'restaurants/(?P<pk>\d+)/dishes/create/',
         DishCreate.as_view(),
         name='dish_create'),
 
     # Edit restaurant dish details, ex.: /donator/restaurants/1/dishes/1/edit/
-    url(r'restaurants/(?P<pkr>\\d+)/dishes/(?P<pk>\\d+)/edit/',
+    url(r'restaurants/(?P<pkr>\d+)/dishes/(?P<pk>\d+)/edit/',
         UpdateView.as_view(
             model=Dish,
             template_name='donator/form.html',
             form_class=DishForm),
         name='dish_edit'),
 
-    # # Create a restaurant review, ex.: /donator/restaurants/1/reviews/create/
-    # # Unlike the previous patterns, this one is implemented using a method view instead of a class view
-    # url(r'\^restaurants/(?P<pk>\\d+)/reviews/create/\$',
-    #     'donator.views.review',
-    #     name='review_create'),
-    #
+    # Create a restaurant review, ex.: /donator/restaurants/1/reviews/create/
+    # Unlike the previous patterns, this one is implemented using a method view instead of a class view
+    url(r'\^restaurants/(?P<pk>\d+)/reviews/create/\$',
+        views.review,
+        name='review_create'),
+
 ]
