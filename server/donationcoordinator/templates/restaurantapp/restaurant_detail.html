@@ -1,10 +1,10 @@
-{% extends "donator/base.html" %}
+{% extends "restaurantapp/base.html" %}
 
 {% block content %}
 <h1>
     {{ restaurant.name }}
     {% if user == restaurant.user %}
-    (<a href="{% url 'donator:restaurant_edit' restaurant.id %}">edit</a>)
+    (<a href="{% url 'restaurantapp:restaurant_edit' restaurant.id %}">edit</a>)
     {% endif %}
 </h1>
 
@@ -18,13 +18,13 @@
 
 <h2>Dishes
     {% if user %}
-    (<a href="{% url 'donator:dish_create' restaurant.id %}">add</a>)
+    (<a href="{% url 'restaurantapp:dish_create' restaurant.id %}">add</a>)
     {% endif %}
 </h2>
 
 <ul>
     {% for dish in restaurant.dishes.all %}
-    <li><a href="{% url 'donator:dish_detail' restaurant.id dish.id %}">
+    <li><a href="{% url 'restaurantapp:dish_detail' restaurant.id dish.id %}">
         {{ dish.name }}</a></li>
     {% empty %}
     <li>Sorry, no dishes for this restaurant yet.</li>
@@ -45,7 +45,7 @@
 
 <h3>Add Review</h3>
 
-<form action="{% url 'donator:review_create' restaurant.id %}" method="post">
+<form action="{% url 'restaurantapp:review_create' restaurant.id %}" method="post">
     {% csrf_token %}
 
     Message: <textarea name="comment" id="comment" rows="4"></textarea>

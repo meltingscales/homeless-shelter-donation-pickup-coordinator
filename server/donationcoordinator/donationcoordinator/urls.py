@@ -19,6 +19,7 @@ from django.conf.urls import url, include
 from django.contrib.auth import views as auth_views
 from . import views
 import donator.urls
+import restaurantapp.urls
 
 app_name = "donationcoordinator"
 
@@ -28,4 +29,5 @@ urlpatterns = [
     path('logout/', auth_views.logout, name='logout'),
     path('admin/', admin.site.urls),
     path('donator/', include(donator.urls, namespace='donator'), name='donator'),
+    path('restaurantapp/', include(restaurantapp.urls, namespace='restaurantapp'), name='restaurantapp')
 ]

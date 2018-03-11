@@ -15,70 +15,12 @@ Including another URLconf
 """
 from django.conf.urls import url
 from django.urls import path
-from django.utils import timezone
-from django.views.generic import DetailView, ListView, UpdateView
 
 from . import views
-from .forms import RestaurantForm, DishForm
-from .models import Restaurant, Dish
-from .views import RestaurantCreate, DishCreate, RestaurantDetail
 
 app_name = 'donator'
 
 urlpatterns = [
 
     url(r'^$', views.index),
-
-    # List latest 5 restaurants: /donator/
-    path('restaurants/',
-        ListView.as_view(
-            queryset=Restaurant.objects.filter(date__lte=timezone.now()).order_by('date')[:5],
-            context_object_name='latest_restaurant_list',
-            template_name='donator/restaurant_list.html'),
-        name='restaurant_list'),
-
-    # Restaurant details, ex.: /donator/restaurants/1/
-    path(r'restaurants/<int:pk>/',
-        RestaurantDetail.as_view(),
-        name='restaurant_detail'),
-
-    # Restaurant dish details, ex: /donator/restaurants/1/dishes/1/
-    url(r'restaurants/(?P<pkr>\d+)/dishes/(?P<pk>\d+)/',
-        DetailView.as_view(
-            model=Dish,
-            template_name='donator/dish_detail.html'),
-        name='dish_detail'),
-
-    # Create a restaurant, /donator/restaurants/create/
-    url(r'restaurants/create/',
-        RestaurantCreate.as_view(),
-        name='restaurant_create'),
-
-    # Edit restaurant details, ex.: /donator/restaurants/1/edit/
-    url(r'restaurants/(?P<pk>\d+)/edit/',
-        UpdateView.as_view(
-            model=Restaurant,
-            template_name='donator/form.html',
-            form_class=RestaurantForm),
-        name='restaurant_edit'),
-
-    # Create a restaurant dish, ex.: /donator/restaurants/1/dishes/create/
-    url(r'restaurants/(?P<pk>\d+)/dishes/create/',
-        DishCreate.as_view(),
-        name='dish_create'),
-
-    # Edit restaurant dish details, ex.: /donator/restaurants/1/dishes/1/edit/
-    url(r'restaurants/(?P<pkr>\d+)/dishes/(?P<pk>\d+)/edit/',
-        UpdateView.as_view(
-            model=Dish,
-            template_name='donator/form.html',
-            form_class=DishForm),
-        name='dish_edit'),
-
-    # Create a restaurant review, ex.: /donator/restaurants/1/reviews/create/
-    # Unlike the previous patterns, this one is implemented using a method view instead of a class view
-    url(r'\^restaurants/(?P<pk>\d+)/reviews/create/\$',
-        views.review,
-        name='review_create'),
-
 ]
