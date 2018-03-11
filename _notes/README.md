@@ -6,8 +6,8 @@
 	- [North Side Housing and Supportive Services](#north-side-housing-and-supportive-services)
 	- [Chicago Coalition for the Homeless](#chicago-coalition-for-the-homeless)
 	- [Pacific Garden Mission (✝ Religious)](#pacific-garden-mission-religious)
-	- [Sarah's Circle](#sarahs-circle)
-	- [Deborah's Place](#deborahs-place)
+	- [Sarah's Circle (♀)](#sarahs-circle-)
+	- [Deborah's Place (♀)](#deborahs-place-)
 	- [Lincoln Park Community Services](#lincoln-park-community-services)
 - [Shelters I've talked to](#shelters-ive-talked-to)
 	- [TODO](#todo)
@@ -65,7 +65,7 @@ application, register themselves, put their stuff up, etc.
 - Religious
 
 
-## Sarah's Circle
+## Sarah's Circle (♀)
 [(:link:) Link to site](https://www.sarahs-circle.org/)
 - 4838 N Sheridan Rd, Chicago, IL 60640
 - Hours:
@@ -79,7 +79,7 @@ application, register themselves, put their stuff up, etc.
 - 4.6 :star: s, 25 reviews.
 
 
-## Deborah's Place
+## Deborah's Place (♀)
 [(:link:) Link to site](http://www.deborahsplace.org/)
 - 2822 W Jackson Blvd, Chicago, IL 60612
 - Hours:
