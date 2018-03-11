@@ -9,6 +9,7 @@
 	- [Sarah's Circle (♀)](#sarahs-circle-)
 	- [Deborah's Place (♀)](#deborahs-place-)
 	- [Lincoln Park Community Services](#lincoln-park-community-services)
+	- [A Safe Haven](#a-safe-haven)
 - [Shelters I've talked to](#shelters-ive-talked-to)
 	- [TODO](#todo)
 
@@ -101,6 +102,19 @@ application, register themselves, put their stuff up, etc.
 | All days | 9AM-8PM    |
 
 - 4.6 :star: s, 34 reviews.
+
+
+## A Safe Haven
+[(:link:) Link to site](http://www.asafehaven.org/)
+- 2750 W Roosevelt Rd, Chicago, IL 60608
+- Hours:
+
+| Day      | Time          |
+| -------- | ------------- |
+| M-F      | 8:30AM-5PM    |
+
+- 3.7 :star: s, 28 reviews.
+
 
 # Shelters I've talked to
 
