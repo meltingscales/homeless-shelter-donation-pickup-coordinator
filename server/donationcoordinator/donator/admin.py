@@ -1,5 +1,5 @@
 from django.contrib import admin
-from donaterinventory import models
+from donator import models
 
 # Register your models here.
 admin.site.register(models.Restaurant)

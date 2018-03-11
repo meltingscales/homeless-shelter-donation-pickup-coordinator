@@ -1,0 +1,15 @@
+{% extends "donator/base.html" %}
+
+{% block content %}
+<main><p>random numbers:</p>
+    {% if test %}
+    <ul>
+        {% for number in test %}
+        <li>
+            <a>{{ number }}</a>
+        </li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+</main>
+{% endblock %}

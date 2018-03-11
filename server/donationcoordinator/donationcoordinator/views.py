@@ -11,4 +11,4 @@ def index(request: HttpRequest):
         "test": [random.randrange(1, 101, 1) for _ in range(10)]
     }
 
-    return render(request, 'donaterinventory/index.html', context)
+    return render(request, 'index.html', context)

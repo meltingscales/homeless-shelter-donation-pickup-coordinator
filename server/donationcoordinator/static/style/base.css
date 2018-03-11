@@ -1,0 +1,13 @@
+html {
+    color: pink;
+    background-color: black;
+}
+
+a:link {
+    color: beige;
+}
+
+a:visited {
+    color: lavender;
+}
+

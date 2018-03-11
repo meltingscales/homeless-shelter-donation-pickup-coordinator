@@ -50,7 +50,7 @@ class Migration(migrations.Migration):
                 ('rating', models.PositiveSmallIntegerField(choices=[(1, 'one'), (2, 'two'), (3, 'three'), (4, 'four'), (5, 'five')], default=3, verbose_name='Rating (stars)')),
                 ('comment', models.TextField(blank=True, null=True)),
                 ('date', models.DateField(default=datetime.date.today)),
-                ('restaurant', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='donaterinventory.Restaurant')),
+                ('restaurant', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='donator.Restaurant')),
                 ('user', models.ForeignKey(default=1, on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
             ],
             options={
@@ -60,7 +60,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='dish',
             name='restaurant',
-            field=models.ForeignKey(null=True, on_delete=django.db.models.deletion.CASCADE, related_name='dishes', to='donaterinventory.Restaurant'),
+            field=models.ForeignKey(null=True, on_delete=django.db.models.deletion.CASCADE, related_name='dishes', to='donator.Restaurant'),
         ),
         migrations.AddField(
             model_name='dish',
