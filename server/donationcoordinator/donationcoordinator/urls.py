@@ -16,13 +16,16 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from django.conf.urls import url, include
+from django.contrib.auth import views as auth_views
 from . import views
 import donaterinventory.urls
 
 app_name = "donationcoordinator"
 
 urlpatterns = [
-    path('', views.index),
+    path('', views.index, name='root'),
+    path('login/', auth_views.login, name='login'),
+    path('logout/', auth_views.logout, name='logout'),
     path('admin/', admin.site.urls),
     path('donator/', include(donaterinventory.urls)),
 ]
