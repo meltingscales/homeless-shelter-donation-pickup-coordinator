@@ -11,7 +11,7 @@
 	- [Lincoln Park Community Services](#lincoln-park-community-services)
 	- [A Safe Haven](#a-safe-haven)
 - [Shelters I've talked to](#shelters-ive-talked-to)
-	- [TODO](#todo)
+	- [Lincoln Park Community Services](#lincoln-park-community-services)
 
 <!-- /TOC -->
 
@@ -118,6 +118,6 @@ application, register themselves, put their stuff up, etc.
 
 # Shelters I've talked to
 
-## TODO
-
-- Actually do this.
+## Lincoln Park Community Services
+- 1st contact: 03/11/2018
+- No response yet.
