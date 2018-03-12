@@ -25,10 +25,10 @@ app_name = "donationcoordinator"
 
 urlpatterns = [
     path('', core_views.index, name='root'),
-    path('signup/', core_views.signup, name='signup'),
-    path('login/', auth_views.login, name='login'),
-    path('logout/', auth_views.logout, {'next_page':'/'}, name='logout'),
     path('admin/', admin.site.urls),
+    path('accounts/', include('django.contrib.auth.urls')),
+    path('accounts/profile/', core_views.profile, name='profile'),
+    path('accounts/signup/', core_views.signup, name='signup'),
     path('donator/', include(donator.urls, namespace='donator'), name='donator'),
     path('restaurantapp/', include(restaurantapp.urls, namespace='restaurantapp'), name='restaurantapp')
 ]

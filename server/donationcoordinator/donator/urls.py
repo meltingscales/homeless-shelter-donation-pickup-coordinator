@@ -23,4 +23,5 @@ app_name = 'donator'
 urlpatterns = [
 
     url(r'^$', views.index),
+    # path('')
 ]

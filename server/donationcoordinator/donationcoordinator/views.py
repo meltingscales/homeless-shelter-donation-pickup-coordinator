@@ -1,9 +1,11 @@
 import random
 
-from django.http import *
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.forms import UserCreationForm
+from django.http import *
 from django.shortcuts import render, redirect
+from django.contrib import admin
+
 
 
 # Create your views here.
@@ -16,7 +18,7 @@ def index(request: HttpRequest):
     return render(request, 'index.html', context)
 
 
-def signup(request):
+def signup(request: HttpRequest):
     if request.method == 'POST':
         form = UserCreationForm(request.POST)
         if form.is_valid():
@@ -29,3 +31,9 @@ def signup(request):
     else:
         form = UserCreationForm()
     return render(request, 'registration/signup.html', {'form': form})
+
+def profile(request: HttpRequest):
+    return render(request, 'registration/profile.html')
+
+def get_user_profile(request: HttpRequest, username: str):
+    user = admin
