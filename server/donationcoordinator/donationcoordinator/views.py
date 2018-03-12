@@ -12,3 +12,7 @@ def index(request: HttpRequest):
     }
 
     return render(request, 'index.html', context)
+
+
+def signup(request: HttpRequest):
+    return HttpResponse("oh u wanna sign up?")
