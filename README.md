@@ -29,7 +29,7 @@ each other over this platform.
 # For donaters
 - List what items they wish to donate
 - Publish their location to homeless shelters as to optimize the collection
-- routes of pickup vehicles
+  routes of pickup vehicles
 - See **which shelters**; **where**; need **what** items 
 - Get notified of pickup routes
   - If a route does not intersect with you, is there another dropoff point
