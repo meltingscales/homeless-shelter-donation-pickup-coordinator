@@ -120,4 +120,12 @@ application, register themselves, put their stuff up, etc.
 
 ## Lincoln Park Community Services
 - 1st contact: 03/11/2018
+  - Voicemail
+  - Email
+- No response yet.
+
+## North Side Housing and Supportive Services
+- 1st contact: 03/12/2018
+  - Voicemail was full
+  - Email
 - No response yet.
