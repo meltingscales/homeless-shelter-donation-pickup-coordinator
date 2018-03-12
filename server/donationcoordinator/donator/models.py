@@ -5,6 +5,10 @@ from django.db import models
 
 
 class Items(models.Model):
+    """
+    A list of goods such as clothing, food, toiletries.
+    This list belongs to a single ``Home``.
+    """
     pass
 
 
