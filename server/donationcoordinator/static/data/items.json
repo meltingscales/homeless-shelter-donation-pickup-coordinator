@@ -1,0 +1,83 @@
+{
+  "food": {
+    "produce": [
+      "lettuce",
+      "eggplant"
+    ],
+    "non-perishable": [
+      "canned meat",
+      "canned vegetables",
+      "canned soup"
+    ],
+    "perishable": [
+      "cereal",
+      "eggs",
+      "chips",
+      "donuts",
+      "orange juice",
+      "fruit juice"
+    ],
+    "other": [
+      "coffee",
+      "tea",
+      "bottled water",
+      "gum",
+      "mints",
+      "soda",
+      "sparkling water",
+      "seltzer water"
+    ]
+  },
+  "clothing": {
+    "shoes": [
+      "boots",
+      "snow boots",
+      "heels",
+      "sneakers",
+      "wader boots",
+      "dress shoes",
+      "slippers"
+    ],
+    "legwear": [
+      "jeans",
+      "skirts",
+      "blouses",
+      "dresses",
+      "sweatpants",
+      "shorts",
+      "waders"
+    ]
+  },
+  "menstrual products": [
+    "tampons",
+    "pads",
+    "liner pads",
+    "cups"
+  ],
+  "pharmaceuticals": [
+    "antacid",
+    "laxative",
+    "blood thinner",
+    "painkiller"
+  ]
+  "toiletries": [
+    "toilet paper",
+    "baby wipes",
+    "lipstick",
+    "makeup",
+    "shampoo",
+    "conditioner",
+    "shower gel",
+    "skin lotion"
+  ],
+  "cleaning supplies": [
+    "paper towels",
+    "bleach",
+    "drain cleaner"
+  ],
+  "sexual health": [
+    "dental dams",
+    "condoms",
+    "lube"
+  ]
+}
