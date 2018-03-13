@@ -128,4 +128,5 @@ application, register themselves, put their stuff up, etc.
 - 1st contact: 03/12/2018
   - Voicemail was full
   - Email
-- No response yet.
+- Email response on 3/13/2018 
+  - Reply from donation manager, may meet in-person or over the phone.
