@@ -1,7 +1,7 @@
 # list of very, very widely-used general general-purpose functions
 
 
-def wrap(thing, tag, attr=None, val=None, quotes='"'):
+def wrap(thing: str, tag: str, attrs: list = None, vals: list = None, quotes: str = '"'):
     """
     Wrap a ``thing`` in ``tag``, and also apply an ``attribute`` that might have a ``val``.
 
@@ -21,15 +21,27 @@ def wrap(thing, tag, attr=None, val=None, quotes='"'):
         ``<a>text</a>``\n
 
     """
-    if not attr and not val:  # they done passed nothing in!!!
+    if not attrs and not vals:  # they done passed nothing in!!!
         return f"<{tag}>{thing}</{tag}>"
+
+    # ensure that attr and val are both lists so we can treat them like it
+    if not isinstance(attrs, list):
+        attrs = [attrs]
+    if not isinstance(vals, list):
+        vals = [vals]
 
     ret = ""
 
-    ret += f"<{tag} {attr}"
+    ret += f"<{tag} "
 
-    if val:
-        ret += f"={quotes}{val}{quotes}"
+    # apply ALL vals and attrs
+    for i in range(len(attrs)):
+        a = attrs[i]
+        v = vals[i] if i <= len(vals)-1 else None
+
+        ret += a
+        if v:
+            ret += f"={quotes}{v}{quotes} "
 
     ret += f">{thing}</{tag}>"
 
@@ -40,3 +52,5 @@ if __name__ == '__main__':
     print(wrap("burger", "bacon"))
 
     print(wrap("click me", "a", "href", "google.com"))
+    print(wrap("click me", "a", ["href", "clicked"], ["google.com"]))
+    print(wrap("click me", "a", ["href", "clicked"], ["google.com", "true"]))
