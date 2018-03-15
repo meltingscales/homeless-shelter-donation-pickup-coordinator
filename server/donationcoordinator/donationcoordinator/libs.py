@@ -6,22 +6,27 @@ def wrap(thing: str, tag: str, attrs: list = None, vals: list = None, quotes: st
     Wrap a ``thing`` in ``tag``, and also apply an ``attribute`` that might have a ``val``.
 
     Example 1:
-        ``wrap("a", "click me", "href", "google.com")``\n
+        ``wrap("click me", "a", "href", "google.com")``\n
         ``->``\n
         ``<a href="google.com">click me</a>``\n
 
     Example 2:
-        ``wrap("a", "hi", "checked")``\n
+        ``wrap("hi", "a", "checked")``\n
         ``->``\n
         ``<a checked>hi</a>``\n
 
     Example 3:
-        ``wrap("a", "text")``\n
+        ``wrap("text", "a")``\n
         ``->``\n
         ``<a>text</a>``\n
 
+    Example 4:
+        ``wrap(None, "input", ["type", "checked"], "checkbox")``\n
+        ``->``\n
+        ``<input type="checkbox" checked />``\n
+
     """
-    if not attrs and not vals:  # they done passed nothing in!!!
+    if (thing and tag) and (not attrs and not vals):  # they done passed nothing in!!!
         return f"<{tag}>{thing}</{tag}>"
 
     # ensure that attr and val are both lists so we can treat them like it
@@ -43,7 +48,10 @@ def wrap(thing: str, tag: str, attrs: list = None, vals: list = None, quotes: st
         if v:
             ret += f"={quotes}{v}{quotes} "
 
-    ret += f">{thing}</{tag}>"
+    if thing: #if it's not self-closing
+        ret += f">{thing}</{tag}>"
+    else:
+        ret += "/>"
 
     return ret
 
@@ -54,3 +62,4 @@ if __name__ == '__main__':
     print(wrap("click me", "a", "href", "google.com"))
     print(wrap("click me", "a", ["href", "clicked"], ["google.com"]))
     print(wrap("click me", "a", ["href", "clicked"], ["google.com", "true"]))
+    print(wrap(None, "input", ["type", "checked"], "checkbox"))
