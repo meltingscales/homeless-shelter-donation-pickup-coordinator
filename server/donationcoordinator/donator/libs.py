@@ -2,7 +2,7 @@
 
 import json
 from pprint import pprint
-from django.conf import settings
+
 from donationcoordinator.libs import *
 
 
@@ -19,6 +19,21 @@ def itemTemplateToCustomerForm(template: dict):
     pass
 
 
+def itemToLI(item: str):
+    """Given an item in string form, return an HTML <li> elt that
+    represents that item."""
+    ret = ""
+
+    safeName = item.replace(" ", "-")  # cannot have spaces in CSS classes
+
+    ret += wrap(item, "label")  # add label
+    ret += wrap(None, "input", ["type", "name"], ["number", safeName]) # add input elt
+
+    ret = wrap(ret, "li", "class", safeName)  # wrap it in an <li>
+
+    return ret
+
+
 def itemListToUL(items: list):
     """Given a list of string items, return an HTML <ul> elt that
     represents that list of items."""
@@ -26,8 +41,9 @@ def itemListToUL(items: list):
     ret = ""
 
     for item in items:
-        ret += wrap(item, "li", "class", item) + "\n"
-    ret =  wrap(ret, "ul")
+        ret += itemToLI(item) + "\n"
+
+    ret = wrap("\n"+ret, "ul")
 
     return ret
 
@@ -41,4 +57,4 @@ if __name__ == '__main__':
 
     perishableElt = itemListToUL(perishable)  # perishable food but as <ul> elt
 
-    print(perishableElt)
+    print("Perishable food list: \n" + perishableElt)
