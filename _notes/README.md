@@ -12,6 +12,8 @@
 	- [A Safe Haven](#a-safe-haven)
 - [Shelters I've talked to](#shelters-ive-talked-to)
 	- [Lincoln Park Community Services](#lincoln-park-community-services)
+	- [North Side Housing and Supportive Services](#north-side-housing-and-supportive-services)
+		- [Notes from 03/14/2018 discussion](#notes-from-03142018-discussion)
 
 <!-- /TOC -->
 
@@ -130,3 +132,23 @@ application, register themselves, put their stuff up, etc.
   - Email
 - Email response on 3/13/2018 
   - Reply from donation manager, may meet in-person or over the phone.
+- Met in-person on 03/14/2018
+
+### Notes from 03/14/2018 discussion
+
+- Talked mainly about small yet important things that the app should do
+  - Bookkeeping!
+    - Export transaction logs as `csv`, `pdf`, `docx`, `txt`, etc
+    - Sign-up form for users that Orgs can customize
+    - Keep track of items that an Org has
+  - Inter-organization transfers
+  - Donators must let Orgs know EXACTLY what they're donating
+    - i.e. men's underwear is essentially useless to Sarah's circle
+- Other Orgs I should contact are:
+  - [Sarah's Circle (♀)](#sarahs-circle-)
+  - Night Ministry
+
+
+- ![](nshss-meeting-03-15-2018-01.jpg)
+- ![](nshss-meeting-03-15-2018-02.jpg)
+- ![](nshss-meeting-03-15-2018-03.jpg)
