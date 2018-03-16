@@ -71,7 +71,7 @@ def dictToUL(dictionary: dict, depth=0, s=" ", dump_cache=False):
     """Given any dictionary of groups of any depth, return an HTML <ul>
     that represents that tree of items and item groups."""
 
-    h = make_hash(dictionary)
+    h = freeze(dictionary)
 
     if dump_cache and h in alreadySeen: #they want to dump the cache for an object
         del alreadySeen[h]
