@@ -21,6 +21,7 @@ This is a listing of what the UI may look like.
 
 <!-- /TOC -->
 
+--------------------------------------------------------------------------------
 # Organization views
 
 ## What does the Org need?
@@ -36,21 +37,25 @@ This is a listing of what the UI may look like.
 ### Org Donators Map view
 ![An Org's view of a map with donators as little dots within a 1-mile radius, as well as what they have to donate. ](org_donators_map_view.jpg)
 
+--------------------------------------------------------------------------------
 # Driver views
 
 ## Whilst driving 1
 ![App view of a van driver's map with their route intersecting people who wish to donate goods to the shelter.](driver_view_1.jpg)
 
+--------------------------------------------------------------------------------
 # Donator views
 
 ## Donator Inventory View
 ![A Donator's view of their current inventory. They have groups and subgroups like Food and Perishables, and can collapse and expand any group. They enter inventory as a number for each item, like `(3) Canteloupe`](donator_inventory_view.jpg)
 
+--------------------------------------------------------------------------------
 # ER Diagrams
 
 ## User-House-Items relationship  
 ![An Entity-Relationship Diagram that details how Users should have one or more Houses and houses have a single list of Items](erdiagram.png)
 
+--------------------------------------------------------------------------------
 # Miscellaneous views
 
 ## Data JSON to HTML element
