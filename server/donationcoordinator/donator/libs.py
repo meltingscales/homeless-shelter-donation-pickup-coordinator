@@ -2,7 +2,9 @@
 
 import copy
 import json
+import functools
 from pprint import pprint
+
 
 from donationcoordinator.libs import *
 
@@ -30,13 +32,6 @@ def getItemTemplate(path: str):
     as a dict that represents the list of items."""
     with open(path) as data_file:
         return json.load(data_file)
-
-
-def itemTemplateToCustomerForm(template: dict):
-    """Given an ``ItemTemplate``, return an HTML form that represents
-    that ``ItemTemplate``."""
-    pass
-
 
 def itemToLI(item: str, depth=0, s=" "):
     """Given an item in string form, return an HTML <li> elt that
@@ -66,24 +61,8 @@ def itemListToUL(items: list, depth=0, s=" "):
 
     return ret
 
-
-def dictToUL(dictionary: dict, depth=0, s=" ", dump_cache=False):
-    """Given any dictionary of groups of any depth, return an HTML <ul>
-    that represents that tree of items and item groups."""
-
-    h = freeze(dictionary)
-
-    if dump_cache and h in alreadySeen: #they want to dump the cache for an object
-        del alreadySeen[h]
-
-    if h in alreadySeen:
-        return alreadySeen[h]
-    else:
-        alreadySeen[h] = dictToUL_rec(dictionary, depth, s)
-        return alreadySeen[h]
-
-
-def dictToUL_rec(dictionary: dict, depth=0, s=" "):
+@functools.lru_cache(maxsize=None)
+def dictToUL(dictionary: dict, depth=0, s=" "):
     d = copy.deepcopy(dictionary)
     ret = ''
 
@@ -98,7 +77,7 @@ def dictToUL_rec(dictionary: dict, depth=0, s=" "):
         print("we got root. its elt:")
         print(elt)
 
-        ret += s * depth + dictToUL_rec(elt, depth + 1) + "\n"
+        ret += s * depth + dictToUL(elt, depth + 1) + "\n"
 
         ret += s * depth + '</ul>' + "\n"
 
@@ -113,7 +92,7 @@ def dictToUL_rec(dictionary: dict, depth=0, s=" "):
             ret += itemListToUL(elt, depth, s)
         else:
             ret += s * (depth + 1) + f"<ul>\n"
-            ret += dictToUL_rec(elt, depth + 1) + "\n"
+            ret += dictToUL(elt, depth + 1) + "\n"
             ret += s * (depth + 1) + f"</ul>\n"
 
     return ret
