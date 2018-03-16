@@ -23,5 +23,7 @@ app_name = 'donator'
 urlpatterns = [
 
     url(r'^$', views.index),
-    # path('')
+
+    # List person's Homes
+    # path(r''),
 ]
