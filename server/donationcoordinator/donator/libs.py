@@ -6,6 +6,24 @@ from pprint import pprint
 
 from donationcoordinator.libs import *
 
+alreadySeen = {}  # cache for DictToUL function...
+
+
+def freeze(o):
+  if isinstance(o,dict):
+    return frozenset({ k:freeze(v) for k,v in o.items()}.items())
+
+  if isinstance(o,list):
+    return tuple([freeze(v) for v in o])
+
+  return o
+
+
+def make_hash(o):
+    """
+    makes a hash out of anything that contains only list,dict and hashable types including string and numeric types
+    """
+    return hash(freeze(o))
 
 def getItemTemplate(path: str):
     """Given a ``path``, return the JSON file at that path
@@ -49,10 +67,23 @@ def itemListToUL(items: list, depth=0, s=" "):
     return ret
 
 
-def dictToUL(dictionary: dict, depth=0, s=" "):
+def dictToUL(dictionary: dict, depth=0, s=" ", dump_cache=False):
     """Given any dictionary of groups of any depth, return an HTML <ul>
     that represents that tree of items and item groups."""
 
+    h = make_hash(dictionary)
+
+    if dump_cache and h in alreadySeen: #they want to dump the cache for an object
+        del alreadySeen[h]
+
+    if h in alreadySeen:
+        return alreadySeen[h]
+    else:
+        alreadySeen[h] = dictToUL_rec(dictionary, depth, s)
+        return alreadySeen[h]
+
+
+def dictToUL_rec(dictionary: dict, depth=0, s=" "):
     d = copy.deepcopy(dictionary)
     ret = ''
 
@@ -67,7 +98,7 @@ def dictToUL(dictionary: dict, depth=0, s=" "):
         print("we got root. its elt:")
         print(elt)
 
-        ret += s * depth + dictToUL(elt, depth + 1) + "\n"
+        ret += s * depth + dictToUL_rec(elt, depth + 1) + "\n"
 
         ret += s * depth + '</ul>' + "\n"
 
@@ -82,7 +113,7 @@ def dictToUL(dictionary: dict, depth=0, s=" "):
             ret += itemListToUL(elt, depth, s)
         else:
             ret += s * (depth + 1) + f"<ul>\n"
-            ret += dictToUL(elt, depth + 1) + "\n"
+            ret += dictToUL_rec(elt, depth + 1) + "\n"
             ret += s * (depth + 1) + f"</ul>\n"
 
     return ret
@@ -106,4 +137,3 @@ if __name__ == '__main__':
 
     with open('../static/data/items_autogen.html', 'w+') as file:
         file.write(ulElt)
-
