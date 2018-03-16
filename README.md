@@ -5,6 +5,7 @@
 - [For those who dislike reading or have little time](#for-those-who-dislike-reading-or-have-little-time)
 - [For donaters](#for-donaters)
 - [For shelters](#for-shelters)
+- [For developers](#for-developers)
 
 <!-- /TOC -->
 
@@ -53,3 +54,14 @@ each other over this platform.
     - Food
       - Canned food
       - Produce
+
+# For developers
+To develop or contribute for this project, you will need the following:
+- Python >= 3.6
+  - django
+
+Because of the way Django handles database ORM, you will need to run these commands to migrate the objects into SQL schemas:
+- `py manage.py makemigrations`
+- `py manage.py migrate`
+
+To run, simply type `py manage.py runserver`
