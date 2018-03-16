@@ -33,6 +33,9 @@ def signup(request: HttpRequest):
     return render(request, 'registration/signup.html', {'form': form})
 
 def profile(request: HttpRequest):
+
+    print(f"'{request.user}' asked for their profile.")
+
     return render(request, 'registration/profile.html')
 
 def get_user_profile(request: HttpRequest, username: str):

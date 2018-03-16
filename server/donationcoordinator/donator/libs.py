@@ -1,10 +1,9 @@
 # general-purpose library functions used by ``donator`` class.
 
 import copy
-import json
 import functools
+import json
 from pprint import pprint
-
 
 from donationcoordinator.libs import *
 
@@ -12,13 +11,13 @@ alreadySeen = {}  # cache for DictToUL function...
 
 
 def freeze(o):
-  if isinstance(o,dict):
-    return frozenset({ k:freeze(v) for k,v in o.items()}.items())
+    if isinstance(o, dict):
+        return frozenset({k: freeze(v) for k, v in o.items()}.items())
 
-  if isinstance(o,list):
-    return tuple([freeze(v) for v in o])
+    if isinstance(o, list):
+        return tuple([freeze(v) for v in o])
 
-  return o
+    return o
 
 
 def make_hash(o):
@@ -27,11 +26,13 @@ def make_hash(o):
     """
     return hash(freeze(o))
 
+
 def getItemTemplate(path: str):
     """Given a ``path``, return the JSON file at that path
     as a dict that represents the list of items."""
     with open(path) as data_file:
         return json.load(data_file)
+
 
 def itemToLI(item: str, depth=0, s=" "):
     """Given an item in string form, return an HTML <li> elt that
@@ -61,6 +62,7 @@ def itemListToUL(items: list, depth=0, s=" "):
 
     return ret
 
+
 @functools.lru_cache(maxsize=None)
 def dictToUL(dictionary: dict, depth=0, s=" "):
     d = copy.deepcopy(dictionary)
@@ -89,7 +91,7 @@ def dictToUL(dictionary: dict, depth=0, s=" "):
         ret += s * depth + f'<li class="{key}">\n'
         ret += s * depth + f'<a>"{key}"</a>\n'
         if isinstance(elt, list):  # if it's a list, stop recursing
-            ret += itemListToUL(elt, depth, s)
+            ret += itemListToUL(elt, depth + 1, s)
         else:
             ret += s * (depth + 1) + f"<ul>\n"
             ret += dictToUL(elt, depth + 1) + "\n"

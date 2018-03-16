@@ -1,10 +1,17 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends "base.html" %}
 
-</body>
-</html>
+{% block content %}
+<h1>
+    Homes
+    {% if user %}(<a href="{% url 'donator:home_create' %}">add</a>){% endif %}
+</h1>
+
+<ul>
+    {% for home in homes_list %}
+    <li><a href="{% url 'donator:home_detail' home.id %}">
+        {{ home.name }}</a></li>
+    {% empty %}
+    <li>Sorry, no Homes created yet.</li>
+    {% endfor %}
+</ul>
+{% endblock %}
