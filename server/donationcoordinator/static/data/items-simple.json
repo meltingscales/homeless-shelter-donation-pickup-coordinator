@@ -1,0 +1,24 @@
+{
+  "food": {
+    "produce": [
+      "lettuce",
+      "eggplant"
+    ],
+    "non-perishable": [
+      "canned meat",
+      "canned vegetables",
+      "canned soup"
+    ]
+  },
+  "toys": {
+    "small": [
+      "legos",
+      "doll",
+      "blocks"
+    ],
+    "large": [
+      "model airplane",
+      "kite"
+    ]
+  }
+}
