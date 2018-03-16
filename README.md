@@ -58,7 +58,8 @@ each other over this platform.
 # For developers
 To develop or contribute for this project, you will need the following:
 - Python >= 3.6
-  - django
+  - `django`
+  - probably other libraries
 
 Because of the way Django handles database ORM, you will need to run these commands to migrate the objects into SQL schemas:
 - `py manage.py makemigrations`
