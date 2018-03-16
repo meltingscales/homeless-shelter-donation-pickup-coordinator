@@ -1,10 +1,19 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends "base.html" %}
 
-</body>
-</html>
+{% block content %}
+<h1>
+    {{ home.name }}
+    (<a href="{% url 'donator:home_edit' restaurant.id %}">edit</a>)
+</h1>
+
+<h2>Address:</h2>
+
+<p>
+    {{ restaurant.street }}, {{ restaurant.number }} <br/>
+    {{ restaurant.zipcode }} {{ restaurant.city }} <br/>
+    {{ restaurant.stateOrProvince }} ({{ restaurant.country }})
+</p>
+
+
+
+{% endblock %}

@@ -3,6 +3,12 @@ from django.shortcuts import render
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import render, redirect
+from django.views.generic.edit import CreateView
+from django.views.generic import DetailView
+
+
+from .models import Home, Items, User
+from .forms import *
 
 
 # Create your views here.
@@ -13,7 +19,10 @@ def index(request: HttpRequest):
     context = {}
     return render(request, template_name, context)
 
+
 def signup(request):
+    template_name = 'registration/signup.html'
+
     if request.method == 'POST':
         form = UserCreationForm(request.POST)
         if form.is_valid():
@@ -25,4 +34,38 @@ def signup(request):
             return redirect('home')
     else:
         form = UserCreationForm()
-    return render(request, 'registration/signup.html', {'form': form})
+    return render(request, template_name, {'form': form})
+
+
+def my_homes(request):
+    """A User wants a list of their Homes."""
+    template_name = "donator/home_list.html"
+    context = {}
+
+    # context[""]
+
+    return render(request, template_name, context)
+
+
+class HomeCreate(CreateView):
+    model = Home
+    template_name = 'donator/form.html'
+    # success_url = reverse_lazy('restaurant_detail')
+    form_class = HomeForm
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        return super(HomeCreate, self).form_valid(form)
+
+class HomeDetail(DetailView):
+    model = Home
+    template_name = 'restaurantapp/restaurant_detail.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(HomeDetail, self).get_context_data(**kwargs)
+        return context
+
+
+def home_detail(request):
+    """A User wants details about one of their Homes."""
+    return HttpResponse("home details???")

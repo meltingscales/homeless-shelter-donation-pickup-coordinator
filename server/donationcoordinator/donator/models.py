@@ -29,5 +29,5 @@ class Home(models.Model):
     state = models.TextField()
     country = models.TextField()
     image = models.ImageField(upload_to='homes', blank=True, null=True)
-    items = models.ForeignKey(Items, null=True, on_delete=models.PROTECT)  # stuff they wanna give away
-    user = models.ForeignKey(User, default=1, on_delete=models.PROTECT)
+    items = models.ForeignKey(Items, blank=True, null=True, on_delete=models.PROTECT)  # stuff they wanna give away
+    user = models.ForeignKey(User, on_delete=models.PROTECT)
