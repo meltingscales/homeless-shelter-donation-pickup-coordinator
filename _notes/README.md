@@ -11,8 +11,8 @@
 	- [Lincoln Park Community Services](#lincoln-park-community-services)
 	- [A Safe Haven](#a-safe-haven)
 - [Shelters I've talked to](#shelters-ive-talked-to)
-	- [Lincoln Park Community Services](#lincoln-park-community-services)
-	- [North Side Housing and Supportive Services](#north-side-housing-and-supportive-services)
+	- [Lincoln Park Community Services (03/11/2018)](#lincoln-park-community-services-03112018)
+	- [North Side Housing and Supportive Services (03/12/2018)](#north-side-housing-and-supportive-services-03122018)
 		- [Notes from 03/14/2018 discussion](#notes-from-03142018-discussion)
 
 <!-- /TOC -->
@@ -120,13 +120,13 @@ application, register themselves, put their stuff up, etc.
 
 # Shelters I've talked to
 
-## Lincoln Park Community Services
+## Lincoln Park Community Services (03/11/2018)
 - 1st contact: 03/11/2018
   - Voicemail
   - Email
 - No response yet.
 
-## North Side Housing and Supportive Services
+## North Side Housing and Supportive Services (03/12/2018)
 - 1st contact: 03/12/2018
   - Voicemail was full
   - Email
