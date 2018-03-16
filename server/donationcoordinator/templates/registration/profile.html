@@ -1,11 +1,17 @@
 {% extends "base.html" %}
 
-{% block title %}Login{% endblock %}
+{% block title %}My Profile{% endblock %}
 
 {% block content %}
 {% if user.is_authenticated %}
 
-<p>oh so u want ur profile, {{ user.username }}? ha. here it is!!!</p>
+<p>oh so u want ur profile, '{{ user.username }}'? ha. here it is!!!</p>
+<nav>
+    <ul>
+        <li><a href="/donator/my-homes/">My homes</a></li>
+        <li><a href="/donator/export">Export data</a></li>
+    </ul>
+</nav>
 {% else %}
 <p>U AINT LOGGED IN!!!</p>
 {% endif %}
