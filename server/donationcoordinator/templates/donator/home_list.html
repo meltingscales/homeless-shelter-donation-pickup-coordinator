@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 
 {% block content %}
+{% include "donator/profile_nav.html" %}
 <h1>
     Homes
     {% if user %}(<a href="{% url 'donator:home_create' %}">add</a>){% endif %}

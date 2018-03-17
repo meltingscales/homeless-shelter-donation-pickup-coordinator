@@ -1,18 +1,23 @@
 {% extends "base.html" %}
 
 {% block content %}
+{% include "donator/profile_nav.html" %}
 <h1>
     {{ home.name }}
-    (<a href="{% url 'donator:home_edit' restaurant.id %}">edit</a>)
+    (<a href="{% url 'donator:home_edit' home.id %}">edit</a>)
 </h1>
 
 <h2>Address:</h2>
 
 <p>
-    {{ restaurant.street }}, {{ restaurant.number }} <br/>
-    {{ restaurant.zipcode }} {{ restaurant.city }} <br/>
-    {{ restaurant.stateOrProvince }} ({{ restaurant.country }})
+    {{ home.street }}, {{ home.number }} <br/>
+    {{ home.zipCode }} {{ home.city }} <br/>
+    {{ home.stateOrProvince }} ({{ home.country }})
 </p>
+
+<aside>
+    (<a href="{% url 'donator:home_delete' home.id %}">delete home</a>)
+</aside>
 
 
 

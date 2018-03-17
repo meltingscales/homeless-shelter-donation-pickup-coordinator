@@ -15,12 +15,12 @@ Including another URLconf
 """
 from django.conf.urls import url
 from django.urls import path
-from django.views.generic import DetailView, ListView, UpdateView
+from django.views.generic import UpdateView, DeleteView
 
 from . import views
-
-from .models import Home, Items, User
-from .views import HomeCreate, HomeDetail
+from .forms import HomeForm
+from .models import Home
+from .views import HomeCreate, HomeDetail, HomeDelete
 
 app_name = 'donator'
 
@@ -32,7 +32,7 @@ urlpatterns = [
     path(r'my-homes/', views.my_homes, name="home_list"),
 
     # Detail of one Home
-    path(r'my-homes/<int:pkr>/',
+    path(r'my-homes/<int:pk>/',
          HomeDetail.as_view(),
          name="home_detail",
          ),
@@ -42,4 +42,19 @@ urlpatterns = [
          HomeCreate.as_view(),
          name="home_create",
          ),
+
+    # Edit home details, ex.: /donator/my-homes/1/edit/
+    path(r'my-homes/<int:pk>/edit/',
+         UpdateView.as_view(
+             model=Home,
+             template_name='donator/form.html',
+             form_class=HomeForm),
+         name="home_edit",
+         ),
+
+    # delete home by ID, ex.: /donator/my-homes/1/delete/
+    path(r'my-homes/<int:pk>/delete/',
+         HomeDelete.as_view(),
+         name="home_delete",
+         )
 ]

@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block content %}
+{% include "donator/profile_nav.html" %}
+
+<h1>
+    Delete {{ home.name }}?
+</h1>
+
+<form method="post" action="">
+    {% csrf_token %}
+    <table>
+        {{ form.as_table }}
+    </table>
+    <input type="submit" value="Submit"/>
+</form>
+
+{% endblock %}
