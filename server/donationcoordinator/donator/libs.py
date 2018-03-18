@@ -11,6 +11,7 @@ from donationcoordinator.libs import *
 
 class ItemList:
     space_replacer = '_'  # what to replace spaces with in the HTML since CSS classes can't have spaces
+    endpoint_class = 'items_list' #to identify the input elt parents
 
     template = {  # template
         'root': {
@@ -80,7 +81,7 @@ class ItemList:
 
         if ItemList.is_item_dict_list(d):  # it's a list of items!
             for key in d:
-                if key in flat: #if key is in our POST
+                if key in flat:  # if key is in our POST
                     d[key] = flat[key]  # overwrite the number
         else:
             for key in d:
@@ -100,7 +101,7 @@ class ItemList:
         for key in keys:
             elt: dict = d[key]
 
-            ret += f'<li class="{key}">\n'
+            ret += f'<li class="{key.replace(" ",ItemList.space_replacer)}">\n'
             ret += f'<a>"{key}"</a>\n'
 
             ekl = list(elt.keys())
@@ -242,7 +243,7 @@ class ItemList:
         for key, val in items.items():
             ret += ItemList.itemToLI(key, val) + "\n"
 
-        ret = wrap("\n" + ret, "ul")
+        ret = wrap("\n" + ret, "ul", "class", ItemList.endpoint_class)
 
         return ret
 

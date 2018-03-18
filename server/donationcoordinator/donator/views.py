@@ -187,12 +187,12 @@ class ItemsUpdate(UpdateView):
             il = ItemList()
 
             formDict = self.clean_form()
-            print("Flattened data")
-            print(formDict)
+            # print("Flattened data")
+            # print(formDict)
 
             il.apply_flat_dict(formDict)
-            print("Final data:")
-            print(il.data)
+            # print("Final data:")
+            # print(il.data)
 
             self.home.items.data = il.data
             self.home.items.save()
