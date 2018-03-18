@@ -21,15 +21,22 @@ function toggleView(p)
     toggleClass(p, 'hidden')
 }
 
-function applyCollapse(elt)
-{
-    //TODO actually do this
-}
+var a_elts = $('section#items form ul a');
 
-var root = $('section#items form ul');
+print("all <a> elts that will (upon click) collapse their UL elts")
+print(a_elts)
 
-print("root elt:")
-print(root)
+a_elts.each(function(i, elt) { //for all <a> tags
 
-applyCollapse(root)
+    $(elt).on('click', function(event) {
+
+        elem = event.currentTarget;
+        parent = elem.parentElement;
+        sibling = $(parent).find('ul')[0];
+
+        toggleView($(sibling))
+
+    });
+});
+
 });
