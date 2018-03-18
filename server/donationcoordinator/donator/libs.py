@@ -1,129 +1,198 @@
 # general-purpose library functions used by ``donator`` class.
 
 import copy
-import functools
-import json
-from functools import (lru_cache)
-from pprint import pprint
+from bs4 import BeautifulSoup as bs
 
 from donationcoordinator.libs import *
 
 
-def hashable_lru(func):
-    cache = lru_cache(maxsize=1024)
+class ItemList:
+    data = {  # default items list
+        'root': {
+            'food': {
+                'slugs': 0,
+                'meat': 0,
+                'leaves': 0,
+                'berries': 0, },
+            'not food': {
+                'legos': 0,
+                'dirt': 0,
+                'glowsticks': 0, },
+        },
+    }
 
-    def deserialise(value):
-        try:
-            return json.loads(value)
-        except Exception:
-            return value
+    @staticmethod
+    @hashable_lru
+    def to_html_rec(dictionary: dict):
+        """Recursive method. See ``to_html()``."""
+        d = copy.deepcopy(dictionary)
+        ret = ''
 
-    def func_with_serialized_params(*args, **kwargs):
-        _args = tuple([deserialise(arg) for arg in args])
-        _kwargs = {k: deserialise(v) for k, v in kwargs.items()}
-        return func(*_args, **_kwargs)
+        keys = list(d.keys())
+        print("Dict's keys:")
+        print(keys)
 
-    cached_function = cache(func_with_serialized_params)
+        if len(keys) == 1 and keys[0] == 'root':
+            ret += '<ul class="root">\n'
+            elt = d[keys[0]]
 
-    @functools.wraps(func)
-    def lru_decorator(*args, **kwargs):
-        _args = tuple([json.dumps(arg, sort_keys=True) if type(arg) in (list, dict) else arg for arg in args])
-        _kwargs = {k: json.dumps(v, sort_keys=True) if type(v) in (list, dict) else v for k, v in kwargs.items()}
-        return cached_function(*_args, **_kwargs)
+            print("we got root. its elt:")
+            print(elt)
 
-    lru_decorator.cache_info = cached_function.cache_info
-    lru_decorator.cache_clear = cached_function.cache_clear
-    return lru_decorator
+            ret += ItemList.to_html_rec(elt) + "\n"
 
+            ret += '</ul>' + "\n"
 
-def getItemTemplate(path: str):
-    """Given a ``path``, return the JSON file at that path
-    as a dict that represents the list of items."""
-    with open(path) as data_file:
-        return json.load(data_file)
+            return ret
 
+        for key in keys:
+            elt: dict = d[key]
 
-def itemToLI(item: str, depth=0, s=" "):
-    """Given an item in string form, return an HTML <li> elt that
-    represents that item."""
-    ret = ""
+            ret +=  f'<li class="{key}">\n'
+            ret +=  f'<a>"{key}"</a>\n'
 
-    safeName = item.replace(" ", "-")  # cannot have spaces in CSS classes
+            ekl = list(elt.keys())
 
-    ret += s * depth + wrap(item, "label") + "\n"  # add label
-    ret += s * depth + wrap(None, "input", ["type", "name"], ["number", safeName]) + "\n"  # add input elt
+            print("elt's keys:")
+            print(ekl)
 
-    ret = s * depth + wrap(ret, "li", "class", safeName)  # wrap it in an <li>
+            # keys are numbers, stop recursing
+            if ekl[0] and isinstance(elt[ekl[0]], int):
+                ret += ItemList.itemDictToUL(elt)
 
-    return ret
-
-
-def itemListToUL(items: list, depth=0, s=" "):
-    """Given a list of string items, return an HTML <ul> elt that
-    represents that list of items."""
-
-    ret = ""
-
-    for item in items:
-        ret += itemToLI(item, depth, s) + "\n"
-
-    ret = wrap("\n" + ret, "ul")
-
-    return ret
-
-
-@hashable_lru
-def dictToUL(dictionary: dict, depth=0, s=" "):
-    d = copy.deepcopy(dictionary)
-    ret = ''
-
-    keys = list(d.keys())
-    print("Dict's keys:")
-    print(keys)
-
-    if len(keys) == 1 and keys[0] == 'root':
-        ret += s * depth + '<ul class="root">\n'
-        elt = d[keys[0]]
-
-        print("we got root. its elt:")
-        print(elt)
-
-        ret += s * depth + dictToUL(elt, depth + 1) + "\n"
-
-        ret += s * depth + '</ul>' + "\n"
+            else:
+                ret += f"<ul>\n"
+                ret += ItemList.to_html_rec(elt) + "\n"
+                ret +=  f"</ul>\n"
 
         return ret
 
-    for key in keys:
-        elt = d[key]
+    @staticmethod
+    @hashable_lru
+    def dictToJSONItems(dictionary: dict):
+        """Given a list of items and item categories, convert
+        it into a list that has number values.
 
-        ret += s * depth + f'<li class="{key}">\n'
-        ret += s * depth + f'<a>"{key}"</a>\n'
-        if isinstance(elt, list):  # if it's a list, stop recursing
-            ret += itemListToUL(elt, depth + 1, s)
-        else:
-            ret += s * (depth + 1) + f"<ul>\n"
-            ret += dictToUL(elt, depth + 1) + "\n"
-            ret += s * (depth + 1) + f"</ul>\n"
+        Example:
+            {'root':
+                {'food':
+                    ['beef',
+                    'beans',
+                    'slugs'],
+                'not food':
+                    ['legos',
+                    'dirt',
+                    'glowsticks']
+                }
+            }
 
-    return ret
+            ->
+
+            {'root':
+                {'food':
+                    {'beef': 0,
+                    'beans': 0,
+                    'slugs': 0},
+                'not food':
+                    {'legos': 0,
+                    'dirt': 0,
+                    'glowsticks': 0}
+                }
+            }"""
+        ret = {}
+
+        if isinstance(dictionary, list):
+            for item in dictionary:
+                ret[item] = 0
+
+            return ret
+
+        for item in dictionary:
+            ret[item] = ItemList.dictToJSONItems(dictionary[item])
+
+        return ret
+
+    @staticmethod
+    def from_file(path: str):
+        """Given a JSON file's location , return an
+        ItemList with all zeroes from that file."""
+        with open(path, 'r') as file:
+            d = json.load(file)
+
+            return ItemList.dictToJSONItems(d)
+
+    @staticmethod
+    def itemToLI(item: str, number=0):
+        """Given an item in string form, return an HTML <li> elt that
+        represents that item."""
+        ret = ""
+
+        safeName = item.replace(" ", "-")  # cannot have spaces in CSS classes
+
+        attrs = ["type", "name", "value"]
+        vals = ["number", safeName, number]
+
+        ret +=  wrap(item, "label") + "\n"  # add label
+        ret +=  wrap(None, "input", attrs, vals) + "\n"  # add input elt
+
+        ret =  wrap(ret, "li", "class", safeName)  # wrap it in an <li>
+
+        return ret
+
+    @staticmethod
+    def itemDictToUL(items: dict):
+        """Given a dict of string:int items, return an HTML <ul> elt
+        that represents that list of items"""
+
+        ret = ""
+
+        print("itemDictToUL() passed:")
+        print(items)
+
+        for key, val in items.items():
+            ret += ItemList.itemToLI(key, val) + "\n"
+
+        ret = wrap("\n" + ret, "ul")
+
+        return ret
+
+    @staticmethod
+    def itemListToUL(items: list):
+        """Given a list of string items, return an HTML <ul> elt that
+        represents that list of items."""
+
+        ret = ""
+
+        for item in items:
+            ret += ItemList.itemToLI(item) + "\n"
+
+        ret = wrap("\n" + ret, "ul")
+
+        return ret
+
+    def __init__(self, val):
+        if isinstance(val, str):  # they passed us a path
+            self.data = ItemList.from_file(val)
+
+        elif isinstance(val, dict):
+            self.data = val
+
+    def to_html(self):
+        """Turn ``self`` into an HTML form element."""
+        return bs(ItemList.to_html_rec(self.data), 'html.parser').prettify()
 
 
 if __name__ == '__main__':
-    d = getItemTemplate("../static/data/items.json")
-    # pprint(d)
+    itemsLoc = "../static/data/items.json"
 
-    dsimple = getItemTemplate("../static/data/items-simple.json")
-    pprint(dsimple)
+    itemList = ItemList(itemsLoc)  # initialize ItemsList from path
 
-    # perishable = d['root']['food']['perishable']  # list of perishable food
-    # pprint(perishable)
-    #
-    # perishableElt = itemListToUL(perishable)  # perishable food but as <ul> elt
-    # print("Perishable food list: \n" + perishableElt)
+    print("List of items ready for serializing into database:")
+    print(itemList.data)
 
-    ulElt = dictToUL(d)
-    print("Entire <ul> elt:\n" + ulElt)
+    print("Form elt:")
+    print(itemList.to_html())
 
     with open('../static/data/items_autogen.html', 'w+') as file:
-        file.write(ulElt)
+        file.write(itemList.to_html())
+
