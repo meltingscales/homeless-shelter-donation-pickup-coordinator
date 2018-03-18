@@ -35,19 +35,6 @@ class ItemList:
         # print("Dict's keys:")
         # print(keys)
 
-        if len(keys) == 1 and keys[0] == 'root':
-            ret += '<ul class="root">\n'
-            elt = d[keys[0]]
-
-            # print("we got root. its elt:")
-            # print(elt)
-
-            ret += ItemList.to_html_rec(elt) + "\n"
-
-            ret += '</ul>' + "\n"
-
-            return ret
-
         for key in keys:
             elt: dict = d[key]
 
@@ -77,30 +64,26 @@ class ItemList:
         it into a list that has number values.
 
         Example:
-            {'root':
-                {'food':
-                    ['beef',
-                    'beans',
-                    'slugs'],
-                'not food':
-                    ['legos',
-                    'dirt',
-                    'glowsticks']
-                }
+            {'food':
+                ['beef',
+                'beans',
+                'slugs'],
+            'not food':
+                ['legos',
+                'dirt',
+                'glowsticks']
             }
 
             ->
 
-            {'root':
-                {'food':
-                    {'beef': 0,
-                    'beans': 0,
-                    'slugs': 0},
-                'not food':
-                    {'legos': 0,
-                    'dirt': 0,
-                    'glowsticks': 0}
-                }
+            {'food':
+                {'beef': 0,
+                'beans': 0,
+                'slugs': 0},
+            'not food':
+                {'legos': 0,
+                'dirt': 0,
+                'glowsticks': 0}
             }"""
         ret = {}
 
@@ -186,7 +169,10 @@ class ItemList:
 
     def to_html(self):
         """Turn ``self`` into an HTML form element."""
-        return bs(ItemList.to_html_rec(self.data), 'html.parser').prettify()
+        elt = ItemList.to_html_rec(self.data)
+
+        # elt = wrap(elt, 'ul', 'class', 'root')
+        return bs(elt, 'html.parser').prettify()
 
 
 if __name__ == '__main__':
