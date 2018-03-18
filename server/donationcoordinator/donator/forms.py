@@ -1,11 +1,12 @@
 from django.forms import ModelForm
-from .models import User, Items, Home
+
+from .models import Items, Home
 
 
 class HomeForm(ModelForm):
     class Meta:
         model = Home
-        exclude = ('user','items','image')
+        exclude = ('user', 'items',)
 
 
 class ItemsForm(ModelForm):
