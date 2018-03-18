@@ -1,13 +1,14 @@
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.forms import UserCreationForm
+from django.core.exceptions import PermissionDenied
 from django.http import *
 from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.views.generic import DetailView
-from django.views.generic.edit import CreateView, DeleteView
-from django.core.exceptions import PermissionDenied
+from django.views.generic.edit import CreateView, DeleteView, UpdateView
 
 from .forms import *
+from .models import User
 
 
 # Create your views here.
@@ -60,6 +61,20 @@ class HomeCreate(CreateView):
     def form_valid(self, form):
         form.instance.user = self.request.user
         return super(HomeCreate, self).form_valid(form)
+
+
+class HomeUpdate(UpdateView):
+    model = Home
+    template_name = 'donator/form.html'
+    form_class = HomeForm
+
+    def get_object(self, queryset=None) -> Home:
+        """ Hook to ensure object is owned by request.user. """
+
+        obj = super(HomeUpdate, self).get_object()
+        if not obj.user == self.request.user:
+            raise PermissionDenied
+        return obj
 
 
 class HomeDetail(DetailView):

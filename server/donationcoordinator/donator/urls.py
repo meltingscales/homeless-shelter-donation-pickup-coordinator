@@ -15,12 +15,9 @@ Including another URLconf
 """
 from django.conf.urls import url
 from django.urls import path
-from django.views.generic import UpdateView, DeleteView
 
 from . import views
-from .forms import HomeForm
-from .models import Home
-from .views import HomeCreate, HomeDetail, HomeDelete
+from .views import HomeCreate, HomeDetail, HomeDelete, HomeUpdate
 
 app_name = 'donator'
 
@@ -45,10 +42,7 @@ urlpatterns = [
 
     # Edit home details, ex.: /donator/my-homes/1/edit/
     path(r'my-homes/<int:pk>/edit/',
-         UpdateView.as_view(
-             model=Home,
-             template_name='donator/form.html',
-             form_class=HomeForm),
+         HomeUpdate.as_view(),
          name="home_edit",
          ),
 
