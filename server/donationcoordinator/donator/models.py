@@ -1,7 +1,5 @@
 # Create your models here.
-import os
 
-from django.conf import settings
 from django.contrib.auth.models import User
 from django.db import models
 from jsonfield import JSONField
@@ -14,18 +12,24 @@ class Items(models.Model):
     A list of goods such as clothing, food, toiletries.
     This list belongs to a single ``Home``.
     """
-    data = JSONField(default=libs.ItemList.from_file())
+    data = JSONField()
+
+    @staticmethod
+    def default_object():
+        return Items.objects.create(
+            data=libs.ItemList.from_file()
+        )
 
 
 class Home(models.Model):
     """
-    One of a ``User``'s (possibly) many ``Home``s.
+    One of a ``User`` 's (possibly) many ``Home`` s.
 
     For example, I (Henry) live on-campus and at my condo.
-    I can have two ``Home``s that I have different ``Items`` in,
+    I can have two ``Home`` s that I have different ``Items`` in,
     since my condo and dorm have different stuff I can give away.
 
-    One ``Home`` has one ``Items``...since you can only have one 'pile of stuff to give away' per house...normally.
+    One ``Home`` has one ``Items`` ...since you can only have one 'pile of stuff to give away' per house...normally.
     """
     name = models.TextField()
     street = models.TextField()
@@ -34,8 +38,40 @@ class Home(models.Model):
     state = models.TextField()
     country = models.TextField()
     image = models.ImageField(upload_to='homes', blank=True, null=True)
-    items = models.ForeignKey(Items, null=True, on_delete=models.PROTECT)  # stuff they wanna give away
-    user = models.ForeignKey(User, on_delete=models.PROTECT)
+    items: Items = models.ForeignKey(Items, null=True, on_delete=models.PROTECT)  # stuff they wanna give away
+    user: User = models.ForeignKey(User, on_delete=models.PROTECT)
 
     def get_absolute_url(self):
         return u'/donator/my-homes/%i' % self.id
+
+    def save(self, *args, **kwargs):
+        if self.items is None:
+            self.items = Items.default_object()
+
+        return super().save(*args, **kwargs)
+
+    def __str__(self):
+        ret = f"{self.name} at {self.street}, {self.city}, {self.state}, {self.zipCode}."
+        ret += f" Owned by {self.user.username}."
+
+        return ret
+
+# def home_post_save(sender, instance: Home, **kwargs):
+#     """Post-save event for Home object."""
+#     # home = Home.objects.get_or_create(instance)
+#
+#     print("Post-save for Home object!")
+#     print("Home:")
+#     print(instance)
+#
+#     if instance.items is None:
+#         print("home's items is NONE D:")
+#     else:
+#         print("Home's items:")
+#         print(instance.items.data)
+#
+#     # if instance.items.data
+#
+#
+# # connect callback
+# models.signals.post_save.connect(home_post_save, sender=Home)
