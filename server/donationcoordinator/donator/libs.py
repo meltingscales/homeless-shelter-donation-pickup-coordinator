@@ -32,15 +32,15 @@ class ItemList:
         ret = ''
 
         keys = list(d.keys())
-        print("Dict's keys:")
-        print(keys)
+        # print("Dict's keys:")
+        # print(keys)
 
         if len(keys) == 1 and keys[0] == 'root':
             ret += '<ul class="root">\n'
             elt = d[keys[0]]
 
-            print("we got root. its elt:")
-            print(elt)
+            # print("we got root. its elt:")
+            # print(elt)
 
             ret += ItemList.to_html_rec(elt) + "\n"
 
@@ -56,8 +56,8 @@ class ItemList:
 
             ekl = list(elt.keys())
 
-            print("elt's keys:")
-            print(ekl)
+            # print("elt's keys:")
+            # print(ekl)
 
             # keys are numbers, stop recursing
             if ekl[0] and isinstance(elt[ekl[0]], int):
@@ -153,8 +153,8 @@ class ItemList:
 
         ret = ""
 
-        print("itemDictToUL() passed:")
-        print(items)
+        # print("itemDictToUL() passed:")
+        # print(items)
 
         for key, val in items.items():
             ret += ItemList.itemToLI(key, val) + "\n"
