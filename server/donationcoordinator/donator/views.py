@@ -42,7 +42,6 @@ def my_homes(request, context={}):
     template_name = "donator/home_list.html"
     user: User = request.user
 
-
     if not user.is_authenticated:
         context["message"] = "You must be logged in to view a list of your homes!"
         return render(request, template_name, context)
@@ -138,17 +137,21 @@ class HomeDelete(DeleteView):
 
             return render(request, self.template_name, context)
 
+
 class ItemsUpdate(UpdateView):
+    model = Items
+    template_name = 'donator/form.html'
+    form_class = ItemsForm
 
-    def get_object(self, queryset=None) -> Home:
-        """ Hook to ensure object is owned by request.user. """
-
-        obj = super(ItemsUpdate, self).get_object()
-        if not obj.home.user == self.request.home.user:
-            raise PermissionDenied
-        return obj
+    def get_success_url(self):
+        return self.request.META.get('HTTP_REFERER', '/')
 
     def form_valid(self, form):
         print("u wanna know if items form is valid? HA!!!")
         return True
 
+    def post(self, request: HttpRequest, *args, **kwargs):
+        if self.form_valid(request):
+            return HttpResponseRedirect(self.get_success_url())
+
+        return HttpResponse("ur items ar bad :(")
