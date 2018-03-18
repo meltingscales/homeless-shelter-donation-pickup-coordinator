@@ -9,18 +9,31 @@
     (<a href="{% url 'donator:home_edit' home.id %}">edit</a>)
 </h1>
 
+{% if home.image %}
+<figure>
+    <img src="{{ home.image.src }}">
+    <figcaption>An image of your house.</figcaption>
+</figure>
+{% else %}
+<section>No image uploaded.</section>
+{% endif %}
+
+
 <h2>Address:</h2>
 
-<p>
-    {{ home.street }}, {{ home.number }} <br/>
-    {{ home.zipCode }} {{ home.city }} <br/>
-    {{ home.stateOrProvince }} ({{ home.country }})
-</p>
+
+
+<ul>
+    <li>{{ home.street }}</li>
+    <li>{{ home.zipCode }}</li>
+    <li>{{ home.city }}</li>
+    <li>{{ home.state }}</li>
+    <li>{{ home.country }}</li>
+</ul>
 
 <aside>
     (<a href="{% url 'donator:home_delete' home.id %}">delete home</a>)
 </aside>
-
 
 
 {% endblock %}
