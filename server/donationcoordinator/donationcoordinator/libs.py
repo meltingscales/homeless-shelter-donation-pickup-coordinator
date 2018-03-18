@@ -1,4 +1,34 @@
 # list of very, very widely-used general general-purpose functions
+import functools
+import json
+from functools import (lru_cache)
+
+
+def hashable_lru(func):
+    cache = lru_cache(maxsize=1024)
+
+    def deserialise(value):
+        try:
+            return json.loads(value)
+        except Exception:
+            return value
+
+    def func_with_serialized_params(*args, **kwargs):
+        _args = tuple([deserialise(arg) for arg in args])
+        _kwargs = {k: deserialise(v) for k, v in kwargs.items()}
+        return func(*_args, **_kwargs)
+
+    cached_function = cache(func_with_serialized_params)
+
+    @functools.wraps(func)
+    def lru_decorator(*args, **kwargs):
+        _args = tuple([json.dumps(arg, sort_keys=True) if type(arg) in (list, dict) else arg for arg in args])
+        _kwargs = {k: json.dumps(v, sort_keys=True) if type(v) in (list, dict) else v for k, v in kwargs.items()}
+        return cached_function(*_args, **_kwargs)
+
+    lru_decorator.cache_info = cached_function.cache_info
+    lru_decorator.cache_clear = cached_function.cache_clear
+    return lru_decorator
 
 
 def wrap(thing: str, tag: str, attrs: list = None, vals: list = None, quotes: str = '"'):
@@ -42,13 +72,13 @@ def wrap(thing: str, tag: str, attrs: list = None, vals: list = None, quotes: st
     # apply ALL vals and attrs
     for i in range(len(attrs)):
         a = attrs[i]
-        v = vals[i] if i <= len(vals)-1 else None
+        v = vals[i] if i <= len(vals) - 1 else None
 
         ret += a
-        if v:
+        if v is not None:
             ret += f"={quotes}{v}{quotes} "
 
-    if thing: #if it's not self-closing
+    if thing is not None:  # if it's not self-closing
         ret += f">{thing}</{tag}>"
     else:
         ret += "/>"
