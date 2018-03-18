@@ -9,27 +9,36 @@
     (<a href="{% url 'donator:home_edit' home.id %}">edit</a>)
 </h1>
 
-{% if home.image %}
-<figure>
-    <img src="{{ home.image.src }}">
-    <figcaption>An image of your house.</figcaption>
-</figure>
-{% else %}
-<section>No image uploaded.</section>
-{% endif %}
+<section id="home-image">
+    {% if home.image %}
+    <figure>
+        <img src="{{ home.image.src }}">
+        <figcaption>An image of your house.</figcaption>
+    </figure>
+    {% else %}
+    <p>No image uploaded.</p>
+    {% endif %}
+</section>
 
+<section id="address">
+    <h2>Address:</h2>
 
-<h2>Address:</h2>
+    <ul>
+        <li>{{ home.street }}</li>
+        <li>{{ home.zipCode }}</li>
+        <li>{{ home.city }}</li>
+        <li>{{ home.state }}</li>
+        <li>{{ home.country }}</li>
+    </ul>
+</section>
 
-
-
-<ul>
-    <li>{{ home.street }}</li>
-    <li>{{ home.zipCode }}</li>
-    <li>{{ home.city }}</li>
-    <li>{{ home.state }}</li>
-    <li>{{ home.country }}</li>
-</ul>
+<section id="items">
+    {% if home.items %}
+    <p>u got items??? COOL!!!!</p>
+    {% else %}
+    <p>u aint got no ITEMS!!! &gt;:(</p>
+    {% endif %}
+</section>
 
 <aside>
     (<a href="{% url 'donator:home_delete' home.id %}">delete home</a>)
