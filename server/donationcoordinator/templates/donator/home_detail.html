@@ -38,7 +38,8 @@
 
     <h2>Your Items:</h2>
 
-    <form method="POST" action="update_items" name="items">
+    <form method="POST" action="update-items/" name="items">
+        {% csrf_token %}
         <ul>
             {{ home.items.as_html |safe }}
             <li>
