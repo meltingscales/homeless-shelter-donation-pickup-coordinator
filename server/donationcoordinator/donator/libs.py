@@ -116,9 +116,13 @@ class ItemList:
         return ret
 
     @staticmethod
-    def from_file(path: str = os.path.join(settings.PROJECT_ROOT, settings.STATICFILES_DIRS[0], r'data\items.json')):
+    def from_file(path: str = None):
         """Given a JSON file's location , return an
         ItemList with all zeroes from that file."""
+        if settings.configured:
+            if not path:
+                path = os.path.join(settings.PROJECT_ROOT, settings.STATICFILES_DIRS[0], r'data\items.json')
+
         with open(path, 'r') as file:
             d = json.load(file)
 
