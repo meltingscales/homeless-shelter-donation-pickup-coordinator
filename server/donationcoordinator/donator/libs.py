@@ -3,28 +3,37 @@
 import copy
 import functools
 import json
+from functools import (lru_cache)
 from pprint import pprint
 
 from donationcoordinator.libs import *
 
-alreadySeen = {}  # cache for DictToUL function...
 
+def hashable_lru(func):
+    cache = lru_cache(maxsize=1024)
 
-def freeze(o):
-    if isinstance(o, dict):
-        return frozenset({k: freeze(v) for k, v in o.items()}.items())
+    def deserialise(value):
+        try:
+            return json.loads(value)
+        except Exception:
+            return value
 
-    if isinstance(o, list):
-        return tuple([freeze(v) for v in o])
+    def func_with_serialized_params(*args, **kwargs):
+        _args = tuple([deserialise(arg) for arg in args])
+        _kwargs = {k: deserialise(v) for k, v in kwargs.items()}
+        return func(*_args, **_kwargs)
 
-    return o
+    cached_function = cache(func_with_serialized_params)
 
+    @functools.wraps(func)
+    def lru_decorator(*args, **kwargs):
+        _args = tuple([json.dumps(arg, sort_keys=True) if type(arg) in (list, dict) else arg for arg in args])
+        _kwargs = {k: json.dumps(v, sort_keys=True) if type(v) in (list, dict) else v for k, v in kwargs.items()}
+        return cached_function(*_args, **_kwargs)
 
-def make_hash(o):
-    """
-    makes a hash out of anything that contains only list,dict and hashable types including string and numeric types
-    """
-    return hash(freeze(o))
+    lru_decorator.cache_info = cached_function.cache_info
+    lru_decorator.cache_clear = cached_function.cache_clear
+    return lru_decorator
 
 
 def getItemTemplate(path: str):
@@ -63,7 +72,7 @@ def itemListToUL(items: list, depth=0, s=" "):
     return ret
 
 
-@functools.lru_cache(maxsize=None)
+@hashable_lru
 def dictToUL(dictionary: dict, depth=0, s=" "):
     d = copy.deepcopy(dictionary)
     ret = ''
