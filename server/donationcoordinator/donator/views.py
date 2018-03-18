@@ -5,6 +5,7 @@ from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.views.generic import DetailView
 from django.views.generic.edit import CreateView, DeleteView
+from django.core.exceptions import PermissionDenied
 
 from .forms import *
 
@@ -35,10 +36,9 @@ def signup(request):
     return render(request, template_name, {'form': form})
 
 
-def my_homes(request):
+def my_homes(request, context={}):
     """A User wants a list of their Homes."""
     template_name = "donator/home_list.html"
-    context = {}
     user: User = request.user
 
     homes = Home.objects.filter(user=user)
@@ -66,6 +66,14 @@ class HomeDetail(DetailView):
     model = Home
     template_name = 'donator/home_detail.html'
 
+    def get_object(self, queryset=None) -> Home:
+        """ Hook to ensure object is owned by request.user. """
+
+        obj = super(HomeDetail, self).get_object()
+        if not obj.user == self.request.user:
+            raise PermissionDenied
+        return obj
+
     def get_context_data(self, **kwargs):
         context = super(HomeDetail, self).get_context_data(**kwargs)
         return context
@@ -76,11 +84,11 @@ class HomeDelete(DeleteView):
     template_name = 'donator/home_delete.html'
 
     def get_object(self, queryset=None) -> Home:
-
         """ Hook to ensure object is owned by request.user. """
+
         obj = super(HomeDelete, self).get_object()
         if not obj.user == self.request.user:
-            raise Http404
+            raise PermissionDenied
         return obj
 
     def get_success_url(self):
@@ -97,9 +105,6 @@ class HomeDelete(DeleteView):
         return form_name == home_name  # make sure they type the name to confirm
 
     def post(self, request: HttpRequest, *args, **kwargs):
-
-        print(request)
-        print(request.POST)
 
         if self.form_valid(request):
             print("Form is valid for delete!")
