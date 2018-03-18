@@ -5,7 +5,6 @@ from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.views.generic import DetailView
 from django.views.generic.edit import CreateView, DeleteView
-from django.db import models
 
 from .forms import *
 
@@ -42,12 +41,7 @@ def my_homes(request):
     context = {}
     user: User = request.user
 
-    print("does " + str(user.username) + " want their homes?!")
-
     homes = Home.objects.filter(user=user)
-
-    print("List of homes:")
-    print(homes)
 
     context["homes_list"] = homes
 
@@ -77,13 +71,44 @@ class HomeDetail(DetailView):
         return context
 
 
-def home_detail(request):
-    """A User wants details about one of their Homes."""
-    return HttpResponse("home details???")
-
 class HomeDelete(DeleteView):
     model = Home
     template_name = 'donator/home_delete.html'
 
+    def get_object(self, queryset=None) -> Home:
+
+        """ Hook to ensure object is owned by request.user. """
+        obj = super(HomeDelete, self).get_object()
+        if not obj.user == self.request.user:
+            raise Http404
+        return obj
+
     def get_success_url(self):
         return reverse('donator:home_list')
+
+    def form_valid(self, request: HttpRequest):
+
+        if 'home_name' not in request.POST:
+            return False
+
+        form_name = request.POST['home_name']
+        home_name = self.get_object().name
+
+        return form_name == home_name  # make sure they type the name to confirm
+
+    def post(self, request: HttpRequest, *args, **kwargs):
+
+        print(request)
+        print(request.POST)
+
+        if self.form_valid(request):
+            print("Form is valid for delete!")
+            self.get_object().delete()
+            return HttpResponseRedirect(self.get_success_url())
+        else:  # they can't delete
+            context = {
+                'error_message': 'Cannot delete! You must type in the home\'s name to confirm!',
+                'home': self.get_object(),
+            }
+
+            return render(request, self.template_name, context)
