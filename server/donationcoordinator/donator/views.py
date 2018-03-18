@@ -43,7 +43,7 @@ def my_homes(request, context={}):
     user: User = request.user
 
 
-    if user.is_anonymous:
+    if not user.is_authenticated:
         context["message"] = "You must be logged in to view a list of your homes!"
         return render(request, template_name, context)
 
