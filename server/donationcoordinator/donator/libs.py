@@ -10,7 +10,9 @@ from donationcoordinator.libs import *
 
 
 class ItemList:
-    data = {  # default items list
+    space_replacer = '_'  # what to replace spaces with in the HTML since CSS classes can't have spaces
+
+    template = {  # template
         'root': {
             'food': {
                 'slugs': 0,
@@ -23,6 +25,66 @@ class ItemList:
                 'glowsticks': 0, },
         },
     }
+
+    data = {  # default items list
+        'root': {
+            'food': {
+                'slugs': 1,
+                'meat': 0,
+                'leaves': 3,
+                'berries': 0, },
+            'not food': {
+                'legos': 1,
+                'dirt': 0,
+                'glowsticks': 1, },
+        },
+    }
+
+    @staticmethod
+    def apply_flat_dict_rec(d: dict, flat: dict) -> dict:
+        """Recursive method. See ``apply_flat_dict()``.
+
+        Modifies a non-flat dict, ``d``, and applies all keys contained in
+        a flat dict, ``flat``.
+
+        Example:
+            a_f_d_r(
+                {
+                    'food': {
+                        'meat': 0,
+                        'cheese': 0
+                        },
+                    'not food': {
+                        'dirt': 0,
+                        'legos': 0
+                        }
+                },
+
+                {'meat':1, 'cheese':3, 'dirt':1, 'legos':1}
+            )
+
+            ->
+            dict is modified to now be this:
+
+            {
+                    'food': {
+                        'meat': 1,
+                        'cheese': 3
+                        },
+                    'not food': {
+                        'dirt': 1,
+                        'legos': 1
+                        }
+                },
+            """
+
+        if ItemList.is_item_dict_list(d):  # it's a list of items!
+            for key in d:
+                if key in flat: #if key is in our POST
+                    d[key] = flat[key]  # overwrite the number
+        else:
+            for key in d:
+                ItemList.apply_flat_dict_rec(d[key], flat)
 
     @staticmethod
     @hashable_lru
@@ -56,6 +118,44 @@ class ItemList:
                 ret += f"</ul>\n"
 
         return ret
+
+    @staticmethod
+    def is_item_dict_list(dictionary: dict):
+        """Given a dictionary, tell you if it's a list of numbers of items or not.
+
+        Example:
+            {
+            'food': {
+                'meat': 0,
+                'beets': 1
+                },
+            'not food': {
+                'legos': 3,
+                'dirt': 1
+                }
+            }
+        ->
+        True
+
+
+        """
+
+        # print("Passed this:")
+        # print(dictionary)
+
+        if not isinstance(dictionary, dict):
+            return False
+
+        if dictionary == {}:
+            return False
+
+        keys = list(dictionary.keys())
+        for key in keys:  # i.e. 'food'
+            value = dictionary[key]
+            if not (isinstance(key, str) and isinstance(value, int)):
+                return False
+
+        return True
 
     @staticmethod
     @hashable_lru
@@ -117,7 +217,7 @@ class ItemList:
         represents that item."""
         ret = ""
 
-        safeName = item.replace(" ", "-")  # cannot have spaces in CSS classes
+        safeName = item.replace(" ", ItemList.space_replacer)  # cannot have spaces in CSS classes
 
         attrs = ["type", "name", "value"]
         vals = ["number", safeName, number]
@@ -160,9 +260,15 @@ class ItemList:
 
         return ret
 
-    def __init__(self, val):
-        if isinstance(val, str):  # they passed us a path
+    def __init__(self, val=None):
+
+        if val is None:  # they passed us nothing
+            self.template = ItemList.from_file()
+            self.data = self.template
+
+        elif isinstance(val, str):  # they passed us a path
             self.data = ItemList.from_file(val)
+            self.template = self.data
 
         elif isinstance(val, dict):
             self.data = val
@@ -174,9 +280,14 @@ class ItemList:
         # elt = wrap(elt, 'ul', 'class', 'root')
         return bs(elt, 'html.parser').prettify()
 
+    def apply_flat_dict(self, flat):
+        ItemList.apply_flat_dict_rec(self.data, flat)
+
 
 if __name__ == '__main__':
     itemsLoc = "../static/data/items.json"
+
+    flat = {'bleach': 3, 'cereal': 3, 'dental dams': 3}
 
     itemList = ItemList(itemsLoc)  # initialize ItemsList from path
 
@@ -185,6 +296,11 @@ if __name__ == '__main__':
 
     print("Form elt:")
     print(itemList.to_html())
+
+    itemList.apply_flat_dict(flat)
+
+    print("List of items after we apply a simulated JSON form's POST data")
+    print(itemList.data)
 
     with open('../static/data/items_autogen.html', 'w+') as file:
         file.write(itemList.to_html())

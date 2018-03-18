@@ -41,7 +41,7 @@ class Home(models.Model):
     state = models.TextField()
     country = models.TextField()
     image = models.ImageField(upload_to='homes', blank=True, null=True)
-    items: Items = models.ForeignKey(Items, null=True, on_delete=models.PROTECT)  # stuff they wanna give away
+    items: Items = models.OneToOneField(Items, null=True, on_delete=models.PROTECT)  # stuff they wanna give away
     user: User = models.ForeignKey(User, on_delete=models.PROTECT)
 
     def get_absolute_url(self):

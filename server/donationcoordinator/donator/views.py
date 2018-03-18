@@ -8,6 +8,7 @@ from django.views.generic import DetailView
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
 
 from .forms import *
+from .libs import ItemList
 from .models import User
 
 
@@ -139,19 +140,63 @@ class HomeDelete(DeleteView):
 
 
 class ItemsUpdate(UpdateView):
+    slug_field = \
+        slug_url_kwarg = 'pk'
+
     model = Items
     template_name = 'donator/form.html'
     form_class = ItemsForm
+    illegal_keys = [  # keys we do NOT want in our form
+        'csrfmiddlewaretoken'
+    ]
 
     def get_success_url(self):
         return self.request.META.get('HTTP_REFERER', '/')
 
+    def clean_form(self) -> dict:
+        """Remove anything that isn't an {'item':number} value in
+        this form's POST data."""
+        d = {}
+
+        for key, val in self.request.POST.items():
+            if key not in self.illegal_keys:
+                try:
+                    key = key.replace(ItemList.space_replacer, ' ')
+                    val = int(val)
+
+                    d[key] = val
+                except:
+                    pass
+
+        return d
+
     def form_valid(self, form):
-        print("u wanna know if items form is valid? HA!!!")
+        user = self.request.user
+
+        homeid = self.kwargs['pk']
+        self.home = Home.objects.get(pk=homeid) # TODO is this a risk? idk.
+
+        if not self.home.user == user:  # make sure they own the home
+            raise PermissionDenied
+
         return True
 
     def post(self, request: HttpRequest, *args, **kwargs):
-        if self.form_valid(request):
-            return HttpResponseRedirect(self.get_success_url())
 
-        return HttpResponse("ur items ar bad :(")
+        if self.form_valid(request):
+            il = ItemList()
+
+            formDict = self.clean_form()
+            print("Flattened data")
+            print(formDict)
+
+            il.apply_flat_dict(formDict)
+            print("Final data:")
+            print(il.data)
+
+            self.home.items.data = il.data
+            self.home.items.save()
+
+            return HttpResponseRedirect(self.get_success_url())
+        else:
+            return HttpResponse("ur items ar bad :(")
