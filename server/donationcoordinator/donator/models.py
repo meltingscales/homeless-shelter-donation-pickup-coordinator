@@ -1,7 +1,12 @@
 # Create your models here.
+import os
 
+from django.conf import settings
 from django.contrib.auth.models import User
 from django.db import models
+from jsonfield import JSONField
+
+from . import libs
 
 
 class Items(models.Model):
@@ -9,7 +14,7 @@ class Items(models.Model):
     A list of goods such as clothing, food, toiletries.
     This list belongs to a single ``Home``.
     """
-    pass
+    data = JSONField(default=libs.ItemList.from_file())
 
 
 class Home(models.Model):
@@ -29,9 +34,8 @@ class Home(models.Model):
     state = models.TextField()
     country = models.TextField()
     image = models.ImageField(upload_to='homes', blank=True, null=True)
-    items = models.ForeignKey(Items, blank=True, null=True, on_delete=models.PROTECT)  # stuff they wanna give away
+    items = models.ForeignKey(Items, null=True, on_delete=models.PROTECT)  # stuff they wanna give away
     user = models.ForeignKey(User, on_delete=models.PROTECT)
 
     def get_absolute_url(self):
         return u'/donator/my-homes/%i' % self.id
-

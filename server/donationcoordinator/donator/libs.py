@@ -1,7 +1,10 @@
 # general-purpose library functions used by ``donator`` class.
 
 import copy
+import os
+
 from bs4 import BeautifulSoup as bs
+from django.conf import settings
 
 from donationcoordinator.libs import *
 
@@ -48,8 +51,8 @@ class ItemList:
         for key in keys:
             elt: dict = d[key]
 
-            ret +=  f'<li class="{key}">\n'
-            ret +=  f'<a>"{key}"</a>\n'
+            ret += f'<li class="{key}">\n'
+            ret += f'<a>"{key}"</a>\n'
 
             ekl = list(elt.keys())
 
@@ -63,7 +66,7 @@ class ItemList:
             else:
                 ret += f"<ul>\n"
                 ret += ItemList.to_html_rec(elt) + "\n"
-                ret +=  f"</ul>\n"
+                ret += f"</ul>\n"
 
         return ret
 
@@ -113,7 +116,7 @@ class ItemList:
         return ret
 
     @staticmethod
-    def from_file(path: str):
+    def from_file(path: str = os.path.join(settings.PROJECT_ROOT, settings.STATICFILES_DIRS[0], r'data\items.json')):
         """Given a JSON file's location , return an
         ItemList with all zeroes from that file."""
         with open(path, 'r') as file:
@@ -132,10 +135,10 @@ class ItemList:
         attrs = ["type", "name", "value"]
         vals = ["number", safeName, number]
 
-        ret +=  wrap(item, "label") + "\n"  # add label
-        ret +=  wrap(None, "input", attrs, vals) + "\n"  # add input elt
+        ret += wrap(item, "label") + "\n"  # add label
+        ret += wrap(None, "input", attrs, vals) + "\n"  # add input elt
 
-        ret =  wrap(ret, "li", "class", safeName)  # wrap it in an <li>
+        ret = wrap(ret, "li", "class", safeName)  # wrap it in an <li>
 
         return ret
 
@@ -195,4 +198,3 @@ if __name__ == '__main__':
 
     with open('../static/data/items_autogen.html', 'w+') as file:
         file.write(itemList.to_html())
-
