@@ -42,6 +42,11 @@ def my_homes(request, context={}):
     template_name = "donator/home_list.html"
     user: User = request.user
 
+
+    if user.is_anonymous:
+        context["message"] = "You must be logged in to view a list of your homes!"
+        return render(request, template_name, context)
+
     homes = Home.objects.filter(user=user)
 
     context["homes_list"] = homes

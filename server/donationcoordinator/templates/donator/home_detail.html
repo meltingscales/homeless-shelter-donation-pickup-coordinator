@@ -4,6 +4,7 @@
 
 {% block content %}
 {% include "donator/profile_nav.html" %}
+
 <h1>
     {{ home.name }}
     (<a href="{% url 'donator:home_edit' home.id %}">edit</a>)
