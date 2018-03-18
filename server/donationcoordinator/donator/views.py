@@ -137,3 +137,18 @@ class HomeDelete(DeleteView):
             }
 
             return render(request, self.template_name, context)
+
+class ItemsUpdate(UpdateView):
+
+    def get_object(self, queryset=None) -> Home:
+        """ Hook to ensure object is owned by request.user. """
+
+        obj = super(ItemsUpdate, self).get_object()
+        if not obj.home.user == self.request.home.user:
+            raise PermissionDenied
+        return obj
+
+    def form_valid(self, form):
+        print("u wanna know if items form is valid? HA!!!")
+        return True
+

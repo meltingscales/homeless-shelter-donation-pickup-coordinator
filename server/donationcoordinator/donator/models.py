@@ -20,6 +20,9 @@ class Items(models.Model):
             data=libs.ItemList.from_file()
         )
 
+    def as_html(self):
+        return libs.ItemList(self.data).to_html()
+
 
 class Home(models.Model):
     """

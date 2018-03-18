@@ -35,7 +35,17 @@
 
 <section id="items">
     {% if home.items %}
-    <p>u got items??? COOL!!!!</p>
+
+    <h2>Your Items:</h2>
+
+    <form method="POST" action="update_items" name="items">
+        <ul>
+            {{ home.items.as_html |safe }}
+            <li>
+                <input type="submit" value="Submit"/>
+            </li>
+        </ul>
+    </form>
     {% else %}
     <p>u aint got no ITEMS!!! &gt;:(</p>
     {% endif %}
