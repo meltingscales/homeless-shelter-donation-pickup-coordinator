@@ -1,5 +1,7 @@
 {% extends "base.html" %}
 
+{% block title %} My Homes {% endblock %}
+
 {% block content %}
 {% include "donator/profile_nav.html" %}
 <h1>
@@ -7,12 +9,22 @@
     {% if user %}(<a href="{% url 'donator:home_create' %}">add</a>){% endif %}
 </h1>
 
-<ul>
-    {% for home in homes_list %}
-    <li><a href="{% url 'donator:home_detail' home.id %}">
-        {{ home.name }}</a></li>
-    {% empty %}
-    <li>Sorry, no Homes created yet.</li>
-    {% endfor %}
-</ul>
+<section>
+    <ul>
+        {% for home in homes_list %}
+        <li><a href="{% url 'donator:home_detail' home.id %}">
+            {{ home.name }}</a></li>
+        {% empty %}
+        <li>No Homes created yet.</li>
+        {% endfor %}
+    </ul>
+</section>
+
+<aside>
+    {% if message %}
+    <p>
+        {{ message }}
+    </p>
+    {% endif %}
+</aside>
 {% endblock %}

@@ -37,11 +37,14 @@
     {% endblock %}
 </div>
 
-<div id="content">
+<main id="content">
     {% block content %}
-    {% if error_message %}<p><strong>{{ error_message}}</strong></p>{% endif %}
+    {% if error_message %}
+    <section id="errors">
+        <p>{{ error_message}}</p>
+    </section>{% endif %}
     {% endblock %}
-</div>
+</main>
 
 <div id="footer">
     {% block footer %}{% endblock %}
