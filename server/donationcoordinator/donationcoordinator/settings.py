@@ -28,7 +28,7 @@ REQUIRED_ENVIRONMENT_VARIABLES = [
 
 for ev in REQUIRED_ENVIRONMENT_VARIABLES:
     if ev not in os.environ:
-        raise YouDidntSetYourEnvironmentVarsBro
+        raise YouDidntSetYourEnvironmentVarsBro(ev)
 
 # Build paths inside the project like this: os.path.join(PROJECT_ROOT, ...)
 PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
