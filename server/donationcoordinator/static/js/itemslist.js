@@ -30,11 +30,17 @@ a_elts.each(function(i, elt) { //for all <a> tags
 
     $(elt).on('click', function(event) {
 
-        elem = event.currentTarget;
-        parent = elem.parentElement;
-        sibling = $(parent).find('ul')[0];
+        elem = event.currentTarget.parentElement;
+        e = $(elem)
 
-        toggleView($(sibling))
+        if(e.hasClass('hidden'))
+        {
+            e.removeClass('hidden');
+        }
+        else
+        {
+            e.addClass('hidden');
+        }
 
     });
 });

@@ -1,9 +1,37 @@
-.hidden {
-display: none;
+li.hidden ul {
+    display: none;
+}
+
+#items ul:not(.items_list) > li {
+    list-style-image:url('../media/minus.jpg');
+}
+
+#items li.hidden {
+    list-style-image:url('../media/plus.jpg')
+}
+
+#items li {
+    padding: 0;
+}
+
+#items ul {
+    padding-bottom: 0;
+    padding-top: 0;
 }
 
 #items form {
     width: 100%;
+}
+
+#items a {
+    background-color: darkmagenta;
+    display: inline-block;
+    width: 100%;
+}
+
+#items a:hover {
+    cursor: pointer;
+    background-color: brown;
 }
 
 ul.items_list li {

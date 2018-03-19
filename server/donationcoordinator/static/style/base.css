@@ -57,7 +57,7 @@ li li ol {
 }
 
 li {
-    padding-bottom: 0.611em; /* 11 / 22 = 0.6111111 */
+    /* padding-bottom: 0.611em; */ /* 11 / 22 = 0.6111111 */
 }
 
 li li:last-child {
