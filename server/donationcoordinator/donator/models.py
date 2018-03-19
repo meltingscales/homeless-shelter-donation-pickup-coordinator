@@ -3,6 +3,7 @@
 from django.contrib.auth.models import User
 from django.db import models
 from jsonfield import JSONField
+# import django.contrib.gis.db.models as geomodels
 
 from . import libs
 
@@ -24,6 +25,11 @@ class Items(models.Model):
         return libs.ItemList(self.data).to_html()
 
 
+class HomeLocation(models.Model):
+    recorded_at = models.DateTimeField()
+    # location = geomodels.PointField()
+
+
 class Home(models.Model):
     """
     One of a ``User`` 's (possibly) many ``Home`` s.
@@ -40,6 +46,7 @@ class Home(models.Model):
     zipCode = models.TextField()
     state = models.TextField()
     country = models.TextField()
+    location = models.OneToOneField(HomeLocation, on_delete=models.PROTECT)
     image = models.ImageField(upload_to='homes', blank=True, null=True)
     items: Items = models.OneToOneField(Items, null=True, on_delete=models.PROTECT)  # stuff they wanna give away
     user: User = models.ForeignKey(User, on_delete=models.PROTECT)
@@ -58,23 +65,3 @@ class Home(models.Model):
         ret += f" Owned by {self.user.username}."
 
         return ret
-
-# def home_post_save(sender, instance: Home, **kwargs):
-#     """Post-save event for Home object."""
-#     # home = Home.objects.get_or_create(instance)
-#
-#     print("Post-save for Home object!")
-#     print("Home:")
-#     print(instance)
-#
-#     if instance.items is None:
-#         print("home's items is NONE D:")
-#     else:
-#         print("Home's items:")
-#         print(instance.items.data)
-#
-#     # if instance.items.data
-#
-#
-# # connect callback
-# models.signals.post_save.connect(home_post_save, sender=Home)
