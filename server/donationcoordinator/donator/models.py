@@ -46,7 +46,7 @@ class Home(models.Model):
     zipCode = models.TextField()
     state = models.TextField()
     country = models.TextField()
-    location = models.OneToOneField(HomeLocation, on_delete=models.PROTECT)
+    location = models.OneToOneField(HomeLocation, blank=True, null=True, on_delete=models.PROTECT)
     image = models.ImageField(upload_to='homes', blank=True, null=True)
     items: Items = models.OneToOneField(Items, null=True, on_delete=models.PROTECT)  # stuff they wanna give away
     user: User = models.ForeignKey(User, on_delete=models.PROTECT)
