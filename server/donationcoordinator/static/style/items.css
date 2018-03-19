@@ -2,7 +2,7 @@ li.hidden ul {
     display: none;
 }
 
-#items ul:not(.items_list) > li {
+#items ul:not(.items_list) > li:not(.hidden) {
     list-style-image:url('../media/minus.png');
 }
 
