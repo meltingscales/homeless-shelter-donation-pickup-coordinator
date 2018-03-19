@@ -12,6 +12,7 @@
 	- [A Safe Haven](#a-safe-haven)
 - [Shelters I've talked to](#shelters-ive-talked-to)
 	- [Lincoln Park Community Services (03/11/2018)](#lincoln-park-community-services-03112018)
+		- [Notes from 03/16/2018 discussion](#notes-from-03162018-discussion)
 	- [North Side Housing and Supportive Services (03/12/2018)](#north-side-housing-and-supportive-services-03122018)
 		- [Notes from 03/14/2018 discussion](#notes-from-03142018-discussion)
 
@@ -124,7 +125,35 @@ application, register themselves, put their stuff up, etc.
 - 1st contact: 03/11/2018
   - Voicemail
   - Email
-- No response yet.
+- Email response on 03/15/2018
+  - Reply and will meet in-person
+- Met in-person on 03/15/2018
+
+### Notes from 03/16/2018 discussion
+
+- Talked about problems specific to a smaller shelter, i.e. LPCS
+  - Limited by storage
+  - No dedicated pickup service
+    - Pickup would happen with volunteer's personal vehicles
+  - Donators should:
+    - Know what organizations need
+      - > `LPCS` needs coats, and you have `3` coats!
+  - Orgs:
+    - See what requested items donators have
+      - > `10` people have `20` coats, and this item is marked as `high` need!
+    - Difficulties they face:
+      - Get too much or too little of items
+      - Want to use everything they get
+        - Transfer to other shelters?
+        - Prevent unwanted items from being donated in the first place
+      - Search system and priority!
+      - People ask what they take, uses up phone time & resources
+        - Let people know up front what they can and cannot take
+    - They are smaller so their needs differ
+
+- ![](lpcs-meeting-03-16-2018-01.jpg)
+- ![](lpcs-meeting-03-16-2018-02.jpg)
+
 
 ## North Side Housing and Supportive Services (03/12/2018)
 - 1st contact: 03/12/2018
