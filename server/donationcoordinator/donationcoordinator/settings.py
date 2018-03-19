@@ -23,7 +23,11 @@ class YouDidntSetYourEnvironmentVarsBro(Exception):
         return str(self)
 
 REQUIRED_ENVIRONMENT_VARIABLES = [
+    'OSGEO4W_ROOT',
+    'PYTHON_ROOT',
     'SECRET_KEY',
+    'GDAL_LIBRARY_PATH',
+    'GEOS_LIBRARY_PATH',
 ]
 
 for ev in REQUIRED_ENVIRONMENT_VARIABLES:
@@ -32,6 +36,22 @@ for ev in REQUIRED_ENVIRONMENT_VARIABLES:
 
 # Build paths inside the project like this: os.path.join(PROJECT_ROOT, ...)
 PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+# setup for GDAL, GEOS, etc.
+if os.name == 'nt':
+    import platform
+    OSGEO4W = os.environ['OSGEO4W_ROOT']
+    if '64' in platform.architecture()[0] and '64' not in OSGEO4W:
+        OSGEO4W += "64"
+    assert os.path.isdir(OSGEO4W), "Directory does not exist: " + OSGEO4W
+    os.environ['OSGEO4W_ROOT'] = OSGEO4W
+    os.environ['GDAL_DATA'] = OSGEO4W + r"\share\gdal"
+    os.environ['PROJ_LIB'] = OSGEO4W + r"\share\proj"
+    os.environ['PATH'] = OSGEO4W + r"\bin;" + os.environ['PATH']
+
+OSGEO4W = os.environ['OSGEO4W_ROOT']
+
+GDAL_LIBRARY_PATH = os.environ.get('GDAL_LIBRARY_PATH')
 
 
 # Quick-start development settings - unsuitable for production
@@ -55,6 +75,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.gis',
     'donator',
     'restaurantapp',
 ]

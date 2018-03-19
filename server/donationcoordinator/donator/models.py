@@ -3,7 +3,7 @@
 from django.contrib.auth.models import User
 from django.db import models
 from jsonfield import JSONField
-# import django.contrib.gis.db.models as geomodels
+import django.contrib.gis.db.models as geomodels
 
 from . import libs
 
