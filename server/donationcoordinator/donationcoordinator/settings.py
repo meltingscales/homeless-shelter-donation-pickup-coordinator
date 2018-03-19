@@ -12,6 +12,24 @@ https://docs.djangoproject.com/en/2.0/ref/settings/
 
 import os
 
+class YouDidntSetYourEnvironmentVarsBro(Exception):
+    def __init__(self, m):
+        self.missingVar = m
+
+    def __str__(self):
+        return f"You gotta set the {self.missingVar} var!"
+
+    def __repr__(self):
+        return str(self)
+
+REQUIRED_ENVIRONMENT_VARIABLES = [
+    'SECRET_KEY',
+]
+
+for ev in REQUIRED_ENVIRONMENT_VARIABLES:
+    if ev not in os.environ:
+        raise YouDidntSetYourEnvironmentVarsBro
+
 # Build paths inside the project like this: os.path.join(PROJECT_ROOT, ...)
 PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -20,7 +38,7 @@ PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/2.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get('SECRET_KEY') if 'SECRET_KEY' in os.environ else [][1]
+SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
