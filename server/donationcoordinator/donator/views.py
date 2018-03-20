@@ -1,3 +1,7 @@
+from pprint import pprint
+
+import googlemaps
+from django.conf import settings
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.forms import UserCreationForm
 from django.core.exceptions import PermissionDenied
@@ -5,7 +9,7 @@ from django.http import *
 from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.views.generic import DetailView
-from django.views.generic.edit import CreateView, DeleteView, UpdateView
+from django.views.generic.edit import CreateView, DeleteView, UpdateView, ProcessFormView
 
 from .forms import *
 from .libs import ItemList
@@ -61,6 +65,10 @@ class HomeUpdate(UpdateView):
     def get_success_url(self):
         return reverse('donator:home_detail', kwargs={'pk': self.object.id})
 
+    def post(self, form: HttpRequest, *args, **kwargs):
+        return super().post(self, form, *args, **kwargs)
+
+
     def get_object(self, queryset=None) -> Home:
         """ Hook to ensure object is owned by request.user. """
         try:
@@ -72,9 +80,20 @@ class HomeUpdate(UpdateView):
         return obj
 
     def form_valid(self, form: HomeForm):
-        form.instance.user = self.request.user
-
         print(form.data)
+
+        locs = form.get_loc_data_as_string()
+        print("location string:")
+        print(locs)
+
+        gm = googlemaps.Client(key=settings.GEOPOSITION_GOOGLE_MAPS_API_KEY)
+
+        geo_res = gm.geocode(locs)
+        print("Geo result:")
+        pprint(geo_res)
+
+        if geo_res is None:  # they entered 'moon cheese base' or 'nowheresville tenessee'
+            return False
 
         return super(HomeUpdate, self).form_valid(form)
 
