@@ -23,7 +23,6 @@ class HomeForm(ModelForm):
             ret[goodie] = self.data[goodie]
         return ret
 
-
     def get_loc_data_as_string(self):
         return ', '.join(self.data[goodie] for goodie in HomeForm.goodies)  # in order of goodies
 

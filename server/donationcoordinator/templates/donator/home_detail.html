@@ -34,6 +34,22 @@
     </ul>
 </section>
 
+<section id="map">
+    <h2>Google Maps location:</h2>
+
+    {% if home.location %}
+
+    <h3>Raw data:</h3>
+    <pre><code>{{ home.location.googlemapsjson }}</code></pre>
+
+    <h3>Map:</h3>
+
+    <a href="{{ home.location.to_google_maps_uri }}">Map!</a>
+    {% else %}
+    <p>Home's location not found!</p>
+    {% endif %}
+</section>
+
 <section id="items">
     {% if home.items %}
 

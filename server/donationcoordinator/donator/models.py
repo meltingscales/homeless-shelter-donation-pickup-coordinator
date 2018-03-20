@@ -1,9 +1,12 @@
 # Create your models here.
 
+from datetime import datetime
+
+import django.contrib.gis.db.models as geomodels
 from django.contrib.auth.models import User
+from django.contrib.gis.geos import Point
 from django.db import models
 from jsonfield import JSONField
-import django.contrib.gis.db.models as geomodels
 
 from . import libs
 
@@ -27,8 +30,30 @@ class Items(models.Model):
 
 class HomeLocation(models.Model):
     """This model will be saved in a GeoDjango database."""
-    recorded_at = models.DateTimeField()
+    recorded_at = models.DateTimeField(default=datetime.now)
+    googlemapsjson = JSONField(default={})
     location = geomodels.PointField()
+
+    @staticmethod
+    def from_lat_lon(lat, lng, data=None):
+        return HomeLocation.objects.create(
+            location=Point(x=lat, y=lng),
+            googlemapsjson=data,
+        )
+
+    def to_lat_lon(self):
+        return {
+            'lat': self.location.x,
+            'lon': self.location.y,
+        }
+
+    def save(self, *args, **kwargs):
+        return super().save(*args, **kwargs)
+
+    def to_google_maps_uri(self):
+        d = self.to_lat_lon()
+
+        return f"https://www.google.com/maps/search/?api=1&query={d['lat']},{d['lon']}"
 
 
 class Home(models.Model):

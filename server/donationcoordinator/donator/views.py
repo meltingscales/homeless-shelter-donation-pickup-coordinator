@@ -1,5 +1,3 @@
-from pprint import pprint
-
 import googlemaps
 from django.conf import settings
 from django.contrib.auth import login, authenticate
@@ -9,11 +7,11 @@ from django.http import *
 from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.views.generic import DetailView
-from django.views.generic.edit import CreateView, DeleteView, UpdateView, ProcessFormView
+from django.views.generic.edit import CreateView, DeleteView, UpdateView
 
 from .forms import *
 from .libs import ItemList
-from .models import User
+from .models import User, Home, HomeLocation
 
 
 # Create your views here.
@@ -61,13 +59,32 @@ class HomeUpdate(UpdateView):
     model = Home
     template_name = 'donator/home_edit.html'
     form_class = HomeForm
+    geo_result = {}
+    gmaps_json = {}
+
+    def save_location(self, form: HomeForm):
+
+        loc = self.geo_result[0]['geometry']['location']
+        lat = loc['lat']
+        lng = loc['lng']
+
+        location = HomeLocation.from_lat_lon(lat=lat, lng=lng, data=self.geo_result)
+
+        self.home.location = location
+        self.home.location.save()
+        self.home.save()
 
     def get_success_url(self):
         return reverse('donator:home_detail', kwargs={'pk': self.object.id})
 
-    def post(self, form: HttpRequest, *args, **kwargs):
-        return super().post(self, form, *args, **kwargs)
+    def post(self, request: HttpRequest, *args, **kwargs):
 
+        form = self.get_form()
+
+        if self.form_valid(form):
+            self.save_location(form)  # save HomeLocation to Home
+
+        return super().post(self, request, *args, **kwargs)
 
     def get_object(self, queryset=None) -> Home:
         """ Hook to ensure object is owned by request.user. """
@@ -80,19 +97,22 @@ class HomeUpdate(UpdateView):
         return obj
 
     def form_valid(self, form: HomeForm):
+
+        homeid = self.kwargs['pk']
+        self.home = Home.objects.get(pk=homeid)
+
+        form.instance.user = User.objects.get(username=self.request.user.username)
+
         print(form.data)
 
         locs = form.get_loc_data_as_string()
-        print("location string:")
-        print(locs)
 
-        gm = googlemaps.Client(key=settings.GEOPOSITION_GOOGLE_MAPS_API_KEY)
+        if self.geo_result == {}:  # if it's empty
+            gm = googlemaps.Client(key=settings.GEOPOSITION_GOOGLE_MAPS_API_KEY)
 
-        geo_res = gm.geocode(locs)
-        print("Geo result:")
-        pprint(geo_res)
+            self.geo_result = gm.geocode(locs)
 
-        if geo_res is None:  # they entered 'moon cheese base' or 'nowheresville tenessee'
+        if self.geo_result == {}:  # they entered 'moon cheese base' or 'nowheresville tenessee'
             return False
 
         return super(HomeUpdate, self).form_valid(form)
