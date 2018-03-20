@@ -26,8 +26,9 @@ class Items(models.Model):
 
 
 class HomeLocation(models.Model):
+    """This model will be saved in a GeoDjango database."""
     recorded_at = models.DateTimeField()
-    # location = geomodels.PointField()
+    location = geomodels.PointField()
 
 
 class Home(models.Model):

@@ -28,11 +28,12 @@ REQUIRED_ENVIRONMENT_VARIABLES = [
     'SECRET_KEY',
     'GDAL_LIBRARY_PATH',
     'GEOS_LIBRARY_PATH',
+    'GEOPOSITION_GOOGLE_MAPS_API_KEY',
 ]
 
 for ev in REQUIRED_ENVIRONMENT_VARIABLES:
     if ev not in os.environ:
-        raise YouDidntSetYourEnvironmentVarsBro(ev)
+        print(YouDidntSetYourEnvironmentVarsBro(ev))
 
 # Build paths inside the project like this: os.path.join(PROJECT_ROOT, ...)
 PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -53,12 +54,13 @@ OSGEO4W = os.environ['OSGEO4W_ROOT']
 
 GDAL_LIBRARY_PATH = os.environ.get('GDAL_LIBRARY_PATH')
 
+GEOPOSITION_GOOGLE_MAPS_API_KEY = os.environ.get('GEOPOSITION_GOOGLE_MAPS_API_KEY')
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get('SECRET_KEY')
+SECRET_KEY = os.environ.get('SECRET_KEY') if 'SECRET_KEY' in os.environ else 'supersecret'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -76,6 +78,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.gis',
+    'django_extensions',
     'donator',
     'restaurantapp',
 ]
@@ -118,8 +121,12 @@ WSGI_APPLICATION = 'donationcoordinator.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(PROJECT_ROOT, 'db.sqlite3'),
+        'ENGINE': 'django.contrib.gis.db.backends.postgis',
+        'NAME': 'geodjango',
+        'USER': 'geodjango',
+        'PASSWORD': 'geodjango',
+        'HOST': 'localhost',
+        'PORT': '5432',
     }
 }
 
