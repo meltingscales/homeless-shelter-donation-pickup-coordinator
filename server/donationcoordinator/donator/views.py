@@ -14,7 +14,6 @@ from .models import User
 
 # Create your views here.
 
-
 def index(request: HttpRequest):
     template_name = 'donator/index.html'
     context = {}
@@ -54,32 +53,31 @@ def my_homes(request, context={}):
     return render(request, template_name, context)
 
 
-class HomeCreate(CreateView):
+class HomeUpdate(UpdateView):
     model = Home
-    template_name = 'donator/form.html'
-    # success_url = reverse_lazy('restaurant_detail')
+    template_name = 'donator/home_edit.html'
     form_class = HomeForm
 
     def get_success_url(self):
         return reverse('donator:home_detail', kwargs={'pk': self.object.id})
 
-    def form_valid(self, form):
-        form.instance.user = self.request.user
-        return super(HomeCreate, self).form_valid(form)
-
-
-class HomeUpdate(UpdateView):
-    model = Home
-    template_name = 'donator/form.html'
-    form_class = HomeForm
-
     def get_object(self, queryset=None) -> Home:
         """ Hook to ensure object is owned by request.user. """
-
-        obj = super(HomeUpdate, self).get_object()
+        try:
+            obj = super(HomeUpdate, self).get_object()
+        except AttributeError:  # we are creating and not updating
+            return None
         if not obj.user == self.request.user:
             raise PermissionDenied
         return obj
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        return super(HomeUpdate, self).form_valid(form)
+
+
+class HomeCreate(CreateView, HomeUpdate):
+    pass
 
 
 class HomeDetail(DetailView):
@@ -174,7 +172,7 @@ class ItemsUpdate(UpdateView):
         user = self.request.user
 
         homeid = self.kwargs['pk']
-        self.home = Home.objects.get(pk=homeid) # TODO is this a risk? idk.
+        self.home = Home.objects.get(pk=homeid)  # TODO is this a risk? idk.
 
         if not self.home.user == user:  # make sure they own the home
             raise PermissionDenied
