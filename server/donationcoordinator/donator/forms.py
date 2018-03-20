@@ -6,7 +6,7 @@ from .models import Items, Home
 class HomeForm(ModelForm):
     class Meta:
         model = Home
-        exclude = ('user', 'items',)
+        exclude = ('user', 'items', 'location')
 
 
 class ItemsForm(ModelForm):

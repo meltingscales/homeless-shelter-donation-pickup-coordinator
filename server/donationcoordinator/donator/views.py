@@ -71,8 +71,11 @@ class HomeUpdate(UpdateView):
             raise PermissionDenied
         return obj
 
-    def form_valid(self, form):
+    def form_valid(self, form: HomeForm):
         form.instance.user = self.request.user
+
+        print(form.data)
+
         return super(HomeUpdate, self).form_valid(form)
 
 
