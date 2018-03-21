@@ -3,11 +3,11 @@ li.hidden ul {
 }
 
 #items ul:not(.items_list) > li:not(.hidden) {
-    list-style-image:url('../media/minus.png');
+    list-style-image:url('../media/minus10x10.png');
 }
 
 #items li.hidden {
-    list-style-image:url('../media/plus.png')
+    list-style-image:url('../media/plus10x10.png')
 }
 
 #items li {
