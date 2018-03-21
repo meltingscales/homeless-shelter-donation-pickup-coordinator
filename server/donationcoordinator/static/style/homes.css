@@ -1,0 +1,20 @@
+section#home-detail {
+    display: grid;
+    grid-template-columns: auto 1fr;
+}
+
+section#home-detail h1 {
+    grid-column-start: span 2;
+}
+
+section#address {
+    min-width: 20vw;
+}
+
+section#home-image {
+    grid-column-start: span 2;
+}
+
+section#items {
+    grid-column-start: span 2;
+}

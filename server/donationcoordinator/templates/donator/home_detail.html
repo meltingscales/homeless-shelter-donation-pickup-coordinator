@@ -6,73 +6,74 @@
 {% block content %}
 {% include "donator/profile_nav.html" %}
 
-<h1>
-    {{ home.name }}
-    (<a href="{% url 'donator:home_edit' home.id %}">edit</a>)
-</h1>
+<section id="home-detail">
+    <h1>
+        {{ home.name }}
+        (<a href="{% url 'donator:home_edit' home.id %}">edit</a>)
+    </h1>
 
-<section id="home-image">
-    {% if home.image %}
-    <figure>
-        <img src="{{ home.image.src }}">
-        <figcaption>An image of your house.</figcaption>
-    </figure>
-    {% else %}
-    <p>No image uploaded.</p>
-    {% endif %}
-</section>
+    <section id="home-image">
+        {% if home.image %}
+        <figure>
+            <img src="{{ home.image.src }}">
+            <figcaption>An image of your house.</figcaption>
+        </figure>
+        {% else %}
+        <p>No image uploaded.</p>
+        {% endif %}
+    </section>
 
-<section id="address">
-    <h2>Address:</h2>
+    <section id="address">
+        <h2>Address:</h2>
 
-    <ul>
-        <li>{{ home.street }}</li>
-        <li>{{ home.zipCode }}</li>
-        <li>{{ home.city }}</li>
-        <li>{{ home.state }}</li>
-        <li>{{ home.country }}</li>
-    </ul>
-</section>
-
-<section id="map">
-    <h2>Google Maps location:</h2>
-
-    {% if home.location %}
-
-    <h3>Raw data:</h3>
-    <pre><code>{{ home.location.googlemapsjson }}</code></pre>
-
-    <h3>Map:</h3>
-
-    <a href="{{ home.location.to_google_maps_uri }}">Map!</a>
-    {% else %}
-    <p>Home's location not found!</p>
-    {% endif %}
-</section>
-
-<section id="items">
-    {% if home.items %}
-
-    <h2>Your Items:</h2>
-
-    <form method="POST" action="update-items/" name="items">
-        {% csrf_token %}
         <ul>
-            {{ home.items.as_html |safe }}
-            <li>
-                <input type="submit" value="Submit"/>
-            </li>
+            <li>{{ home.street }}</li>
+            <li>{{ home.zipCode }}</li>
+            <li>{{ home.city }}</li>
+            <li>{{ home.state }}</li>
+            <li>{{ home.country }}</li>
         </ul>
-    </form>
-    {% else %}
-    <p>u aint got no ITEMS!!! &gt;:(</p>
-    {% endif %}
+    </section>
+
+    <section id="map">
+        <h2>Google Maps location:</h2>
+
+        {% if home.location %}
+
+        <h3>
+            <a href="{{ home.location.to_google_maps_uri }}">Map:</a>
+        </h3>
+
+        {{ home.location.to_google_maps_iframe |safe }}
+
+        {% else %}
+        <p>Home's location not found!</p>
+        {% endif %}
+    </section>
+
+    <section id="items">
+        {% if home.items %}
+
+        <h2>Your Items:</h2>
+
+        <form method="POST" action="update-items/" name="items">
+            {% csrf_token %}
+            <ul>
+                {{ home.items.as_html |safe }}
+                <li>
+                    <input type="submit" value="Submit"/>
+                </li>
+            </ul>
+        </form>
+        {% else %}
+        <p>u aint got no ITEMS!!! &gt;:(</p>
+        {% endif %}
+    </section>
+
+    <aside>
+        (<a href="{% url 'donator:home_delete' home.id %}">delete home</a>)
+    </aside>
+
+    <script src="{% static 'js/itemslist.js' %}"></script>
 </section>
-
-<aside>
-    (<a href="{% url 'donator:home_delete' home.id %}">delete home</a>)
-</aside>
-
-<script src="{% static 'js/itemslist.js' %}"></script>
-
 {% endblock %}
