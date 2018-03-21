@@ -56,7 +56,7 @@ def my_homes(request, context={}):
 
     return render(request, template_name, context)
 
-
+# see https://stackoverflow.com/questions/17833117/djangos-createview-is-not-saving-an-object
 class HomeCreateOrUpdate(CreateOrUpdateView):
     model = Home
     template_name = 'donator/home_edit.html'
