@@ -15,8 +15,8 @@ li.hidden ul {
 }
 
 #items ul {
-    padding-bottom: 0;
     padding-top: 0;
+    padding-bottom: 0.611em; /* 11 / 18 = 0.61~ */
 }
 
 #items form {
