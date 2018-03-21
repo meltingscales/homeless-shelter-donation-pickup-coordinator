@@ -2,6 +2,7 @@ import googlemaps
 from django.conf import settings
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.decorators import login_required
 from django.core.exceptions import PermissionDenied, ValidationError
 from django.http import *
 from django.shortcuts import render, redirect
@@ -41,6 +42,7 @@ def signup(request):
     return render(request, template_name, {'form': form})
 
 
+@login_required
 def my_homes(request, context={}):
     """A User wants a list of their Homes."""
     template_name = "donator/home_list.html"
@@ -55,6 +57,7 @@ def my_homes(request, context={}):
     context["homes_list"] = homes
 
     return render(request, template_name, context)
+
 
 # see https://stackoverflow.com/questions/17833117/djangos-createview-is-not-saving-an-object
 class HomeCreateOrUpdate(CreateOrUpdateView):
