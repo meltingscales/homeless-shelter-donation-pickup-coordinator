@@ -82,6 +82,7 @@ INSTALLED_APPS = [
     'django.contrib.gis',
     'django_extensions',
     'donator',
+    'org',
     'restaurantapp',
 ]
 

@@ -1,6 +1,7 @@
 # Create your models here.
 
 from datetime import datetime
+from django.conf import settings
 
 import django.contrib.gis.db.models as geomodels
 from django.contrib.auth.models import User
@@ -55,13 +56,23 @@ class HomeLocation(models.Model):
 
         return f"https://www.google.com/maps/search/?api=1&query={d['lat']},{d['lon']}"
 
+    def to_google_maps_iframe(self):
+        d = self.to_lat_lon()
+        key = settings.GEOPOSITION_GOOGLE_MAPS_API_KEY
+
+        ret = ''
+        src = f'https://www.google.com/maps/embed/v1/place?key={key}&q={d["lat"]},{d["lon"]}'
+
+        ret = libs.wrap(ret, 'iframe', ['src'], [src])
+
+        return ret
+
 
 class HomeManager(models.Manager):
     def create_home(self, name, street, city, zipCode, state, country, location, image, items, user):
         home = Home(name, street, city, zipCode, state, country, location, image, items, user)
 
         return home
-
 
 
 class Home(models.Model):
