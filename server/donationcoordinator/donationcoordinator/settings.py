@@ -41,7 +41,7 @@ PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # setup for GDAL, GEOS, etc.
 if os.name == 'nt':
     import platform
-    OSGEO4W = os.environ['OSGEO4W_ROOT']
+    OSGEO4W = os.environ['OSGEO4W_ROOT'] if 'OSGEO4W_ROOT' in os.environ else r'C:\OSGeo4W'
     if '64' in platform.architecture()[0] and '64' not in OSGEO4W:
         OSGEO4W += "64"
     assert os.path.isdir(OSGEO4W), "Directory does not exist: " + OSGEO4W
@@ -49,6 +49,8 @@ if os.name == 'nt':
     os.environ['GDAL_DATA'] = OSGEO4W + r"\share\gdal"
     os.environ['PROJ_LIB'] = OSGEO4W + r"\share\proj"
     os.environ['PATH'] = OSGEO4W + r"\bin;" + os.environ['PATH']
+    os.environ['GDAL_LIBRARY_PATH'] = OSGEO4W + r'\bin\gdal111.dll'
+    os.environ['GEOS_LIBRARY_PATH'] = OSGEO4W + r'\bin\geos_c.dll'
 
 OSGEO4W = os.environ['OSGEO4W_ROOT']
 
