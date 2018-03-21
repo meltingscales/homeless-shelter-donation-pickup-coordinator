@@ -17,6 +17,7 @@
     {% if user.username %}<p>Welcome, {{ user.username }}!</p> {% endif %}
     <ul>
         <li><a href="/">Home</a></li>
+        <li><a href="/org">Organizations</a></li>
         {% if user.username %}
         <li><a href="{% url 'profile' %}">My Profile</a></li>
         <li><a href="/accounts/logout/">Log out</a></li>
