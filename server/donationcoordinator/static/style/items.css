@@ -24,9 +24,11 @@ li.hidden ul {
 }
 
 #items a {
+    line-height: 2.444rem;
     background-color: darkmagenta;
     display: inline-block;
     width: 100%;
+    vertical-align: middle;
 }
 
 #items a:hover {
