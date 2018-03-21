@@ -84,10 +84,12 @@ class Home(models.Model):
         if self.items is None:
             self.items = Items.default_object()
 
+        print("SOMEONES SAVING A HOME...")
+
         return super().save(*args, **kwargs)
 
     def __str__(self):
-        ret = f"{self.name} at {self.street}, {self.city}, {self.state}, {self.zipCode}."
+        ret = f"[{self.pk}] {self.name} at {self.street}, {self.city}, {self.state}, {self.zipCode}."
         ret += f" Owned by {self.user.username}."
 
         return ret

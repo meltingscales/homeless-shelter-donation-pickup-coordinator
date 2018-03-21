@@ -7,8 +7,9 @@ from django.http import *
 from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.views.generic import DetailView
-from django.views.generic.edit import CreateView, DeleteView, UpdateView
+from django.views.generic.edit import DeleteView, UpdateView
 
+from donationcoordinator.views import CreateOrUpdateView
 from .forms import *
 from .libs import ItemList
 from .models import User, Home, HomeLocation
@@ -55,7 +56,7 @@ def my_homes(request, context={}):
     return render(request, template_name, context)
 
 
-class HomeUpdate(UpdateView):
+class HomeCreateOrUpdate(CreateOrUpdateView):
     model = Home
     template_name = 'donator/home_edit.html'
     form_class = HomeForm
@@ -70,9 +71,7 @@ class HomeUpdate(UpdateView):
 
         location = HomeLocation.from_lat_lon(lat=lat, lng=lng, data=self.geo_result)
 
-        self.home.location = location
-        self.home.location.save()
-        self.home.save()
+        self.object.location = location
 
     def get_success_url(self):
         return reverse('donator:home_detail', kwargs={'pk': self.object.id})
@@ -89,7 +88,7 @@ class HomeUpdate(UpdateView):
     def get_object(self, queryset=None) -> Home:
         """ Hook to ensure object is owned by request.user. """
         try:
-            obj = super(HomeUpdate, self).get_object()
+            obj = super(HomeCreateOrUpdate, self).get_object()
         except AttributeError:  # we are creating and not updating
             return None
         if not obj.user == self.request.user:
@@ -97,9 +96,6 @@ class HomeUpdate(UpdateView):
         return obj
 
     def form_valid(self, form: HomeForm):
-
-        homeid = self.kwargs['pk']
-        self.home = Home.objects.get(pk=homeid)
 
         form.instance.user = User.objects.get(username=self.request.user.username)
 
@@ -115,11 +111,7 @@ class HomeUpdate(UpdateView):
         if self.geo_result == {}:  # they entered 'moon cheese base' or 'nowheresville tenessee'
             return False
 
-        return super(HomeUpdate, self).form_valid(form)
-
-
-class HomeCreate(CreateView, HomeUpdate):
-    pass
+        return super(HomeCreateOrUpdate, self).form_valid(form)
 
 
 class HomeDetail(DetailView):

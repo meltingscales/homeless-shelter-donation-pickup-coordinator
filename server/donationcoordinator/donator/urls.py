@@ -17,7 +17,7 @@ from django.conf.urls import url
 from django.urls import path
 
 from . import views
-from .views import HomeCreate, HomeDetail, HomeDelete, HomeUpdate, ItemsUpdate
+from .views import HomeDetail, HomeDelete, HomeCreateOrUpdate, ItemsUpdate
 
 app_name = 'donator'
 
@@ -41,13 +41,13 @@ urlpatterns = [
 
     # Create a new Home
     path(r'my-homes/new/',
-         HomeCreate.as_view(),
+         HomeCreateOrUpdate.as_view(),
          name="home_create",
          ),
 
     # Edit home details, ex.: /donator/my-homes/1/edit/
     path(r'my-homes/<int:pk>/edit/',
-         HomeUpdate.as_view(),
+         HomeCreateOrUpdate.as_view(),
          name="home_edit",
          ),
 
