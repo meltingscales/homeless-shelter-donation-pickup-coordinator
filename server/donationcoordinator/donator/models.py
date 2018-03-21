@@ -56,6 +56,14 @@ class HomeLocation(models.Model):
         return f"https://www.google.com/maps/search/?api=1&query={d['lat']},{d['lon']}"
 
 
+class HomeManager(models.Manager):
+    def create_home(self, name, street, city, zipCode, state, country, location, image, items, user):
+        home = Home(name, street, city, zipCode, state, country, location, image, items, user)
+
+        return home
+
+
+
 class Home(models.Model):
     """
     One of a ``User`` 's (possibly) many ``Home`` s.
@@ -66,6 +74,8 @@ class Home(models.Model):
 
     One ``Home`` has one ``Items`` ...since you can only have one 'pile of stuff to give away' per house...normally.
     """
+    objects = HomeManager()
+
     name = models.TextField()
     street = models.TextField()
     city = models.TextField()
@@ -84,9 +94,7 @@ class Home(models.Model):
         if self.items is None:
             self.items = Items.default_object()
 
-        print("SOMEONES SAVING A HOME...")
-
-        return super().save(*args, **kwargs)
+        super().save(*args, **kwargs)
 
     def __str__(self):
         ret = f"[{self.pk}] {self.name} at {self.street}, {self.city}, {self.state}, {self.zipCode}."

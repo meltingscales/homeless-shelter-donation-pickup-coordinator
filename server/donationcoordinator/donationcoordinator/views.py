@@ -58,6 +58,13 @@ class CreateOrUpdateView(SingleObjectTemplateResponseMixin, BaseCreateOrUpdateVi
     template_name_suffix = '_form'
 
 
+    def get_object(self, queryset=None):
+        try:
+            return super(CreateOrUpdateView, self).get_object(queryset)
+        except AttributeError:
+            return None
+
+
 # Create your views here.
 
 def index(request: HttpRequest):

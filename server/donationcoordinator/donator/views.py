@@ -2,12 +2,13 @@ import googlemaps
 from django.conf import settings
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.forms import UserCreationForm
-from django.core.exceptions import PermissionDenied
+from django.core.exceptions import PermissionDenied, ValidationError
 from django.http import *
 from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.views.generic import DetailView
 from django.views.generic.edit import DeleteView, UpdateView
+from django.utils.translation import gettext as _
 
 from donationcoordinator.views import CreateOrUpdateView
 from .forms import *
@@ -72,28 +73,13 @@ class HomeCreateOrUpdate(CreateOrUpdateView):
         location = HomeLocation.from_lat_lon(lat=lat, lng=lng, data=self.geo_result)
 
         self.object.location = location
+        self.object.save()
 
     def get_success_url(self):
         return reverse('donator:home_detail', kwargs={'pk': self.object.id})
 
     def post(self, request: HttpRequest, *args, **kwargs):
-
-        form = self.get_form()
-
-        if self.form_valid(form):
-            self.save_location(form)  # save HomeLocation to Home
-
         return super().post(self, request, *args, **kwargs)
-
-    def get_object(self, queryset=None) -> Home:
-        """ Hook to ensure object is owned by request.user. """
-        try:
-            obj = super(HomeCreateOrUpdate, self).get_object()
-        except AttributeError:  # we are creating and not updating
-            return None
-        if not obj.user == self.request.user:
-            raise PermissionDenied
-        return obj
 
     def form_valid(self, form: HomeForm):
 
@@ -109,9 +95,16 @@ class HomeCreateOrUpdate(CreateOrUpdateView):
             self.geo_result = gm.geocode(locs)
 
         if self.geo_result == {}:  # they entered 'moon cheese base' or 'nowheresville tenessee'
-            return False
+            raise ValidationError(
+                _("Location could not be understood by Google Maps!")
+            )
 
-        return super(HomeCreateOrUpdate, self).form_valid(form)
+        ret = super(HomeCreateOrUpdate, self).form_valid(form)
+
+        if ret:
+            self.save_location(form)
+
+        return ret
 
 
 class HomeDetail(DetailView):
