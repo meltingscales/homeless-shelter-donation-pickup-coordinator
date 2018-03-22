@@ -1,14 +1,10 @@
 import random
 
-from django.contrib import admin
 from django.contrib.auth import login, authenticate
-from django.contrib.auth.forms import UserCreationForm
 from django.http import *
 from django.shortcuts import render, redirect
-from django.db import models
-from django.contrib.auth.models import User
-from django.db.models.signals import post_save
-from django.dispatch import receiver
+
+from donator.forms import UserCreationForm
 
 """
 An create+update view in a single class.
@@ -61,7 +57,6 @@ class CreateOrUpdateView(SingleObjectTemplateResponseMixin, BaseCreateOrUpdateVi
     """
     template_name_suffix = '_form'
 
-
     def get_object(self, queryset=None):
         try:
             return super(CreateOrUpdateView, self).get_object(queryset)
@@ -80,6 +75,8 @@ def index(request: HttpRequest):
 
 
 def signup(request: HttpRequest):
+    template = 'registration/signup.html'
+
     if request.method == 'POST':
         form = UserCreationForm(request.POST)
         if form.is_valid():
@@ -88,10 +85,10 @@ def signup(request: HttpRequest):
             raw_password = form.cleaned_data.get('password1')
             user = authenticate(username=username, password=raw_password)
             login(request, user)
-            return redirect('root')
+            return redirect('index')
     else:
         form = UserCreationForm()
-    return render(request, 'registration/signup.html', {'form': form})
+    return render(request, template, {'form': form})
 
 
 def profile(request: HttpRequest):

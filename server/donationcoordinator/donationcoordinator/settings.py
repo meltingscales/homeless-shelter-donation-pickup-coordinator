@@ -152,7 +152,7 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-AUTH_USER_MODEL = 'donationcoordinator.User'
+AUTH_USER_MODEL = 'donator.User'
 
 LOGIN_REDIRECT_URL = '/donator/my-profile/'
 LOGOUT_REDIRECT_URL = '/'

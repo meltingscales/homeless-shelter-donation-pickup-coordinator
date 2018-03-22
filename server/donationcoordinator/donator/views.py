@@ -3,7 +3,6 @@ from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.forms import UserCreationForm
 from django.core.exceptions import PermissionDenied, ValidationError
 from django.db import transaction
 from django.http import *
@@ -13,7 +12,6 @@ from django.utils.translation import gettext as _
 from django.views.generic import DetailView
 from django.views.generic.edit import DeleteView, UpdateView
 
-from donationcoordinator.models import User
 from donationcoordinator.views import CreateOrUpdateView
 from .forms import *
 from .libs import ItemList

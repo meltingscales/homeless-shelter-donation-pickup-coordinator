@@ -11,7 +11,7 @@ from donationcoordinator.libs import *
 
 class ItemList:
     space_replacer = '_'  # what to replace spaces with in the HTML since CSS classes can't have spaces
-    endpoint_class = 'items_list' #to identify the input elt parents
+    endpoint_class = 'items_list'  # to identify the input elt parents
 
     template = {  # template
         'root': {

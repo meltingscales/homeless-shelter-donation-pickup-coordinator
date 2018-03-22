@@ -4,18 +4,24 @@ from datetime import datetime
 
 import django.contrib.gis.db.models as geomodels
 from django.conf import settings
+from django.contrib.auth.models import AbstractUser
 from django.contrib.gis.geos import Point
 from django.db import models
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from jsonfield import JSONField
 
-from donationcoordinator.models import User
+from org.models import Org
 from . import libs
+
+
+class User(AbstractUser):
+    test = models.TextField(max_length=500, blank=True)
 
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
+    org = models.OneToOneField(Org, null=True, blank=True, on_delete=models.CASCADE)
     bio = models.TextField(max_length=500, blank=True)
     birth_date = models.DateField(null=True, blank=True)
 

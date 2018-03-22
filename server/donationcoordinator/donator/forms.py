@@ -1,13 +1,18 @@
-from django.contrib.auth.models import User
+from django.contrib.auth.forms import UserCreationForm
 from django.forms import ModelForm
 
-from .models import Items, Home, Profile
+from .models import Items, Home, Profile, User
 
 
 class UserForm(ModelForm):
     class Meta:
         model = User
         fields = ('first_name', 'last_name', 'email')
+
+
+class UserCreationForm(UserCreationForm):
+    class Meta(UserCreationForm.Meta):
+        model = User
 
 
 class ProfileForm(ModelForm):

@@ -3,7 +3,7 @@ from datetime import date
 
 from django.db import models
 
-from donationcoordinator.models import User
+from donator.models import User
 
 
 class Restaurant(models.Model):
