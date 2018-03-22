@@ -2,12 +2,21 @@ li.hidden ul {
     display: none;
 }
 
-#items ul:not(.items_list) > li:not(.hidden) {
+input {
+    box-shadow: inherit;
+}
+
+ul.items_list.highlighted li:not(.hidden) {
+    /* background-color: red; */
+    box-shadow: inset 0px 0px 10px 2px #FFC107;
+}
+
+#items form ul:not(.items_list) > li:not(.hidden) {
     list-style-image:url('../media/minus10x10.png');
 }
 
-#items li.hidden {
-    list-style-image:url('../media/plus10x10.png')
+#items form li.hidden {
+    list-style-image:url('../media/plus10x10.png');
 }
 
 #items li {
@@ -36,18 +45,15 @@ li.hidden ul {
     background-color: brown;
 }
 
-ul.items_list li {
+form ul.items_list li {
     display: grid;
     grid-template-columns: 30% 1fr;
     width: 100%;
 }
 
-ul.items_list li:nth-of-type(2n+1) { /* every odd one */
+form ul.items_list li:nth-of-type(2n+1) { /* every odd one */
     background-color: #777777;
 }
-ul.items_list li:nth-of-type(2n+0) { /* every even one */
+form ul.items_list li:nth-of-type(2n+0) { /* every even one */
     background-color: #555555;
-}
-
-#items label {
 }

@@ -17,6 +17,7 @@
     {% block header %}
     {% if user.username %}<p>Welcome, {{ user.username }}!</p> {% endif %}
     <ul>
+        <li><a href="/restaurantapp/restaurants">Restaurant test app</a></li>
         <li><a href="/">Home</a></li>
         <li><a href="/org">Organizations</a></li>
         {% if user.username %}
@@ -34,10 +35,6 @@
 
 <div id="sidebar">
     {% block sidebar %}
-    <ul>
-        <li><a href="/donator/">I want to donate</a></li>
-        <li><a href="/restaurantapp/restaurants">Restaurant test app</a></li>
-    </ul>
     {% endblock %}
 </div>
 
