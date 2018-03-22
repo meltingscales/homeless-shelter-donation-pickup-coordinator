@@ -13,10 +13,11 @@ from django.utils.translation import gettext as _
 from django.views.generic import DetailView
 from django.views.generic.edit import DeleteView, UpdateView
 
+from donationcoordinator.models import User
 from donationcoordinator.views import CreateOrUpdateView
 from .forms import *
 from .libs import ItemList
-from .models import Profile, Home, HomeLocation
+from .models import Home, HomeLocation
 
 
 # Create your views here.
@@ -43,9 +44,11 @@ def signup(request):
         form = UserCreationForm()
     return render(request, template_name, {'form': form})
 
+
 @login_required
 def export_data(request):
     return HttpResponse("here u go :)")
+
 
 @login_required
 @transaction.atomic
@@ -70,6 +73,7 @@ def update_profile(request):
         'user_form': user_form,
         'profile_form': profile_form
     })
+
 
 @login_required
 def view_profile(request):

@@ -82,6 +82,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.gis',
     'django_extensions',
+    'donationcoordinator',
     'donator',
     'org',
     'restaurantapp',
@@ -150,6 +151,8 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
+
+AUTH_USER_MODEL = 'donationcoordinator.User'
 
 LOGIN_REDIRECT_URL = '/donator/my-profile/'
 LOGOUT_REDIRECT_URL = '/'
