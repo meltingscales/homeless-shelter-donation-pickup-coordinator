@@ -15,13 +15,14 @@
 
 <nav>
     {% block header %}
-    {% if user.username %}<p>Welcome, {{ user.username }}!</p> {% endif %}
+    {% if user.username %}<p>Welcome, User '{{ user.username }}'!</p> {% endif %}
+    {% if org.orgname %}<p>Welcome, Org '{{ org.orgname }}'!</p>{% endif %}
     <ul>
         <li><a href="/restaurantapp/restaurants">Restaurant test app</a></li>
         <li><a href="/">Home</a></li>
         <li><a href="/org">Organizations</a></li>
         {% if user.username %}
-        <li><a href="{% url 'profile' %}">My Profile</a></li>
+        <li><a href="{% url 'donator:profile_view' %}">My Profile</a></li>
         <li><a href="/accounts/logout/">Log out</a></li>
         <li><a href="/accounts/password_change/">Change password</a></li>
         {% else %}

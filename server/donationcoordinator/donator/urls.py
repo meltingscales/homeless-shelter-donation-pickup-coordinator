@@ -25,6 +25,12 @@ urlpatterns = [
 
     url(r'^$', views.index),
 
+    # User's profile
+    path(r'my-profile/', views.view_profile, name="profile_view"),
+
+    # Update user's profile
+    path(r'my-profile/update/', views.update_profile, name="profile_update"),
+
     # List person's Homes
     path(r'my-homes/', views.my_homes, name="home_list"),
 

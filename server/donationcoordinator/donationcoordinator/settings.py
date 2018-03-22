@@ -11,6 +11,8 @@ https://docs.djangoproject.com/en/2.0/ref/settings/
 """
 
 import os
+import platform
+
 
 class YouDidntSetYourEnvironmentVarsBro(Exception):
     def __init__(self, m):
@@ -21,6 +23,7 @@ class YouDidntSetYourEnvironmentVarsBro(Exception):
 
     def __repr__(self):
         return str(self)
+
 
 REQUIRED_ENVIRONMENT_VARIABLES = [
     'OSGEO4W_ROOT',
@@ -40,7 +43,6 @@ PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # setup for GDAL, GEOS, etc.
 if os.name == 'nt':
-    import platform
     OSGEO4W = os.environ['OSGEO4W_ROOT'] if 'OSGEO4W_ROOT' in os.environ else r'C:\OSGeo4W'
     if '64' in platform.architecture()[0] and '64' not in OSGEO4W:
         OSGEO4W += "64"
@@ -68,7 +70,6 @@ SECRET_KEY = os.environ.get('SECRET_KEY') if 'SECRET_KEY' in os.environ else 'su
 DEBUG = True
 
 ALLOWED_HOSTS = []
-
 
 # Application definition
 
@@ -118,7 +119,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'donationcoordinator.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/2.0/ref/settings/#databases
 
@@ -132,7 +132,6 @@ DATABASES = {
         'PORT': '5432',
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/2.0/ref/settings/#auth-password-validators
@@ -152,9 +151,8 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-LOGIN_REDIRECT_URL = '/accounts/profile/'
+LOGIN_REDIRECT_URL = '/donator/my-profile/'
 LOGOUT_REDIRECT_URL = '/'
-
 
 # Internationalization
 # https://docs.djangoproject.com/en/2.0/topics/i18n/
@@ -168,7 +166,6 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
-
 
 MEDIA_ROOT = os.path.join(PROJECT_ROOT, 'media')
 

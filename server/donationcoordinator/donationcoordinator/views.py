@@ -5,6 +5,10 @@ from django.contrib.auth import login, authenticate
 from django.contrib.auth.forms import UserCreationForm
 from django.http import *
 from django.shortcuts import render, redirect
+from django.db import models
+from django.contrib.auth.models import User
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 
 """
 An create+update view in a single class.
@@ -94,7 +98,3 @@ def profile(request: HttpRequest):
     template = 'donator/profile.html'
 
     return render(request, template)
-
-
-def get_user_profile(request: HttpRequest, username: str):
-    user = admin

@@ -1,20 +1,22 @@
 import googlemaps
 from django.conf import settings
+from django.contrib import messages
 from django.contrib.auth import login, authenticate
-from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.forms import UserCreationForm
 from django.core.exceptions import PermissionDenied, ValidationError
+from django.db import transaction
 from django.http import *
 from django.shortcuts import render, redirect
 from django.urls import reverse
+from django.utils.translation import gettext as _
 from django.views.generic import DetailView
 from django.views.generic.edit import DeleteView, UpdateView
-from django.utils.translation import gettext as _
 
 from donationcoordinator.views import CreateOrUpdateView
 from .forms import *
 from .libs import ItemList
-from .models import User, Home, HomeLocation
+from .models import Profile, Home, HomeLocation
 
 
 # Create your views here.
@@ -40,6 +42,37 @@ def signup(request):
     else:
         form = UserCreationForm()
     return render(request, template_name, {'form': form})
+
+
+@login_required
+@transaction.atomic
+def update_profile(request):
+    template_name = 'profiles/profile.html'
+    redirect_url = 'donator:my-profile'
+
+    if request.method == 'POST':
+        user_form = UserForm(request.POST, instance=request.user)
+        profile_form = ProfileForm(request.POST, instance=request.user.profile)
+        if user_form.is_valid() and profile_form.is_valid():
+            user_form.save()
+            profile_form.save()
+            messages.success(request, _('Your profile was successfully updated!'))
+            return redirect(redirect_url)
+        else:
+            messages.error(request, _('Please correct the error below.'))
+    else:
+        user_form = UserForm(instance=request.user)
+        profile_form = ProfileForm(instance=request.user.profile)
+    return render(request, template_name, {
+        'user_form': user_form,
+        'profile_form': profile_form
+    })
+
+@login_required
+def view_profile(request):
+    template = 'donator/profile.html'
+
+    return render(request, template)
 
 
 @login_required

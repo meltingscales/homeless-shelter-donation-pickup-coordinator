@@ -28,7 +28,6 @@ urlpatterns = [
     path('', core_views.index, name='root'),
     path('admin/', admin.site.urls),
     path('accounts/', include('django.contrib.auth.urls')),
-    path('accounts/profile/', core_views.profile, name='profile'),
     path('accounts/signup/', core_views.signup, name='signup'),
     path('donator/', include(donator.urls, namespace='donator'), name='donator'),
     path('org/', include(org.urls, namespace='org'), name='org'),
