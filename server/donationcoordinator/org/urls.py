@@ -19,7 +19,7 @@ from . import views
 
 app_name = 'org'
 urlpatterns = [
-    url(r'^$', views.index),
+    url(r'^$', views.index, name='index'),
 
-    url(r'new/', views.new_org),
+    url(r'new/', views.new_org, name='new_org'),
 ]

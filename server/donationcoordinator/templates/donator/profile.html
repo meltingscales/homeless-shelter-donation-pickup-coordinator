@@ -6,4 +6,13 @@
 
 {% include "donator/profile_nav.html" %}
 
+<section id="profile">
+    <h1>My Profile <a href="{% url 'donator:profile_update' %}">(edit)</a></h1>
+    <ul>
+        <li><a>Full name: {{user.last_name}}, {{user.first_name}}</a></li>
+        <li><a>Birth date: {{ user.profile.birth_date }}</a></li>
+        <li><a>Bio: {{ user.profile.bio }}</a></li>
+    </ul>
+</section>
+
 {% endblock %}

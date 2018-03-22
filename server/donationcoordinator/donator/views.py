@@ -47,8 +47,8 @@ def signup(request):
 @login_required
 @transaction.atomic
 def update_profile(request):
-    template_name = 'profiles/profile.html'
-    redirect_url = 'donator:my-profile'
+    template_name = 'donator/profile_update.html'
+    redirect_url = 'donator:profile_view'
 
     if request.method == 'POST':
         user_form = UserForm(request.POST, instance=request.user)

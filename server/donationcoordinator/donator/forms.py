@@ -13,7 +13,7 @@ class UserForm(ModelForm):
 class ProfileForm(ModelForm):
     class Meta:
         model = Profile
-        exclude = ()
+        exclude = ('user',)
 
 
 class HomeForm(ModelForm):
