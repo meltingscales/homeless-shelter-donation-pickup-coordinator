@@ -13,15 +13,38 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
-from django.conf.urls import url
+from django.urls import path
 
 from . import views
+from .views import OrgDetail, OrgCreateOrUpdate, OrgCreate
 
 app_name = 'org'
 urlpatterns = [
-    url(r'^$', views.index, name='index'),
+    # view own org
+    path(r'',
+         views.my_org,
+         name='index'
+         ),
 
-    url(r'new/', views.new_org, name='new_org'),
+    # create new org
+    path(r'new/',
+         OrgCreate.as_view(),
+         name='new_org'
+         ),
 
-    url(r'orgs/', views.org_list, name='org_list'),
+    # edit own org
+    path(r'orgs/<int:pk>/edit',
+         OrgCreateOrUpdate.as_view(),
+         name='org_edit',
+         ),
+
+    # list of orgs
+    path(r'orgs/', views.org_list, name='org_list'),
+
+    # view other org
+    path(r'orgs/<int:pk>/',
+         OrgDetail.as_view(),
+         name='org_detail',
+         ),
+
 ]

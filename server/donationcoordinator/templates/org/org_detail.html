@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+
+{% block title %} {{ home.name }} {% endblock %}
+
+{% block content %}
+{% include "org/org_nav.html" %}
+
+<section id="org-detail">
+    <h1>
+        {{ org.name }} <a href="{% url 'org:org_edit' org.id %}">(edit)</a>
+    </h1>
+    <ul>
+        <li><a>Owner: {{ org.ownername }}</a></li>
+    </ul>
+</section>
+{% endblock %}

@@ -13,7 +13,6 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
-from django.conf.urls import url
 from django.urls import path
 
 from . import views
@@ -43,7 +42,7 @@ urlpatterns = [
 
     path(r'my-homes/<int:pk>/update-items/',
          ItemsUpdate.as_view(),
-         name="items_update"
+         name="items_update",
          ),
 
     # Create a new Home

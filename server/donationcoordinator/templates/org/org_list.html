@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block title %} My Homes {% endblock %}
+
+{% block content %}
+{% include "org/org_nav.html" %}
+
+<h1>
+    Organizations
+</h1>
+
+<section>
+    <ul>
+        {% for org in orgs_list %}
+        <li><a href="{% url 'org:org_detail' org.id %}">
+            {{ org.name }}</a></li>
+        {% empty %}
+        <li>No Orgs created yet.</li>
+        {% endfor %}
+    </ul>
+</section>
+
+<aside>
+    {% if message %}
+    <p>
+        {{ message }}
+    </p>
+    {% endif %}
+</aside>
+{% endblock %}
