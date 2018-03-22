@@ -7,7 +7,7 @@ from donator.models import User
 
 class Org(models.Model):
     bio = models.TextField(max_length=500, blank=True)
-    name = models.TextField(max_length=30, null=True, blank=True)
+    name = models.CharField(max_length=30, null=True, blank=True)
     birth_date = models.DateField(null=True, blank=True)
 
     def markdownify(self):

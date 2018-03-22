@@ -7,14 +7,14 @@ from donator.models import User
 
 
 class Restaurant(models.Model):
-    name = models.TextField()
-    street = models.TextField(blank=True, null=True)
+    name = models.CharField(max_length=50)
+    street = models.CharField(max_length=50, blank=True, null=True)
     number = models.IntegerField(blank=True, null=True)
-    city = models.TextField(default="")
-    zipCode = models.TextField(blank=True, null=True)
-    stateOrProvince = models.TextField(blank=True, null=True)
-    country = models.TextField(blank=True, null=True)
-    telephone = models.TextField(blank=True, null=True)
+    city = models.CharField(max_length=50, default="")
+    zipCode = models.CharField(max_length=50, blank=True, null=True)
+    stateOrProvince = models.CharField(max_length=50, blank=True, null=True)
+    country = models.CharField(max_length=50, blank=True, null=True)
+    telephone = models.CharField(max_length=50, blank=True, null=True)
     url = models.URLField(blank=True, null=True)
     user = models.ForeignKey(User, default=1, on_delete=models.PROTECT)
     date = models.DateField(default=date.today)

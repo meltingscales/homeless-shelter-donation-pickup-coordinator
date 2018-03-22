@@ -15,7 +15,7 @@ from . import libs
 
 
 class User(AbstractUser):
-    test = models.TextField(max_length=500, blank=True)
+    test = models.CharField(max_length=50, blank=True)
     org = models.OneToOneField('org.Org', null=True, blank=True, on_delete=models.CASCADE)
 
 
