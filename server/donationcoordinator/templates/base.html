@@ -21,7 +21,7 @@
         <li><a href="{% url 'restaurantapp:restaurant_list' %}">Restaurant test app</a></li>
         <li><a href="/">Home</a></li>
         <li><a href="{% url 'org:index' %}">Organizations</a></li>
-        {% if user %}
+        {% if user.is_authenticated %}
         <li><a href="{% url 'donator:profile_view' %}">My Profile</a></li>
         <li><a href="/accounts/logout/">Log out</a></li>
         <li><a href="/accounts/password_change/">Change password</a></li>
