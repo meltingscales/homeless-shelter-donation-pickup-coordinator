@@ -16,6 +16,7 @@ Including another URLconf
 from django.conf.urls import include
 from django.contrib import admin
 from django.urls import path
+import django.contrib.auth.urls
 
 import donator.urls
 import org.urls
@@ -25,9 +26,9 @@ from . import views as core_views
 app_name = "donationcoordinator"
 
 urlpatterns = [
-    path('', core_views.index, name='root'),
+    path('', core_views.index, name='index'),
     path('admin/', admin.site.urls),
-    path('accounts/', include('django.contrib.auth.urls')),
+    path('accounts/', include(django.contrib.auth.urls)),
     path('accounts/signup/', core_views.signup, name='signup'),
     path('donator/', include(donator.urls, namespace='donator'), name='donator'),
     path('org/', include(org.urls, namespace='org'), name='org'),

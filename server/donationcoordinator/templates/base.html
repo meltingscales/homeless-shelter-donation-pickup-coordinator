@@ -19,15 +19,15 @@
     {% if org.orgname %}<p>Welcome, Org '{{ org.orgname }}'!</p>{% endif %}
     <ul>
         <li><a href="{% url 'restaurantapp:restaurant_list' %}">Restaurant test app</a></li>
-        <li><a href="/">Home</a></li>
+        <li><a href="{% url 'index' %}">Home</a></li>
         <li><a href="{% url 'org:index' %}">Organizations</a></li>
         {% if user.is_authenticated %}
         <li><a href="{% url 'donator:profile_view' %}">My Profile</a></li>
-        <li><a href="/accounts/logout/">Log out</a></li>
-        <li><a href="/accounts/password_change/">Change password</a></li>
+        <li><a href="{% url 'logout' %}">Log out</a></li>
+        <li><a href="{% url 'password_change' %}">Change password</a></li>
         {% else %}
-        <li><a href="/accounts/login/">Log in</a></li>
-        <li><a href="/accounts/password_reset/">Forgot your password?</a></li>
+        <li><a href="{% url 'login' %}">Log in</a></li>
+        <li><a href="{% url 'password_reset' %}">Forgot your password?</a></li>
         <li><a href="{% url 'signup' %}">Sign up</a></li>
         {% endif %}
     </ul>
