@@ -1,8 +1,8 @@
 {% if user.is_authenticated %}
 <nav>
     <ul>
-        <li><a href="/donator/my-homes/">My homes</a></li>
-        <li><a href="/donator/export/">Export data</a></li>
+        <li><a href="{% url 'donator:home_list' %}">My homes</a></li>
+        <li><a href="{% url 'donator:export_data' %}">Export data</a></li>
     </ul>
 </nav>
 {% endif %}

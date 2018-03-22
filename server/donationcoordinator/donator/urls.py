@@ -23,13 +23,14 @@ app_name = 'donator'
 
 urlpatterns = [
 
-    url(r'^$', views.index),
-
     # User's profile
-    path(r'my-profile/', views.view_profile, name="profile_view"),
+    path(r'', views.view_profile, name="profile_view"),
 
     # Update user's profile
     path(r'my-profile/update/', views.update_profile, name="profile_update"),
+
+    # Export data
+    path(r'export/', views.export_data, name='export_data'),
 
     # List person's Homes
     path(r'my-homes/', views.my_homes, name="home_list"),

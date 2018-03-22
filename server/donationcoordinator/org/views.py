@@ -9,5 +9,10 @@ def index(request: HttpRequest):
     context = {}
     return render(request, template_name, context)
 
+
 def new_org(request: HttpRequest):
-    return HttpResponse("LOL NEW ORG?!?!?!")
+    return HttpResponse("want to sign up as an org??")
+
+
+def org_list(request: HttpRequest):
+    return HttpResponse("list o' orgs anyone?")

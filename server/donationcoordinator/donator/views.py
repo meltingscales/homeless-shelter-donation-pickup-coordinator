@@ -43,6 +43,9 @@ def signup(request):
         form = UserCreationForm()
     return render(request, template_name, {'form': form})
 
+@login_required
+def export_data(request):
+    return HttpResponse("here u go :)")
 
 @login_required
 @transaction.atomic

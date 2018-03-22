@@ -11,6 +11,7 @@ ul.items_list.highlighted li:not(.hidden) {
     box-shadow: inset 0px 0px 10px 2px #FFC107;
 }
 
+
 #items form ul:not(.items_list) > li:not(.hidden) {
     list-style-image:url('../media/minus10x10.png');
 }

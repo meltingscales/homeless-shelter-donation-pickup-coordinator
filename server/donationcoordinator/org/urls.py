@@ -22,4 +22,6 @@ urlpatterns = [
     url(r'^$', views.index, name='index'),
 
     url(r'new/', views.new_org, name='new_org'),
+
+    url(r'orgs/', views.org_list, name='org_list'),
 ]
