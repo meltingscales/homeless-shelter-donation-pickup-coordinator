@@ -16,7 +16,7 @@ Including another URLconf
 from django.urls import path
 
 from . import views
-from .views import OrgDetail, OrgCreateOrUpdate, OrgCreate
+from .views import OrgDetail, OrgCreateOrUpdate, OrgCreate, HomeList
 
 app_name = 'org'
 urlpatterns = [
@@ -45,6 +45,11 @@ urlpatterns = [
     path(r'orgs/<int:pk>/',
          OrgDetail.as_view(),
          name='org_detail',
+         ),
+
+    path(r'users/',
+         HomeList.as_view(),
+         name='donator_list',
          ),
 
 ]

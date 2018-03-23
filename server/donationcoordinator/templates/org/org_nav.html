@@ -1,6 +1,10 @@
 <nav>
     <ul>
         <li><a href="{% url 'org:org_list' %}">Orgs near me</a></li>
+        {% if user.org %}
+        <li><a href="{% url 'org:donator_list' %}">Donators near me</a></li>
+        {% else %}
         <li><a href="{% url 'org:new_org' %}">I am an Org</a></li>
+        {% endif %}
     </ul>
 </nav>

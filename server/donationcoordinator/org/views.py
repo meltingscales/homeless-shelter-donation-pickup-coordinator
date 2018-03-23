@@ -3,10 +3,10 @@ from django.core.exceptions import ValidationError
 from django.http import *
 from django.shortcuts import render
 from django.urls import reverse
-from django.views.generic import DetailView
+from django.views.generic import DetailView, ListView
 
 from donationcoordinator.views import CreateOrUpdateView
-from donator.models import User
+from donator.models import User, Home
 from org.forms import OrgForm
 from org.models import Org
 
@@ -91,3 +91,25 @@ class OrgCreate(OrgCreateOrUpdate):
         User.objects.filter(pk=user.pk).update(org=form.instance)
 
         return super(OrgCreateOrUpdate, self).form_valid(form)
+
+
+class HomeList(ListView):
+    model = Home
+    template_name = 'org/home_list.html'
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        print("HomeList!")
+
+        print('object_list')
+        print(object_list)
+
+        print("kwargs")
+        print(**kwargs)
+
+        if len(kwargs) is 0:
+            print("NUN???")
+            context['message'] = 'hi org!'
+
+        return context
