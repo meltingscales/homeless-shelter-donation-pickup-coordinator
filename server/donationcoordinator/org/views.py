@@ -47,15 +47,18 @@ class OrgCreateOrUpdate(CreateOrUpdateView):
     form_class = OrgForm
 
     def form_valid(self, form):
-        form.instance.user = User.objects.get(username=self.request.user.username)
+        user = User.objects.get(username=self.request.user.username)
 
-        print("user:")
-        print(form.instance.user)
+        # print("user:")
+        # print(user)
+        # print("user's org:")
+        # print(user.org)
 
-        form.instance.user.org = self.object  # set person's org to the org being saved
-        form.instance.user.save()
+        # print("Current Org being edited:")
+        # print(form.instance)
 
-        print(form.instance.user.org)
+        if user.org.pk != form.instance.pk:
+            raise ValidationError("You do not own this Org and cannot edit it!")
 
         return super(OrgCreateOrUpdate, self).form_valid(form)
 
@@ -73,17 +76,18 @@ class OrgCreate(OrgCreateOrUpdate):
         user: User = self.request.user
         org: Org = user.org_or_none()
 
-        print("Checking if OrgCreate is valid.")
+        # print("Checking if OrgCreate is valid.")
 
-        print("User:")
-        print(user)
-
-        print("org:")
-        print(org)
+        # print("User:")
+        # print(user)
 
         if org is not None:
             raise ValidationError('You already have an Org, you cannot make multiple ones!')
 
-        print("User apparently does not have an Org.")
+        # print("User apparently does not have an Org.")
+
+        form.save()
+
+        User.objects.filter(pk=user.pk).update(org=form.instance)
 
         return super(OrgCreateOrUpdate, self).form_valid(form)

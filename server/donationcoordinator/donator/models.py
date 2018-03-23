@@ -19,11 +19,26 @@ class User(AbstractUser):
     org = models.OneToOneField('org.Org', null=True, blank=True, on_delete=models.CASCADE)
 
     def org_or_none(self):
+
+        print(f"org_or_none on {self.username}")
+
         try:
             return self.org
         except Exception as e:
             print(e)
             return None
+
+    def __str__(self, o=True):
+        ret = ''
+
+        ret += f'[{self.pk}] : {self.username}'
+
+        org = self.org_or_none()
+
+        if org:
+            ret += f' owns Org {org.name}.'
+
+        return ret
 
 
 class Profile(models.Model):

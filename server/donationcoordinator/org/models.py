@@ -13,7 +13,7 @@ class Org(models.Model):
         return markdown.markdown(self.description, safe_mode='escape')
 
     def ownername(self):
-        userQS = User.objects.filter(org=self.pk)
+        userQS = User.objects.filter(org=self)
 
         if len(userQS) is 0:
             return None
