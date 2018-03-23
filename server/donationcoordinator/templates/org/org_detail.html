@@ -13,5 +13,9 @@
     <ul>
         <li><a>Owner: {{ org.ownername }}</a></li>
     </ul>
+    <section id="org-markdown" class="markdown">
+        {{ org.markdownify |safe }}
+    </section>
+
 </section>
 {% endblock %}
