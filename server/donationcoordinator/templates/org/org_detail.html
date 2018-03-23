@@ -8,7 +8,10 @@
 
 <section id="org-detail">
     <h1>
-        {{ org.name }} <a href="{% url 'org:org_edit' org.id %}">(edit)</a>
+        {{ org.name }}
+        {% if can_edit_org %}
+        <a href="{% url 'org:org_edit' org.id %}">(edit)</a>
+        {% endif %}
     </h1>
     <ul>
         <li><a>Owner: {{ org.ownername }}</a></li>

@@ -26,7 +26,7 @@ def my_org(request: HttpRequest, context={}):
     org: Org = user.org
 
     if org is not None:
-        return render(request, OrgDetail.template_name, {'org': org})
+        return render(request, OrgDetail.template_name, {'org': org, 'can_edit_org': True})
     else:
         return HttpResponseRedirect(reverse('org:org_list'))
 
