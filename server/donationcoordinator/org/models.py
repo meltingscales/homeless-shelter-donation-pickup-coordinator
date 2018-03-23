@@ -1,16 +1,21 @@
+import os
+
 import markdown
+from django.conf import settings
 from django.db import models
 
-# Create your models here.
 from donator.models import User
 
-default_markdown_file = 'static/data/default_markdown.txt'
+default_markdown_file = os.path.join(settings.PROJECT_ROOT, settings.STATICFILES_DIRS[0],
+                                     'data/default_markdown.txt')
 default_markdown = ''
 
 with open(default_markdown_file, 'r') as f:
     for line in f:
         default_markdown += line + "\n"
 
+
+# Create your models here.
 
 class Org(models.Model):
     description = models.TextField(max_length=5000, blank=True, default=default_markdown)
