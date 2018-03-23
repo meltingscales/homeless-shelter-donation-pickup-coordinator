@@ -108,8 +108,14 @@ class HomeList(ListView):
         print("kwargs")
         print(**kwargs)
 
-        if len(kwargs) is 0:
-            print("NUN???")
-            context['message'] = 'hi org!'
+        homesResults = Home.get_homes_locations_near()
+
+        print('homesResults:')
+        print(homesResults)
+
+        if len(kwargs) is 0:  # they did not give us any arguments
+            context['message'] = 'hi org! You did\'nt give this view any arguments! Here\'s a default view!'
+
+        context['homes_results'] = homesResults
 
         return context

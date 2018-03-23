@@ -11,9 +11,11 @@
 <section>
     {% if user.is_authenticated %}
     <ul>
-        {% for home in homes_list %}
-        <li><a href="{% url 'donator:home_detail' home.id %}">
-            {{ home.name }}</a></li>
+        {% for result in homes_results %}
+        <ul>
+            <li>{{ result.home }}</li>
+            <li>{{ result.distance }}</li>
+        </ul>
         {% empty %}
         <li>No Homes created yet.</li>
         {% endfor %}
