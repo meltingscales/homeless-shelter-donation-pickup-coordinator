@@ -100,20 +100,11 @@ class HomeList(ListView):
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
 
-        print("HomeList!")
+        homesResults = Home.get_homes_locations_near()  # get near locations
 
-        print('object_list')
-        print(object_list)
+        homesResults = sorted(homesResults, key=lambda d: d['distance'])  # sort by closest
 
-        print("kwargs")
-        print(**kwargs)
-
-        homesResults = Home.get_homes_locations_near()
-
-        print('homesResults:')
-        print(homesResults)
-
-        if len(kwargs) is 0:  # they did not give us any arguments
+        if len(self.request.GET.keys()) == 0:  # they did not give us any arguments
             context['message'] = 'hi org! You did\'nt give this view any arguments! Here\'s a default view!'
 
         context['homes_results'] = homesResults

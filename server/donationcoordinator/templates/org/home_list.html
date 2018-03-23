@@ -9,6 +9,17 @@
 </h1>
 
 <section>
+    <form type="GET" action="">
+        <ul>
+            <li>
+                <label>Miles</label>
+                <input name="miles" type="number" value="5"/>
+            </li>
+        </ul>
+    </form>
+</section>
+
+<section>
     {% if user.is_authenticated %}
     <ul>
         {% for result in homes_results %}
