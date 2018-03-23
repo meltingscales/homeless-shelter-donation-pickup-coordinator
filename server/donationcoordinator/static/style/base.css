@@ -20,7 +20,7 @@ time, mark, audio, video {
 	padding: 0;
 	border: 0;
 	font-size: 100%;
-	font: inherit;
+	/* font: inherit; */
 	vertical-align: baseline;
 }
 /* HTML5 display-role reset for older browsers */
@@ -34,25 +34,44 @@ body {
 ol, ul {
 	list-style: none;
 }
-blockquote, q {
+/*blockquote, q {
 	quotes: none;
-}
-blockquote:before, blockquote:after,
+}*/
+/*blockquote:before, blockquote:after,
 q:before, q:after {
 	content: '';
 	content: none;
-}
+}*/
 table {
 	border-collapse: collapse;
 	border-spacing: 0;
 }
 
+img {
+    width: 100%;
+}
 
 html {
     color: pink;
     background-color: black;
     font-size: 1.125em;  /* 18px / 16pt = 1.125 */
     line-height: 1.222em;  /* 22pt / 18em = 1.2~ */
+}
+
+.markdown {
+    background-color: rgba(128, 128, 128, 0.3);
+}
+
+blockquote {
+    margin-left: 0.6111em;
+    padding-left: 0.6111em;
+    border-left: 3px solid grey;
+}
+
+code {
+    background-color: rgba(128, 128, 128, 0.50);
+    line-height: 1.222em;
+    display:  inline-block;
 }
 
 body {
@@ -70,7 +89,7 @@ form {
 }
 
 
-h1, h2, h3, h4, h5, h6, p {
+h1, h2, h3, h4, h5, h6, p, pre {
     padding-bottom: 1.222em;  /* 22 / 18 = 1.2~ */
 }
 
@@ -89,9 +108,8 @@ ul {
 
 li ol,
 li ul {
-    padding-top: 0.611em;   /* 11 / 18 = 0.61~ */
     padding-left: 1.222em;  /* 22 / 18 = 1.2~ */
-    padding-bottom: 0;
+    padding-bottom: 0.611em;   /* 11 / 18 = 0.61~ */
 }
 
 li ol {
@@ -103,7 +121,8 @@ li li ol {
 }
 
 li {
-    /* padding-bottom: 0.611em; */ /* 11 / 22 = 0.6111111 */
+    padding-bottom: 0.611em; /* 11 / 22 = 0.6111111 */
+    margin-left: 1.2222em;
 }
 
 li li:last-child {

@@ -17,7 +17,16 @@ class Org(models.Model):
     name = models.CharField(max_length=30, null=True, blank=True)
 
     def markdownify(self):
-        return markdown.markdown(self.description, safe_mode='escape')
+        return markdown.markdown(self.description,
+                                 safe_mode='escape',
+                                 extensions=[
+                                     'tables',
+                                     'codehilite',
+                                     'smarty',
+                                     'fenced_code',
+                                     'toc'
+                                 ],
+                                 )
 
     def ownername(self):
         userQS = User.objects.filter(org=self)
