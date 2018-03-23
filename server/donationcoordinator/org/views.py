@@ -23,9 +23,10 @@ def index(request: HttpRequest):
 def my_org(request: HttpRequest, context={}):
     template_name = 'org/org_detail.html'
     user: User = request.user
+    org: Org = user.org
 
-    if user.org is not None:
-        return HttpResponse("U GOT AN ORG!!!")
+    if org is not None:
+        return render(request, OrgDetail.template_name, {'org': org})
     else:
         return HttpResponseRedirect(reverse('org:org_list'))
 
@@ -40,11 +41,6 @@ def org_list(request: HttpRequest, context={}):
     return render(request, template_name, context)
 
 
-class OrgDetail(DetailView):
-    model = Org
-    template_name = 'org/org_detail.html'
-
-
 class OrgCreateOrUpdate(CreateOrUpdateView):
     model = Org
     template_name = 'org/org_edit.html'
@@ -56,8 +52,10 @@ class OrgCreateOrUpdate(CreateOrUpdateView):
         print("user:")
         print(form.instance.user)
 
-        if (form.instance.user.org is not None):
-            self.object = form.instance.user.org
+        form.instance.user.org = self.object  # set person's org to the org being saved
+        form.instance.user.save()
+
+        print(form.instance.user.org)
 
         return super(OrgCreateOrUpdate, self).form_valid(form)
 
@@ -65,15 +63,27 @@ class OrgCreateOrUpdate(CreateOrUpdateView):
         return reverse('org:org_detail', kwargs={'pk': self.object.id})
 
 
+class OrgDetail(DetailView):
+    model = Org
+    template_name = 'org/org_detail.html'
+
+
 class OrgCreate(OrgCreateOrUpdate):
     def form_valid(self, form: OrgForm):
-        form.instance.user = User.objects.get(username=self.request.user.username)
-
-        org = form.instance.user.org
+        user: User = self.request.user
+        org: Org = user.org_or_none()
 
         print("Checking if OrgCreate is valid.")
 
+        print("User:")
+        print(user)
+
+        print("org:")
+        print(org)
+
         if org is not None:
             raise ValidationError('You already have an Org, you cannot make multiple ones!')
+
+        print("User apparently does not have an Org.")
 
         return super(OrgCreateOrUpdate, self).form_valid(form)

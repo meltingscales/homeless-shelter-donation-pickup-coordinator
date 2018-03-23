@@ -18,6 +18,13 @@ class User(AbstractUser):
     test = models.CharField(max_length=50, blank=True)
     org = models.OneToOneField('org.Org', null=True, blank=True, on_delete=models.CASCADE)
 
+    def org_or_none(self):
+        try:
+            return self.org
+        except Exception as e:
+            print(e)
+            return None
+
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)

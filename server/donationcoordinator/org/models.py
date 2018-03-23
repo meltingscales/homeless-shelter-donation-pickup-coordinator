@@ -6,16 +6,17 @@ from donator.models import User
 
 
 class Org(models.Model):
-    bio = models.TextField(max_length=500, blank=True)
+    description = models.TextField(max_length=500, blank=True)
     name = models.CharField(max_length=30, null=True, blank=True)
-    birth_date = models.DateField(null=True, blank=True)
 
     def markdownify(self):
-        return markdown.markdown(self.bio, safe_mode='escape')
+        return markdown.markdown(self.description, safe_mode='escape')
 
     def ownername(self):
-        user = User.objects.filter(org=self)
-        print(user)
-        if len(user) is 0:
+        userQS = User.objects.filter(org=self.pk)
+
+        if len(userQS) is 0:
             return None
+        
+        user = userQS[0]  # get user from queryset
         return user.username
