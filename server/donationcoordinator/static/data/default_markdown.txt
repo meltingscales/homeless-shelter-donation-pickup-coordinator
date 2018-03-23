@@ -1,6 +1,6 @@
 This is your Organization's description.
 
-It supports a markup language known as (Markdown)[http://www.whatismarkdown.com/].
+It supports a markup language known as [Markdown](http://www.whatismarkdown.com/).
 
 An h1 header
 ============
