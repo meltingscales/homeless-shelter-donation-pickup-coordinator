@@ -33,7 +33,7 @@ This is a listing of what the UI may look like, and of what it will/does look li
 
 ![A view showing someone's personal profile information.](myprofile.PNG)
 
-![A view showing a list of Homes, ordered by distance, away from an Organization's center.](homelist.PNG)
+![A view showing a list of Homes, ordered by distance, away from an Organization's center.](homeslist.PNG)
 
 --------------------------------------------------------------------------------
 
