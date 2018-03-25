@@ -25,15 +25,15 @@ This is a listing of what the UI may look like, and of what it will/does look li
 
 ## Donator UI
 
-![A view of a single home.](homeview.png)
+![A view of a single home.](homeview.PNG)
 
-![A view allowing one to edit a home.](edithome.png)
+![A view allowing one to edit a home.](edithome.PNG)
 
-![A view listing the items you own in a home.](itemsview.png)
+![A view listing the items you own in a home.](itemsview.PNG)
 
-![A view showing someone's personal profile information.](myprofile.png)
+![A view showing someone's personal profile information.](myprofile.PNG)
 
-![A view showing a list of Homes, ordered by distance, away from an Organization's center.](homelist.png)
+![A view showing a list of Homes, ordered by distance, away from an Organization's center.](homelist.PNG)
 
 --------------------------------------------------------------------------------
 
@@ -70,7 +70,7 @@ This is a listing of what the UI may look like, and of what it will/does look li
 ## ER Diagrams
 
 ### User-House-Items relationship  
-![An Entity-Relationship Diagram that details how Users should have one or more Houses and houses have a single list of Items](erdiagram.png)
+![An Entity-Relationship Diagram that details how Users should have one or more Houses and houses have a single list of Items](erdiagram.PNG)
 
 --------------------------------------------------------------------------------
 ## Miscellaneous views
