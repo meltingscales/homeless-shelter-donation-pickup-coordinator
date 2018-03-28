@@ -10,6 +10,24 @@
     "GDAL"
   ],
   "repository": "https://github.com/HenryFBP/homeless-shelter-donation-pickup-coordinator/",
+  "env": {
+    "SECRET_KEY": {
+      "description": "Secret key for Django.",
+      "generator": "secret"
+    },
+    "OSGEO4W_ROOT": {
+      "description": "Open Source GIS libraries",
+      "value": "/app/.geodjango/"
+    },
+    "GEOS_LIBRARY_PATH": {
+      "description": "Geometry Engine, Open Source",
+      "value": "/app/.geodjango/geos/lib/libgeos_c.so"
+    },
+    "GDAL_LIBRARY_PATH": {
+      "description": "Geospatial Data Abstraction Library",
+      "value": "/app/.geodjango/gdal/lib/libgdal.so"
+    }
+  },
   "buildpacks": [
     {
       "url": "http://github.com/cirlabs/heroku-buildpack-geodjango/"

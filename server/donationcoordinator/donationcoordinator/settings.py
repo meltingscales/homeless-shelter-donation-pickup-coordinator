@@ -45,6 +45,7 @@ PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 OSGEO4W = os.environ['OSGEO4W_ROOT']
 
 os.environ['PATH'] = OSGEO4W + r"\bin;" + os.environ['PATH']
+os.environ['PATH'] = OSGEO4W + r"\lib;" + os.environ['PATH']
 
 GEOPOSITION_GOOGLE_MAPS_API_KEY = os.environ.get('GEOPOSITION_GOOGLE_MAPS_API_KEY')
 
