@@ -47,6 +47,9 @@ if 'OSGEO4W_ROOT' in os.environ:
     os.environ['PATH'] = OSGEO4W + r"\bin;" + os.environ['PATH']
     os.environ['PATH'] = OSGEO4W + r"\lib;" + os.environ['PATH']
 
+GDAL_LIBRARY_PATH = os.getenv('GDAL_LIBRARY_PATH')
+GEOS_LIBRARY_PATH = os.getenv('GEOS_LIBRARY_PATH')
+
 GEOPOSITION_GOOGLE_MAPS_API_KEY = os.environ.get('GEOPOSITION_GOOGLE_MAPS_API_KEY')
 
 # Quick-start development settings - unsuitable for production
