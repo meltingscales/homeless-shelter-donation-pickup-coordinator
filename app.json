@@ -1,0 +1,18 @@
+{
+  "name": "Shelter Donation Coordinator",
+  "description": "This application will help to coordinate picking up to-be-donated goods from people who wish to donate them.",
+  "keywords": [
+    "python",
+    "django",
+    "html5",
+    "geodjango",
+    "GEOS",
+    "GDAL"
+  ],
+  "repository": "https://github.com/HenryFBP/homeless-shelter-donation-pickup-coordinator/",
+  "buildpacks": [
+    {
+      "url": "http://github.com/cirlabs/heroku-buildpack-geodjango/"
+    }
+  ]
+}
