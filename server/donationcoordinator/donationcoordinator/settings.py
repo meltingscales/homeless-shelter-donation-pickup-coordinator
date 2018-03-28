@@ -42,10 +42,10 @@ for ev in REQUIRED_ENVIRONMENT_VARIABLES:
 PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # setup for GDAL, GEOS, etc.
-OSGEO4W = os.environ['OSGEO4W_ROOT']
-
-os.environ['PATH'] = OSGEO4W + r"\bin;" + os.environ['PATH']
-os.environ['PATH'] = OSGEO4W + r"\lib;" + os.environ['PATH']
+if 'OSGEO4W_ROOT' in os.environ:
+    OSGEO4W = os.environ['OSGEO4W_ROOT']
+    os.environ['PATH'] = OSGEO4W + r"\bin;" + os.environ['PATH']
+    os.environ['PATH'] = OSGEO4W + r"\lib;" + os.environ['PATH']
 
 GEOPOSITION_GOOGLE_MAPS_API_KEY = os.environ.get('GEOPOSITION_GOOGLE_MAPS_API_KEY')
 
