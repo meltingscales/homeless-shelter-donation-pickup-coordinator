@@ -1,15 +1,25 @@
 {% extends "base.html" %}
 
 {% block content %}
-<main><p>random numbers:</p>
-    {% if test %}
-    <ul>
-        {% for number in test %}
-        <li>
-            <a>{{ number }}</a>
-        </li>
-        {% endfor %}
-    </ul>
-    {% endif %}
+<main>
+    <section>
+        <p>Hello. This is an in-development version of my Homeless Shelter Donation Coordinator app.</p>
+        <p>It is unfinished, and things you see here are going to change.</p>
+        <h2>As an in-dev app, I urge you to not put any personal or sensitive information here as I cannot guarantee
+            that
+            this app is completely secure at this time.</h2>
+    </section>
+    <section>
+        <p>random numbers:</p>
+        {% if test %}
+        <ul>
+            {% for number in test %}
+            <li>
+                <a>{{ number }}</a>
+            </li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+    </section>
 </main>
 {% endblock %}
