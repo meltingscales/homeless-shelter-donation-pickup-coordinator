@@ -1,1 +1,1 @@
-web: gunicorn donationcoordinator.wsgi:application
+web: gunicorn donationcoordinator.wsgi
