@@ -8,6 +8,8 @@ from django.conf import settings
 
 from donationcoordinator.libs import *
 
+default_items_json_path = os.path.join(settings.PROJECT_ROOT, settings.STATICFILES_DIRS[0], r'data/items.json')
+
 
 class ItemList:
     space_replacer = '_'  # what to replace spaces with in the HTML since CSS classes can't have spaces
@@ -205,7 +207,7 @@ class ItemList:
         ItemList with all zeroes from that file."""
         if settings.configured:
             if not path:
-                path = os.path.join(settings.PROJECT_ROOT, settings.STATICFILES_DIRS[0], r'data\items.json')
+                path = default_items_json_path
 
         with open(path, 'r') as file:
             d = json.load(file)
