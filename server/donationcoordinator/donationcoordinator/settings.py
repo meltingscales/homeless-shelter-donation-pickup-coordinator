@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/2.0/ref/settings/
 
 import os
 
+import dj_database_url
 import django_heroku
 
 
@@ -152,14 +153,7 @@ WSGI_APPLICATION = 'donationcoordinator.wsgi.application'
 # https://docs.djangoproject.com/en/2.0/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.contrib.gis.db.backends.postgis',
-        'NAME': 'geodjango',
-        'USER': 'geodjango',
-        'PASSWORD': 'geodjango',
-        'HOST': 'localhost',
-        'PORT': '5432',
-    }
+    'default': dj_database_url.config(default="postgres://geodjango:geodjango@localhost/geodjango"),
 }
 
 # Password validation
