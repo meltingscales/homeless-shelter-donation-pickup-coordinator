@@ -29,6 +29,8 @@ REQUIRED_ENVIRONMENT_VARIABLES = [
     'OSGEO4W_ROOT',
     'GDAL_LIBRARY_PATH',
     'GEOS_LIBRARY_PATH',
+    'GDAL_DATA',
+    'PROJ_LIB',
     'GEOPOSITION_GOOGLE_MAPS_API_KEY',
 ]
 
@@ -42,12 +44,7 @@ PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # setup for GDAL, GEOS, etc.
 OSGEO4W = os.environ['OSGEO4W_ROOT']
 
-if not os.path.isdir(OSGEO4W):
-    print("OSGEO4W aka '" + OSGEO4W + "' is not a directory.")
-    print("Maybe adding '64' to it will help.")
-    OSGEO4W = OSGEO4W + "64"
-
-GDAL_LIBRARY_PATH = os.environ.get('GDAL_LIBRARY_PATH')
+os.environ['PATH'] = OSGEO4W + r"\bin;" + os.environ['PATH']
 
 GEOPOSITION_GOOGLE_MAPS_API_KEY = os.environ.get('GEOPOSITION_GOOGLE_MAPS_API_KEY')
 
@@ -176,3 +173,8 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = (
     os.path.join('static'),
 )
+
+for ev in REQUIRED_ENVIRONMENT_VARIABLES:
+    if ev in os.environ:
+        if not os.path.exists(os.environ.get(ev)):
+            print("Path '" + os.environ.get(ev) + "' from var '" + ev + "' doesn't exist, if it's a path.")
