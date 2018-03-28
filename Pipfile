@@ -41,6 +41,8 @@ social-auth-core = "==1.7.0"
 "urllib3" = "==1.22"
 vine = "==1.1.4"
 watchdog = "==0.8.3"
+gunicorn = "*"
+django-heroku = "*"
 
 [dev-packages]
 

@@ -1,0 +1,1 @@
+web: gunicorn donationcoordinator.wsgi:application --log-file log.txt

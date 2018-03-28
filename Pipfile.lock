@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "2024c569507e15d169bcb701f595e08c6c4b32b140fd61cb6b8af97614a302cb"
+            "sha256": "b83d8d4dd15565620f5e044753015f4a6f1bab65e6ffe375f31e46612c7b6c4d"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -90,6 +90,13 @@
             "markers": "python_version >= '3.0'",
             "version": "==0.5.0"
         },
+        "dj-database-url": {
+            "hashes": [
+                "sha256:4aeaeb1f573c74835b0686a2b46b85990571159ffc21aa57ecd4d1e1cb334163",
+                "sha256:851785365761ebe4994a921b433062309eb882fedd318e1b0fcecc607ed02da9"
+            ],
+            "version": "==0.5.0"
+        },
         "django": {
             "hashes": [
                 "sha256:3d9916515599f757043c690ae2b5ea28666afa09779636351da505396cbb2f19",
@@ -122,6 +129,14 @@
             "index": "pypi",
             "version": "==2.0.6"
         },
+        "django-heroku": {
+            "hashes": [
+                "sha256:2bc690aab89eedbe01311752320a9a12e7548e3b0ed102681acc5736a41a4762",
+                "sha256:6af4bc3ae4a9b55eaad6dbe5164918982d2762661aebc9f83d9fa49f6009514e"
+            ],
+            "index": "pypi",
+            "version": "==0.3.1"
+        },
         "django-location-field": {
             "hashes": [
                 "sha256:815f212ec5ce4fcf026268fa27b0c56bb9cb258ddde9c22dd3ea817ccdf65d0a",
@@ -137,6 +152,14 @@
             ],
             "index": "pypi",
             "version": "==2.5.1"
+        },
+        "gunicorn": {
+            "hashes": [
+                "sha256:75af03c99389535f218cc596c7de74df4763803f7b63eb09d77e92b3956b36c6",
+                "sha256:eee1169f0ca667be05db3351a0960765620dad53f53434262ff8901b68a1b622"
+            ],
+            "index": "pypi",
+            "version": "==19.7.1"
         },
         "idna": {
             "hashes": [
@@ -401,6 +424,13 @@
             ],
             "index": "pypi",
             "version": "==0.8.3"
+        },
+        "whitenoise": {
+            "hashes": [
+                "sha256:15f43b2e701821b95c9016cf469d29e2a546cb1c7dead584ba82c36f843995cf",
+                "sha256:9d81515f2b5b27051910996e1e860b1332e354d9e7bcf30c98f21dcb6713e0dd"
+            ],
+            "version": "==3.3.1"
         }
     },
     "develop": {}

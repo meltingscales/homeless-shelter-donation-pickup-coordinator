@@ -12,6 +12,31 @@ https://docs.djangoproject.com/en/2.0/ref/settings/
 
 import os
 
+import django_heroku
+
+
+def load_env_file(path):
+    """load environment file."""
+
+    print("About to load envfile located here:" + path)
+
+    if os.path.exists(path):
+        f = open(path, 'r')
+
+        for line in f:
+            line = line.replace('\r', '').replace('\n', '')
+            if '=' in line:
+                lines = line.split("=")
+                key = lines[0]
+                val = lines[1]
+
+                if key not in os.environ:
+                    print(f"'{key}' not in os.environ, but it is inside of '{path}'!")
+                    os.environ[key] = val
+        f.close()
+    else:
+        print("File doesn't exist!")
+
 
 class YouDidntSetYourEnvironmentVarsBro(Exception):
     def __init__(self, m):
@@ -34,12 +59,22 @@ REQUIRED_ENVIRONMENT_VARIABLES = [
     'GEOPOSITION_GOOGLE_MAPS_API_KEY',
 ]
 
+env_files = [
+    'environment.env',
+    'secretkey.password.env',
+]
+
+for file in env_files:
+    load_env_file(file)
+
 for ev in REQUIRED_ENVIRONMENT_VARIABLES:
     if ev not in os.environ:
         print(YouDidntSetYourEnvironmentVarsBro(ev))
 
 # Build paths inside the project like this: os.path.join(PROJECT_ROOT, ...)
 PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+BASE_DIR = PROJECT_ROOT
 
 # setup for GDAL, GEOS, etc.
 if 'OSGEO4W_ROOT' in os.environ:
@@ -178,7 +213,5 @@ STATICFILES_DIRS = (
     os.path.join('static'),
 )
 
-for ev in REQUIRED_ENVIRONMENT_VARIABLES:
-    if ev in os.environ:
-        if not os.path.exists(os.environ.get(ev)):
-            print("Path '" + os.environ.get(ev) + "' from var '" + ev + "' doesn't exist, if it's a path.")
+# Activate Django-Heroku.
+django_heroku.settings(locals())
