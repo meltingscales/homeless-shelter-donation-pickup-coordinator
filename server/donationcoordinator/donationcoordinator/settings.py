@@ -43,6 +43,8 @@ PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 OSGEO4W = os.environ['OSGEO4W_ROOT']
 
 if not os.path.isdir(OSGEO4W):
+    print("OSGEO4W aka '" + OSGEO4W + "' is not a directory.")
+    print("Maybe adding '64' to it will help.")
     OSGEO4W = OSGEO4W + "64"
 
 GDAL_LIBRARY_PATH = os.environ.get('GDAL_LIBRARY_PATH')
