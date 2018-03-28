@@ -13,8 +13,8 @@ class Startup:
 
         p = Profile(
             user=u,
-            bio="I am Henry, the guy who made this site.",
-            birth_date=datetime.now(),
+            bio="I am Henry, the guy who made this cool site.",
+            birth_date=datetime.strptime('Aug 1 1997', "%b %d %Y"),
         )
 
         u.save()
