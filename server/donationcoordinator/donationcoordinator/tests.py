@@ -20,15 +20,24 @@ class TestExample(TestCase):
             password="password123",
         )
 
-        u.save()
         print("Test user:")
         print(str(u))
 
         p = Profile(
             user=u,
-            bio=models.TextField(default="I am Henry, the guy who made this site."),
+            bio="I am Henry, the guy who made this site.",
             birth_date=datetime.now(),
         )
 
         print("test profile:")
         print(str(p))
+
+        u.save()
+
+        print("AFTER SAVING:")
+
+        print("test profile:")
+        print(str(p))
+
+        print("Test user:")
+        print(str(u))
