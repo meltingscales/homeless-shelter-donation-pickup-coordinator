@@ -1,1 +1,1 @@
-web: gunicorn server/donationcoordinator/donationcoordinator.wsgi
+web: gunicorn --chdir server/donationcoordinator/ donationcoordinator.wsgi
