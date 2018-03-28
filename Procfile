@@ -1,2 +1,2 @@
-release: ./release-tasks.sh
+release: chmox +x release-tasks.sh; ./release-tasks.sh
 web: gunicorn --chdir server/donationcoordinator/ donationcoordinator.wsgi
