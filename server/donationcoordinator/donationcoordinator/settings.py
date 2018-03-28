@@ -11,7 +11,6 @@ https://docs.djangoproject.com/en/2.0/ref/settings/
 """
 
 import os
-import platform
 
 
 class YouDidntSetYourEnvironmentVarsBro(Exception):
@@ -26,9 +25,8 @@ class YouDidntSetYourEnvironmentVarsBro(Exception):
 
 
 REQUIRED_ENVIRONMENT_VARIABLES = [
-    'OSGEO4W_ROOT',
-    'PYTHON_ROOT',
     'SECRET_KEY',
+    'OSGEO4W_ROOT',
     'GDAL_LIBRARY_PATH',
     'GEOS_LIBRARY_PATH',
     'GEOPOSITION_GOOGLE_MAPS_API_KEY',
@@ -42,19 +40,10 @@ for ev in REQUIRED_ENVIRONMENT_VARIABLES:
 PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # setup for GDAL, GEOS, etc.
-if os.name == 'nt':
-    OSGEO4W = os.environ['OSGEO4W_ROOT'] if 'OSGEO4W_ROOT' in os.environ else r'C:\OSGeo4W'
-    if '64' in platform.architecture()[0] and '64' not in OSGEO4W:
-        OSGEO4W += "64"
-    assert os.path.isdir(OSGEO4W), "Directory does not exist: " + OSGEO4W
-    os.environ['OSGEO4W_ROOT'] = OSGEO4W
-    os.environ['GDAL_DATA'] = OSGEO4W + r"\share\gdal"
-    os.environ['PROJ_LIB'] = OSGEO4W + r"\share\proj"
-    os.environ['PATH'] = OSGEO4W + r"\bin;" + os.environ['PATH']
-    os.environ['GDAL_LIBRARY_PATH'] = OSGEO4W + r'\bin\gdal111.dll'
-    os.environ['GEOS_LIBRARY_PATH'] = OSGEO4W + r'\bin\geos_c.dll'
-
 OSGEO4W = os.environ['OSGEO4W_ROOT']
+
+if not os.path.isdir(OSGEO4W):
+    OSGEO4W = OSGEO4W + "64"
 
 GDAL_LIBRARY_PATH = os.environ.get('GDAL_LIBRARY_PATH')
 
