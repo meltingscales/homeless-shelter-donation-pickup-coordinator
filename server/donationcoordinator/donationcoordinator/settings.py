@@ -149,6 +149,10 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'donationcoordinator.wsgi.application'
 
+if 'DATABASE_URL' in os.environ:  # please help me heroku gods
+    if 'postgres' in os.environ['DATABASE_URL']:
+        os.environ['DATABASE_URL'] = os.environ['DATABASE_URL'].replace('postgres', 'postgis')
+
 # Database
 # https://docs.djangoproject.com/en/2.0/ref/settings/#databases
 
