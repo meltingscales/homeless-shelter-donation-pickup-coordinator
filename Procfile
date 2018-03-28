@@ -1,2 +1,2 @@
-release: python server/donationcoordinator/manage.py migrate
+release: ./release-tasks.sh
 web: gunicorn --chdir server/donationcoordinator/ donationcoordinator.wsgi
