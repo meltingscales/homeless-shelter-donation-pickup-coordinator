@@ -160,11 +160,16 @@ nav ul {
 }
 
 nav ul li {
-    display: table-cell;
-    width: 1%;
     text-align: center;
     padding-bottom: 0;
     margin: 0;
+}
+
+@media screen and (min-width: 600px) {
+    nav ul li {
+        display: table-cell;
+        width: 1%;
+    }
 }
 
 nav a {
