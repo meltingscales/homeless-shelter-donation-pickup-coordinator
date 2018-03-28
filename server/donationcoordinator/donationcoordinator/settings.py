@@ -153,9 +153,11 @@ WSGI_APPLICATION = 'donationcoordinator.wsgi.application'
 # https://docs.djangoproject.com/en/2.0/ref/settings/#databases
 
 DATABASES = {
-    'default': dj_database_url.config(default="postgres://geodjango:geodjango@localhost/geodjango"),
+    'default': dj_database_url.config(
+        default="postgis://geodjango:geodjango@localhost/geodjango",
+        engine='django.contrib.gis.db.backends.postgis',
+    ),
 }
-DATABASES['default']['ENGINE'] = 'django.contrib.gis.db.backends.postgis'
 
 # Password validation
 # https://docs.djangoproject.com/en/2.0/ref/settings/#auth-password-validators
