@@ -19,7 +19,7 @@
     <p>
         {% if user.username %}Welcome, User '{{ user.username }}' {% endif %}
         {% if org.orgname %}with Org '{{ org.orgname }}'{% endif %}
-        !
+        {% if user.username %} ! {% endif %}
     </p>
     <ul>
         <li><a href="{% url 'index' %}">Home</a></li>
