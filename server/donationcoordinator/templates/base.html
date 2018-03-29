@@ -4,6 +4,7 @@
 <html lang="en">
 
 <head>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,shrink-to-fit=no"/>
     <link rel="stylesheet" href='{% static "style/base.css" %}'/>
     <link rel="stylesheet" href='{% static "style/items.css" %}'/>
     <link rel="stylesheet" href='{% static "style/homes.css" %}'/>
@@ -15,16 +16,17 @@
 
 <nav>
     {% block header %}
-    {% if user.username %}<p>Welcome, User '{{ user.username }}'!</p> {% endif %}
-    {% if org.orgname %}<p>Welcome, Org '{{ org.orgname }}'!</p>{% endif %}
+    <p>
+        {% if user.username %}Welcome, User '{{ user.username }}' {% endif %}
+        {% if org.orgname %}with Org '{{ org.orgname }}'{% endif %}
+        !
+    </p>
     <ul>
-        <li><a href="{% url 'restaurantapp:restaurant_list' %}">Restaurant test app</a></li>
         <li><a href="{% url 'index' %}">Home</a></li>
-        <li><a href="{% url 'org:index' %}">Organizations</a></li>
+        <li><a href="{% url 'org:index' %}">Orgs</a></li>
         {% if user.is_authenticated %}
         <li><a href="{% url 'donator:profile_view' %}">My Profile</a></li>
         <li><a href="{% url 'logout' %}">Log out</a></li>
-        <li><a href="{% url 'password_change' %}">Change password</a></li>
         {% else %}
         <li><a href="{% url 'login' %}">Log in</a></li>
         <li><a href="{% url 'password_reset' %}">Forgot your password?</a></li>

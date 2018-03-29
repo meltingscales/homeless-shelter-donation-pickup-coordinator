@@ -165,13 +165,6 @@ nav ul li {
     margin: 0;
 }
 
-@media screen and (min-width: 600px) {
-    nav ul li {
-        display: table-cell;
-        width: 1%;
-    }
-}
-
 nav a {
     display: block;
     white-space: pre;
@@ -180,12 +173,25 @@ nav a {
     text-decoration: none;
     color: #551A8B;
     background-color: #C376CE;
-    padding-top: 0.6111em;      /* 11 / 18 = 0.61~ */
-    padding-bottom: 0.6111em;   /* 11 / 18 = 0.61~ */
-    font-size: 1.375em; /* 22 / 16 = 1.375 */
+    padding-top: 0.30555em;      /* 5.5 / 18 = 0.305~ */
+    padding-bottom: 0.30555em;   /* 5.5 / 18 = 0.305~ */
+    font-size: 1.000em; /* 16 / 16 = 1.000 */
 }
 
 nav a:hover {
     background-color: #965A9E; /*slightly darker to show you're hovering over it*/
     color: #FBDDFF;
+}
+
+@media screen and (min-width: 425px) {
+    nav ul li {
+        display: table-cell;
+        width: 1%;
+    }
+
+    nav a {
+        padding-top: 0.6111em;      /* 11 / 18 = 0.61~ */
+        padding-bottom: 0.6111em;   /* 11 / 18 = 0.61~ */
+        font-size: 1.375em; /* 22 / 16 = 1.375 */
+    }
 }
