@@ -4,11 +4,17 @@
 
 {% block content %}
 <h2>Login</h2>
-<form method="post">
-    {% csrf_token %}
-    <ul>
-        {{ form.as_ul }}
-    </ul>
-    <button type="submit">Login</button>
-</form>
+<section>
+    <form method="post">
+        {% csrf_token %}
+        <ul>
+            {{ form.as_ul }}
+        </ul>
+        <button type="submit">Login</button>
+    </form>
+</section>
+<aside>
+    <a href="{% url 'password_reset' %}">Forgot your password?</a>
+    <!-- TODO make this not literally adjacent to the login button -->
+</aside>
 {% endblock %}

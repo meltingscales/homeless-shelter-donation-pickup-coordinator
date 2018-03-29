@@ -8,6 +8,7 @@ from django.contrib.auth.models import AbstractUser
 from django.contrib.gis.geos import Point
 from django.contrib.gis.measure import Distance
 from django.db import models
+from django.db.models import Manager
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from jsonfield import JSONField
@@ -22,9 +23,7 @@ class User(AbstractUser):
     org = models.OneToOneField('org.Org', null=True, blank=True, on_delete=models.CASCADE)
 
     def org_or_none(self):
-
-        print(f"org_or_none on {self.username}")
-
+        # print(f"org_or_none on {self.username}")
         try:
             return self.org
         except Exception as e:
@@ -45,6 +44,8 @@ class User(AbstractUser):
 
 
 class Profile(models.Model):
+    objects = models.Manager
+
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     bio = models.TextField(max_length=500, blank=True)
     birth_date = models.DateField(null=True, blank=True)
@@ -57,6 +58,18 @@ class Profile(models.Model):
     @receiver(post_save, sender=User)
     def save_user_profile(sender, instance, **kwargs):
         instance.profile.save()
+
+    def __str__(self):
+        s = f"Profile of user f{str(self.user)}. Preview of bio:"
+
+        b = str(self.bio)
+        upper = 100
+        if len(b) < upper:
+            upper = len(b)
+
+        s += "'" + b[0:upper] + "'"
+
+        return s
 
 
 class Items(models.Model):
