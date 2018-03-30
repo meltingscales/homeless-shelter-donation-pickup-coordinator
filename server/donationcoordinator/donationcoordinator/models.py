@@ -18,12 +18,11 @@ class LocationFields(models.Model):
     class Meta:
         abstract = True
 
-    name = models.TextField()
-    street = models.TextField()
-    city = models.TextField()
-    zipCode = models.TextField()
-    state = models.TextField()
-    country = models.TextField()
+    street = models.CharField(max_length=100)
+    city = models.CharField(max_length=100)
+    zipCode = models.CharField(max_length=100)
+    state = models.CharField(max_length=100)
+    country = models.CharField(max_length=100)
 
 
 class Location(models.Model):

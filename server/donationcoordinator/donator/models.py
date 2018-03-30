@@ -115,6 +115,7 @@ class Home(LocationFields, models.Model):
     """
     objects = HomeManager()
 
+    name = models.CharField(max_length=100)
     location = models.OneToOneField(HomeLocation, blank=True, null=True, on_delete=models.PROTECT)
     image = models.ImageField(upload_to='homes', blank=True, null=True)
     items: Items = models.OneToOneField(Items, null=True, on_delete=models.PROTECT)  # stuff they wanna give away
