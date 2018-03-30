@@ -4,6 +4,7 @@ from datetime import datetime
 
 import django.contrib.gis.db.models as geomodels
 from django.conf import settings
+from donationcoordinator.models import Location
 from django.contrib.auth.models import AbstractUser
 from django.contrib.gis.geos import Point
 from django.contrib.gis.measure import Distance
@@ -89,44 +90,7 @@ class Items(models.Model):
         return libs.ItemList(self.data).to_html()
 
 
-class HomeLocation(models.Model):
-    """This model will be saved in a GeoDjango database."""
-    recorded_at = models.DateTimeField(default=datetime.now)
-    googlemapsjson = JSONField(default={})
-    location = geomodels.PointField()
-
-    @staticmethod
-    def from_lat_lon(lat, lng, data=None):
-        return HomeLocation.objects.create(
-            location=Point(x=lat, y=lng),
-            googlemapsjson=data,
-        )
-
-    def to_lat_lon(self):
-        return {
-            'lat': self.location.x,
-            'lon': self.location.y,
-        }
-
-    def save(self, *args, **kwargs):
-        return super().save(*args, **kwargs)
-
-    def to_google_maps_uri(self):
-        d = self.to_lat_lon()
-
-        return f"https://www.google.com/maps/search/?api=1&query={d['lat']},{d['lon']}"
-
-    def to_google_maps_iframe(self):
-        d = self.to_lat_lon()
-        key = settings.GEOPOSITION_GOOGLE_MAPS_API_KEY
-
-        ret = ''
-        src = f'https://www.google.com/maps/embed/v1/place?key={key}&q={d["lat"]},{d["lon"]}'
-
-        ret = libs.wrap(ret, 'iframe', ['src'], [src])
-
-        return ret
-
+class HomeLocation(Location):
     def get_home(self):
         """Return the `Home` that has this `HomeLocation`."""
         return Home.objects.filter(location=self)

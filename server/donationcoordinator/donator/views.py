@@ -111,7 +111,7 @@ class HomeCreateOrUpdate(CreateOrUpdateView):
         lat = loc['lat']
         lng = loc['lng']
 
-        location = HomeLocation.from_lat_lon(lat=lat, lng=lng, data=self.geo_result)
+        location = HomeLocation.from_lat_lon(HomeLocation, lat=lat, lng=lng, data=self.geo_result)
 
         self.object.location = location
         self.object.save()
