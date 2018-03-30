@@ -13,6 +13,18 @@ from datetime import datetime
 
 from . import libs
 
+class LocationFields(models.Model):
+
+    class Meta:
+        abstract = True
+
+    name = models.TextField()
+    street = models.TextField()
+    city = models.TextField()
+    zipCode = models.TextField()
+    state = models.TextField()
+    country = models.TextField()
+
 
 class Location(models.Model):
     """This model will be saved in a GeoDjango database."""

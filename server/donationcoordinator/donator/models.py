@@ -4,7 +4,7 @@ from datetime import datetime
 
 import django.contrib.gis.db.models as geomodels
 from django.conf import settings
-from donationcoordinator.models import Location
+from donationcoordinator.models import Location, LocationFields
 from django.contrib.auth.models import AbstractUser
 from django.contrib.gis.geos import Point
 from django.contrib.gis.measure import Distance
@@ -103,7 +103,7 @@ class HomeManager(models.Manager):
         return home
 
 
-class Home(models.Model):
+class Home(LocationFields, models.Model):
     """
     One of a ``User`` 's (possibly) many ``Home`` s.
 
@@ -115,12 +115,6 @@ class Home(models.Model):
     """
     objects = HomeManager()
 
-    name = models.TextField()
-    street = models.TextField()
-    city = models.TextField()
-    zipCode = models.TextField()
-    state = models.TextField()
-    country = models.TextField()
     location = models.OneToOneField(HomeLocation, blank=True, null=True, on_delete=models.PROTECT)
     image = models.ImageField(upload_to='homes', blank=True, null=True)
     items: Items = models.OneToOneField(Items, null=True, on_delete=models.PROTECT)  # stuff they wanna give away
