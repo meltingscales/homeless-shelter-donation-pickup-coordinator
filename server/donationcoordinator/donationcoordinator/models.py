@@ -1,20 +1,15 @@
-from django.db import models
+from datetime import datetime
+
 import django.contrib.gis.db.models as geomodels
 from django.conf import settings
-from django.contrib.auth.models import AbstractUser
 from django.contrib.gis.geos import Point
-from django.contrib.gis.measure import Distance
 from django.db import models
-from django.db.models import Manager
-from django.db.models.signals import post_save
-from django.dispatch import receiver
 from jsonfield import JSONField
-from datetime import datetime
 
 from . import libs
 
-class LocationFields(models.Model):
 
+class LocationFields(models.Model):
     class Meta:
         abstract = True
 

@@ -7,9 +7,11 @@ from .models import Org
 class OrgForm(ModelForm):
     class Meta:
         model = Org
-        exclude = ()
+        exclude = ('location',)
 
 
 class HomeSearchForm(ModelForm):
     """For searching a list of Homes."""
-    distance = forms.NumberInput()
+    distance = forms.NumberInput(attrs={
+        'step': 0.5,
+    })

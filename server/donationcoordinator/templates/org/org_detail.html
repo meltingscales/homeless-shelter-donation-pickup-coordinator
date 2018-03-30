@@ -13,12 +13,43 @@
         <a href="{% url 'org:org_edit' org.id %}">(edit)</a>
         {% endif %}
     </h1>
-    <ul>
-        <li><a>Owner: {{ org.ownername }}</a></li>
-    </ul>
-    <section id="org-markdown" class="markdown">
-        {{ org.markdownify |safe }}
+
+    <p>Owner: {{ org.ownername }}</p>
+
+    <section id="address">
+        <h2>Address:</h2>
+
+        <ul>
+            <li>{{ org.street }}</li>
+            <li>{{ org.zipCode }}</li>
+            <li>{{ org.city }}</li>
+            <li>{{ org.state }}</li>
+            <li>{{ org.country }}</li>
+        </ul>
+    </section>
+    <section id="map">
+        <h2>Google Maps location:</h2>
+
+        {% if org.location %}
+
+        <h3>
+            <a href="{{ org.location.to_google_maps_uri }}">Map:</a>
+        </h3>
+
+        {{ org.location.to_google_maps_iframe |safe }}
+
+        {% else %}
+        <p>Org's location not found!</p>
+        {% endif %}
+
     </section>
 
+
+</section>
+<section id="org-markdown" class="markdown">
+    {{ org.markdownify |safe }}
+</section>
+<section id="org-markdown" class="markdown">
+    {{ org.markdownify |safe }}
 </section>
 {% endblock %}
