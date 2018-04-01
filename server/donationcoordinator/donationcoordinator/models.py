@@ -1,5 +1,4 @@
 from datetime import datetime
-from pprint import pprint
 
 import django.contrib.gis.db.models as geomodels
 from django.conf import settings
@@ -45,8 +44,6 @@ class Location(models.Model):
 
         geo_result = GoogleMapsClient.lat_lon(locString)
         geo_result = geo_result[0]  # just use 1st one
-
-        pprint(geo_result)
 
         return _class.from_lat_lon(
             _class,

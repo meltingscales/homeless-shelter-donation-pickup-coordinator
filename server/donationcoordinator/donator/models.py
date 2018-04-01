@@ -110,8 +110,6 @@ class Home(LocationFields, models.Model):
 
     def save(self, *args, **kwargs):  # when Home is saved
 
-        print("saving a Home!")
-
         if self.items is None:  # if no items, make default one.
             self.items = Items.default_object()
 
