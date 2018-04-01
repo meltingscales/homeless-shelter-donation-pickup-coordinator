@@ -78,15 +78,8 @@ class OrgCreate(OrgCreateOrUpdate):
         user: User = self.request.user
         org: Org = user.org_or_none()
 
-        # print("Checking if OrgCreate is valid.")
-
-        # print("User:")
-        # print(user)
-
         if org is not None:
             raise ValidationError('You already have an Org, you cannot make multiple ones!')
-
-        # print("User apparently does not have an Org.")
 
         form.save()
 

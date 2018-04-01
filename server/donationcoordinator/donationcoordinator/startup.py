@@ -10,6 +10,13 @@ class Startup:
     set up my server for testing."""
 
     @staticmethod
+    def delete_all_homes():
+        allHomes = Home.objects.all()
+        print("Deleting these homes:")
+        pprint(allHomes)
+        allHomes.delete()
+
+    @staticmethod
     def delete_all_users():
         allUsers = User.objects.all()
         print("Deleting these users:")
