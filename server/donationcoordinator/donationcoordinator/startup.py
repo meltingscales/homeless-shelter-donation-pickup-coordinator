@@ -17,11 +17,13 @@ class Startup:
 
     @staticmethod
     def create_test_users():
-        u = User(
+        u = User.objects.create_user(
             username="henryfbp",
             email="henryfbp@gmail.com",
             password="password123",
         )
+
+        u.save()
 
         p = Profile(
             user=u,
@@ -29,6 +31,6 @@ class Startup:
             birth_date=datetime.strptime('Aug 1 1997', "%b %d %Y"),
         )
 
-        u.save()
+        p.save()
 
         print(u)
