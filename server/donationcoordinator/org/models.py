@@ -49,3 +49,16 @@ class Org(LocationFields, models.Model):
 
         user = userQS[0]  # get user from queryset
         return user.username
+
+    def save(self, *args, **kwargs):  # when Org is saved
+
+        self.location = OrgLocation.from_fields(  # unconditionally create new lat,lon from fields
+            OrgLocation,
+            street=self.street,
+            city=self.city,
+            zipCode=self.zipCode,
+            state=self.state,
+            country=self.country,
+        )
+
+        super().save(*args, **kwargs)
