@@ -14,6 +14,7 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 import django.contrib.auth.urls
+from django import db
 from django.conf.urls import include
 from django.contrib import admin
 from django.urls import path
@@ -37,6 +38,7 @@ urlpatterns = [
 try:
     Startup.delete_all_users()
     Startup.create_test_users()
+    db.connections.close_all()
 except Exception as e:
     print("Couldn't do startup tasks.")
     print(e)
