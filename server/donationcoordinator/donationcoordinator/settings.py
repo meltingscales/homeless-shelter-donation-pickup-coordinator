@@ -114,7 +114,6 @@ INSTALLED_APPS = [
     'donationcoordinator',
     'donator',
     'org',
-    'restaurantapp',
 ]
 
 MIDDLEWARE = [
