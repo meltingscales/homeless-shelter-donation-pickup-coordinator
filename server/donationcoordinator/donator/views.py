@@ -1,9 +1,7 @@
-import googlemaps
-from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.decorators import login_required
-from django.core.exceptions import PermissionDenied, ValidationError
+from django.core.exceptions import PermissionDenied
 from django.db import transaction
 from django.http import *
 from django.shortcuts import render, redirect
@@ -15,7 +13,7 @@ from django.views.generic.edit import DeleteView, UpdateView
 from donationcoordinator.views import CreateOrUpdateView
 from .forms import *
 from .libs import ItemList
-from .models import Home, HomeLocation
+from .models import Home
 
 
 # Create your views here.
@@ -102,19 +100,6 @@ class HomeCreateOrUpdate(CreateOrUpdateView):
     model = Home
     template_name = 'donator/home_edit.html'
     form_class = HomeForm
-    geo_result = {}
-    gmaps_json = {}
-
-    def save_location(self, form: HomeForm):
-
-        loc = self.geo_result[0]['geometry']['location']
-        lat = loc['lat']
-        lng = loc['lng']
-
-        location = HomeLocation.from_lat_lon(HomeLocation, lat=lat, lng=lng, data=self.geo_result)
-
-        self.object.location = location
-        self.object.save()
 
     def get_success_url(self):
         return reverse('donator:home_detail', kwargs={'pk': self.object.id})
@@ -123,29 +108,7 @@ class HomeCreateOrUpdate(CreateOrUpdateView):
         return super().post(self, request, *args, **kwargs)
 
     def form_valid(self, form: HomeForm):
-
-        form.instance.user = User.objects.get(username=self.request.user.username)
-
-        print(form.data)
-
-        locs = form.get_loc_data_as_string()
-
-        if self.geo_result == {}:  # if it's empty
-            gm = googlemaps.Client(key=settings.GEOPOSITION_GOOGLE_MAPS_API_KEY)
-
-            self.geo_result = gm.geocode(locs)
-
-        if self.geo_result == {}:  # they entered 'moon cheese base' or 'nowheresville tenessee'
-            raise ValidationError(
-                _("Location could not be understood by Google Maps!")
-            )
-
-        ret = super(HomeCreateOrUpdate, self).form_valid(form)
-
-        if ret:
-            self.save_location(form)
-
-        return ret
+        return super(HomeCreateOrUpdate, self).form_valid(form)
 
 
 class HomeDetail(DetailView):

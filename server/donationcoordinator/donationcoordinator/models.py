@@ -1,4 +1,5 @@
 from datetime import datetime
+from pprint import pprint
 
 import django.contrib.gis.db.models as geomodels
 from django.conf import settings
@@ -6,6 +7,7 @@ from django.contrib.gis.geos import Point
 from django.db import models
 from jsonfield import JSONField
 
+from donationcoordinator.libs import GoogleMapsClient
 from . import libs
 
 
@@ -35,6 +37,21 @@ class Location(models.Model):
         return _class.objects.create(
             location=Point(x=lat, y=lng),
             googlemapsjson=data,
+        )
+
+    @staticmethod
+    def from_fields(_class, **kwargs):
+        locString = ','.join(list(dict(kwargs).values()))
+
+        geo_result = GoogleMapsClient.lat_lon(locString)
+        geo_result = geo_result[0]  # just use 1st one
+
+        pprint(geo_result)
+
+        return _class.from_lat_lon(
+            _class,
+            lat=geo_result[0],
+            lng=geo_result[1],
         )
 
     def to_lat_lon(self):

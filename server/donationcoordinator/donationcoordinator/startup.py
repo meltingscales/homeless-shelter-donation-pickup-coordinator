@@ -1,7 +1,7 @@
 from datetime import datetime
 from pprint import pprint
 
-from donator.models import User, Profile
+from donator.models import User, Profile, Home
 
 
 class Startup:
@@ -17,20 +17,26 @@ class Startup:
 
     @staticmethod
     def create_test_users():
-        u = User.objects.create_user(
+        henryUser = User.objects.create_user(
             username="henryfbp",
             email="henryfbp@gmail.com",
             password="password123",
         )
 
-        u.save()
-
-        p = Profile(
-            user=u,
+        henryProfile = Profile(
+            user=henryUser,
             bio="I am Henry, the guy who made this cool site.",
             birth_date=datetime.strptime('Aug 1 1997', "%b %d %Y"),
         )
+        henryProfile.save()
 
-        p.save()
-
-        print(u)
+        henryHome1 = Home(
+            user=henryUser,
+            name='Condo',
+            street='6060 N Ridge Ave',
+            city='Chicago',
+            zipCode='60660',
+            state='IL',
+            country='USA',
+        )
+        henryHome1.save()

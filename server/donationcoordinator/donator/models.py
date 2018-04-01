@@ -1,16 +1,12 @@
 # Create your models here.
 
-from datetime import datetime
-
-import django.contrib.gis.db.models as geomodels
-from django.conf import settings
-from donationcoordinator.models import Location, LocationFields
 from django.contrib.auth.models import AbstractUser
 from django.contrib.gis.geos import Point
 from django.contrib.gis.measure import Distance
 from django.db import models
 from jsonfield import JSONField
 
+from donationcoordinator.models import Location, LocationFields
 from . import libs
 
 chicagolatlon = (41.8781, -87.6298,)
@@ -104,17 +100,29 @@ class Home(LocationFields, models.Model):
     objects = HomeManager()
 
     name = models.CharField(max_length=100)
-    location = models.OneToOneField(HomeLocation, blank=True, null=True, on_delete=models.PROTECT)
+    location = models.OneToOneField(HomeLocation, blank=True, null=True, on_delete=models.CASCADE)
     image = models.ImageField(upload_to='homes', blank=True, null=True)
-    items: Items = models.OneToOneField(Items, null=True, on_delete=models.PROTECT)  # stuff they wanna give away
-    user: User = models.ForeignKey(User, on_delete=models.PROTECT)
+    items: Items = models.OneToOneField(Items, null=True, on_delete=models.CASCADE)  # stuff they wanna give away
+    user: User = models.ForeignKey(User, on_delete=models.CASCADE)
 
     def get_absolute_url(self):
         return u'/donator/my-homes/%i' % self.id
 
-    def save(self, *args, **kwargs):
-        if self.items is None:
+    def save(self, *args, **kwargs):  # when Home is saved
+
+        print("saving a Home!")
+
+        if self.items is None:  # if no items, make default one.
             self.items = Items.default_object()
+
+        self.location = HomeLocation.from_fields(  # unconditionally create new lat,lon from fields
+            HomeLocation,
+            street=self.street,
+            city=self.city,
+            zipCode=self.zipCode,
+            state=self.state,
+            country=self.country,
+        )
 
         super().save(*args, **kwargs)
 
