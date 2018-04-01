@@ -27,7 +27,7 @@ class OrgLocation(Location):
 class Org(LocationFields, models.Model):
     description = models.TextField(max_length=5000, blank=True, default=default_markdown)
     name = models.CharField(max_length=30, null=True, blank=True)
-    location = models.OneToOneField(OrgLocation, blank=True, null=True, on_delete=models.PROTECT)
+    location = models.OneToOneField(OrgLocation, blank=True, null=True, on_delete=models.CASCADE)
 
     def markdownify(self):
         return markdown.markdown(self.description,

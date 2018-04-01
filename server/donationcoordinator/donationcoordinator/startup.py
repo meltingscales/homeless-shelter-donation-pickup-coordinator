@@ -2,6 +2,7 @@ from datetime import datetime
 from pprint import pprint
 
 from donator.models import User, Profile, Home
+from org.models import Org
 
 
 class Startup:
@@ -16,12 +17,35 @@ class Startup:
         allUsers.delete()
 
     @staticmethod
+    def delete_all_orgs():
+        allOrgs = Org.objects.all()
+        print("Deleting these orgs:")
+        pprint(allOrgs)
+        allOrgs.delete()
+
+    @staticmethod
     def create_test_users():
+        henryOrg = Org(
+            name="Habitat for Henry",
+            street='3241 S Wabash Ave',
+            city='Chicago',
+            zipCode='60616',
+            state='IL',
+            country='USA',
+            description="# HFH: Donate to me\n"
+                        "I am a one-man org. Woohoo!\n"
+                        "- markdown\n"
+                        "- is\n"
+                        "- cool\n",
+        )
+
+        henryOrg.save()
 
         henryUser = User.objects.create_user(
             username="henryfbp",
             email="henryfbp@gmail.com",
             password="password123",
+            org=henryOrg,
         )
 
         henryProfile = Profile(

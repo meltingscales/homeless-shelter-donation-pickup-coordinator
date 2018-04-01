@@ -36,8 +36,12 @@ urlpatterns = [
 ]
 
 try:
+
+    Startup.delete_all_orgs()
     Startup.delete_all_users()
+
     Startup.create_test_users()
+
     db.connections.close_all()
 except Exception as e:
     print("Couldn't do startup tasks.")
