@@ -17,6 +17,7 @@ class Startup:
 
     @staticmethod
     def create_test_users():
+
         henryUser = User.objects.create_user(
             username="henryfbp",
             email="henryfbp@gmail.com",
@@ -40,3 +41,26 @@ class Startup:
             country='USA',
         )
         henryHome1.save()
+
+        testUser = User.objects.create_user(
+            username="testuser",
+            email="testuser@test.testing",
+            password="testpassword123",
+        )
+        testProfile = Profile(
+            user=testUser,
+            bio="I am a test user! Hi!",
+            birth_date=datetime.now(),
+        )
+        testUser.save()
+
+        testUserHome = Home(
+            user=testUser,
+            name='my test home',
+            street='3530 S Wolcott Ave',
+            city='Chicago',
+            zipCode='60609',
+            state='IL',
+            country='USA',
+        )
+        testUserHome.save()
