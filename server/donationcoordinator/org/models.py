@@ -4,6 +4,7 @@ import markdown
 from django.conf import settings
 from django.db import models
 
+from donationcoordinator.models import LocationFields, Location
 from donator.models import User
 
 default_markdown_file = os.path.join(settings.PROJECT_ROOT, settings.STATICFILES_DIRS[0],
@@ -17,9 +18,16 @@ with open(default_markdown_file, 'r') as f:
 
 # Create your models here.
 
-class Org(models.Model):
+class OrgLocation(Location):
+    def get_org(self):
+        """Return the `Org` that has this `OrgLocation`."""
+        return Org.objects.filter(location=self)
+
+
+class Org(LocationFields, models.Model):
     description = models.TextField(max_length=5000, blank=True, default=default_markdown)
     name = models.CharField(max_length=30, null=True, blank=True)
+    location = models.OneToOneField(OrgLocation, blank=True, null=True, on_delete=models.PROTECT)
 
     def markdownify(self):
         return markdown.markdown(self.description,

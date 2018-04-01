@@ -4,7 +4,6 @@ import copy
 import os
 
 from bs4 import BeautifulSoup as bs
-from django.conf import settings
 
 from donationcoordinator.libs import *
 

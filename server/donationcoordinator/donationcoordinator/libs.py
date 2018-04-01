@@ -3,6 +3,32 @@ import functools
 import json
 from functools import (lru_cache)
 
+import googlemaps
+from django.conf import settings
+
+
+class GoogleMapsClient():
+    key = settings.GEOPOSITION_GOOGLE_MAPS_API_KEY
+    client = googlemaps.Client(key=key)
+
+    @staticmethod
+    @lru_cache(maxsize=1024)
+    def results(address_string):
+        return GoogleMapsClient.client.geocode(address_string)
+
+    @staticmethod
+    @lru_cache(maxsize=1024)
+    def lat_lon(address_string):
+        """Given an address, return a list of lat-lon pairs that belongs to that address."""
+        results = GoogleMapsClient.results(address_string)
+
+        latlons = []
+        for result in results:
+            ll: dict = result['geometry']['location']
+            latlons.append(tuple(ll.values()))
+
+        return latlons
+
 
 def hashable_lru(func):
     cache = lru_cache(maxsize=1024)

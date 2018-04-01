@@ -110,7 +110,7 @@ class HomeList(ListView):
         homesResults = sorted(homesResults, key=lambda d: d['distance'])  # sort by closest
 
         if len(self.request.GET.keys()) == 0:  # they did not give us any arguments
-            context['message'] = 'hi org! You did\'nt give this view any arguments! Here\'s a default view!'
+            context['message'] = 'hi org! You didn\'t give this view any arguments! Here\'s a default view!'
         elif 'miles' in self.request.GET:
             context['message'] = 'OH SO U WANT ' + str(self.request.GET['miles'] + "MILES DO U??")
 
