@@ -46,6 +46,7 @@ class OrgCreateOrUpdate(CreateOrUpdateView):
     template_name = 'org/org_edit.html'
     form_class = OrgForm
 
+    @login_required
     def form_valid(self, form):
         user = User.objects.get(username=self.request.user.username)
 
@@ -62,6 +63,7 @@ class OrgCreateOrUpdate(CreateOrUpdateView):
 
         return super(OrgCreateOrUpdate, self).form_valid(form)
 
+    @login_required
     def get_success_url(self):
         return reverse('org:org_detail', kwargs={'pk': self.object.id})
 
@@ -101,6 +103,9 @@ class HomeList(ListView):
         context = super().get_context_data(**kwargs)
 
         GET = self.request.GET
+
+        print("user's org who wants HomeList:")
+        print(self.request.user.org)
 
         if 'miles' in GET:
             homesResults = Home.get_homes_locations_near(radius=GET['miles'])
