@@ -32,11 +32,15 @@ class Startup:
             zipCode='60616',
             state='IL',
             country='USA',
-            description="# HFH: Donate to me\n"
-                        "I am a one-man org. Woohoo!\n"
-                        "- markdown\n"
-                        "- is\n"
-                        "- cool\n",
+            description="""
+# HFH: Donate to me
+
+I am a one-man org. Woohoo!
+
+  - Markdown
+  - Is
+  - Cool
+""",
         )
 
         henryOrg.save()
