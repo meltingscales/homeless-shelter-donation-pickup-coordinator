@@ -34,5 +34,9 @@ urlpatterns = [
     path('org/', include(org.urls, namespace='org'), name='org'),
 ]
 
-Startup.delete_all_users()
-Startup.create_test_users()
+try:
+    Startup.delete_all_users()
+    Startup.create_test_users()
+except Exception as e:
+    print("Couldn't do startup tasks.")
+    print(e)
