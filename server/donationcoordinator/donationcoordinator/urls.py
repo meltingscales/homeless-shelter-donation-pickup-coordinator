@@ -20,7 +20,6 @@ from django.urls import path
 
 import donator.urls
 import org.urls
-import restaurantapp.urls
 from . import views as core_views
 from .startup import Startup
 
@@ -33,8 +32,11 @@ urlpatterns = [
     path('accounts/signup/', core_views.signup, name='signup'),
     path('donator/', include(donator.urls, namespace='donator'), name='donator'),
     path('org/', include(org.urls, namespace='org'), name='org'),
-    path('restaurantapp/', include(restaurantapp.urls, namespace='restaurantapp'), name='restaurantapp')
 ]
 
-Startup.delete_all_users()
-Startup.create_test_users()
+try:
+    Startup.delete_all_users()
+    Startup.create_test_users()
+except Exception as e:
+    print("Couldn't do startup tasks.")
+    print(e)
