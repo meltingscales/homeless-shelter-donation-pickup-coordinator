@@ -13,15 +13,20 @@ class TestExample(TestCase):
     def tearDown(self):
         pass
 
+    def test_can_do_math(self):
+        one = 1
+        alsoone = 1
+        shouldbetwo = one + alsoone
+
+        self.assertEqual(one + alsoone, shouldbetwo)
+
     def test_create_users(self):
         u = User(
             username="henryfbp",
             email="henryfbp@gmail.com",
             password="password123",
         )
-
-        print("Test user:")
-        print(str(u))
+        u.save()
 
         p = Profile(
             user=u,
@@ -29,12 +34,7 @@ class TestExample(TestCase):
             birth_date=datetime.now(),
         )
 
-        print("test profile:")
-        print(str(p))
-
-        u.save()
-
-        print("AFTER SAVING:")
+        p.save()
 
         print("test profile:")
         print(str(p))

@@ -13,6 +13,8 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+import os
+
 import django.contrib.auth.urls
 from django import db
 from django.conf.urls import include
@@ -37,15 +39,16 @@ urlpatterns = [
     path('org/', include(org.urls, namespace='org'), name='org'),
 ]
 
-try:
+if 'STARTUP_DATABASE_TASKS' in os.environ and os.environ['STARTUP_DATABASE_TASKS'].lower() != 'false':
 
-    Startup.delete_all_objects(Org)
-    Startup.delete_all_objects(User)
-    Startup.delete_all_objects(HomeLocation)
+    print("Resetting database and populating it with default models!")
 
-    Startup.create_test_users()
+    try:
+        Startup.delete_all_objects(Org, User, HomeLocation)
 
-    db.connections.close_all()
-except Exception as e:
-    print("Couldn't do startup tasks.")
-    print(e)
+        Startup.create_test_users()
+
+        db.connections.close_all()
+    except Exception as e:
+        print("Couldn't do startup tasks.")
+        print(e)

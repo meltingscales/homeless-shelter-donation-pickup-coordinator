@@ -26,6 +26,10 @@
     "GDAL_LIBRARY_PATH": {
       "description": "Geospatial Data Abstraction Library",
       "value": "/app/.geodjango/gdal/lib/libgdal.so"
+    },
+    "STARTUP_DATABASE_TASKS": {
+      "description": "Destroy all db tuples and make test ones?",
+      "value": "true"
     }
   },
   "buildpacks": [

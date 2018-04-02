@@ -3,6 +3,7 @@ from pprint import pprint
 
 from donator.models import User, Profile, Home, Items
 from org.models import Org
+from .libs import islist, istuple
 
 
 class Startup:
@@ -10,12 +11,20 @@ class Startup:
     set up my server for testing."""
 
     @staticmethod
-    def delete_all_objects(cls):
-        """Delete all objects of an ORM class."""
-        allclsobjects = cls.objects.all()
-        print(f"Deleting these '{cls.__name__}'s:")
-        pprint(allclsobjects)
-        allclsobjects.delete()
+    def delete_all_objects(cls, *args):
+        """Delete all objects of an ORM class, or list of classes."""
+        if args:
+            cls = args
+
+        if islist(cls) or istuple(cls):
+            for aclass in cls:
+                Startup.delete_all_objects(aclass)
+
+        else:
+            allclsobjects = cls.objects.all()
+            print(f"Deleting these '{cls.__name__}'s:")
+            pprint(allclsobjects)
+            allclsobjects.delete()
 
     @staticmethod
     def create_test_users():
