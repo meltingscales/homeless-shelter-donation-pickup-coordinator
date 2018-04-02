@@ -10,25 +10,12 @@ class Startup:
     set up my server for testing."""
 
     @staticmethod
-    def delete_all_homes():
-        allHomes = Home.objects.all()
-        print("Deleting these homes:")
-        pprint(allHomes)
-        allHomes.delete()
-
-    @staticmethod
-    def delete_all_users():
-        allUsers = User.objects.all()
-        print("Deleting these users:")
-        pprint(allUsers)
-        allUsers.delete()
-
-    @staticmethod
-    def delete_all_orgs():
-        allOrgs = Org.objects.all()
-        print("Deleting these orgs:")
-        pprint(allOrgs)
-        allOrgs.delete()
+    def delete_all_objects(cls):
+        """Delete all objects of an ORM class."""
+        allclsobjects = cls.objects.all()
+        print(f"Deleting these '{cls.__name__}'s:")
+        pprint(allclsobjects)
+        allclsobjects.delete()
 
     @staticmethod
     def create_test_users():

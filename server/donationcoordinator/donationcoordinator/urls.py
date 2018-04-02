@@ -21,6 +21,8 @@ from django.urls import path
 
 import donator.urls
 import org.urls
+from donator.models import User, HomeLocation
+from org.models import Org
 from . import views as core_views
 from .startup import Startup
 
@@ -37,8 +39,9 @@ urlpatterns = [
 
 try:
 
-    Startup.delete_all_orgs()
-    Startup.delete_all_users()
+    Startup.delete_all_objects(Org)
+    Startup.delete_all_objects(User)
+    Startup.delete_all_objects(HomeLocation)
 
     Startup.create_test_users()
 
