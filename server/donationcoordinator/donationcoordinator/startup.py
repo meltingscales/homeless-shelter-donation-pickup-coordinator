@@ -1,7 +1,7 @@
 from datetime import datetime
 from pprint import pprint
 
-from donator.models import User, Profile, Home
+from donator.models import User, Profile, Home, Items
 from org.models import Org
 
 
@@ -52,6 +52,12 @@ I am a one-man org. Woohoo!
             birth_date=datetime.strptime('Aug 1 1997', "%b %d %Y"),
         )
         henryProfile.save()
+
+        henryItems: Items = Items.default_object()
+
+        henryItems.apply_list({  # add some items
+            'toilet paper': 3,
+        })
 
         henryHome1 = Home(
             user=henryUser,

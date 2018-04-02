@@ -7,7 +7,8 @@ from bs4 import BeautifulSoup as bs
 
 from donationcoordinator.libs import *
 
-default_items_json_path = os.path.join(settings.PROJECT_ROOT, settings.STATICFILES_DIRS[0], r'data/items.json')
+default_items_json_path = r'data/items.json'
+default_items_json_path = os.path.join(settings.PROJECT_ROOT, settings.STATICFILES_DIRS[0], default_items_json_path)
 
 
 class ItemList:
@@ -142,9 +143,6 @@ class ItemList:
 
         """
 
-        # print("Passed this:")
-        # print(dictionary)
-
         if not isinstance(dictionary, dict):
             return False
 
@@ -264,6 +262,8 @@ class ItemList:
 
     def __init__(self, val=None):
 
+        from donator.models import Items
+
         if val is None:  # they passed us nothing
             self.template = ItemList.from_file()
             self.data = self.template
@@ -272,8 +272,11 @@ class ItemList:
             self.data = ItemList.from_file(val)
             self.template = self.data
 
-        elif isinstance(val, dict):
+        elif isinstance(val, dict):  # it's a dict
             self.data = val
+
+        elif isinstance(val, Items):  # it's an Items object
+            self.data = val.data
 
     def to_html(self):
         """Turn ``self`` into an HTML form element."""

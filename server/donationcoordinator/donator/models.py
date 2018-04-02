@@ -7,7 +7,7 @@ from django.db import models
 from jsonfield import JSONField
 
 from donationcoordinator.models import Location, LocationFields
-from . import libs
+from .libs import ItemList
 
 chicagolatlon = (41.8781, -87.6298,)
 
@@ -67,11 +67,20 @@ class Items(models.Model):
     @staticmethod
     def default_object():
         return Items.objects.create(
-            data=libs.ItemList.from_file()
+            data=ItemList.from_file()
         )
 
     def as_html(self):
-        return libs.ItemList(self.data).to_html()
+        return ItemList(self.data).to_html()
+
+    def apply_list(self, list):
+        """Apply a key-value list of item:number pairs to self."""
+        itemsList = ItemList(self)  # make itemsList
+        newdata = itemsList.apply_flat_dict(list)
+
+        self.data = newdata
+
+        self.save()
 
 
 class HomeLocation(Location):
