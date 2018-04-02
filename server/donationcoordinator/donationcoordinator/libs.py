@@ -8,8 +8,11 @@ from django.conf import settings
 
 
 class GoogleMapsClient():
-    key = settings.GEOPOSITION_GOOGLE_MAPS_API_KEY
-    client = googlemaps.Client(key=key)
+    try:
+        key = settings.GEOPOSITION_GOOGLE_MAPS_API_KEY
+        client = googlemaps.Client(key=key)
+    except Exception as e:
+        pass
 
     @staticmethod
     @lru_cache(maxsize=1024)

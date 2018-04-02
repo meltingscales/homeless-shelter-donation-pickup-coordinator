@@ -1,11 +1,16 @@
 # general-purpose library functions used by ``donator`` class.
 
 import copy
+import json
 import os
 
-from bs4 import BeautifulSoup as bs
+from django.conf import settings
 
-from donationcoordinator.libs import *
+if not settings.configured:
+    pass
+
+from donationcoordinator.libs import hashable_lru, wrap
+from bs4 import BeautifulSoup as bs
 
 default_items_json_path = r'data/items.json'
 default_items_json_path = os.path.join(settings.PROJECT_ROOT, settings.STATICFILES_DIRS[0], default_items_json_path)
@@ -42,6 +47,29 @@ class ItemList:
                 'glowsticks': 1, },
         },
     }
+
+    @staticmethod
+    def flatten_dict(d: dict):
+        """Modifies a non-flat dict, ``d``, and flattens it.
+                Example:
+            f_d({
+                    'food': {
+                        'meat': 0,
+                        'cheese': 0
+                        },
+                    'not food': {
+                        'dirt': 0,
+                        'legos': 0
+                        }
+                })
+                ->
+                {'meat':1, 'cheese':3, 'dirt':1, 'legos':1}
+            )
+
+        """
+        for key, val in d.items():
+            print(key)
+            print(val)
 
     @staticmethod
     def apply_flat_dict_rec(d: dict, flat: dict) -> dict:
@@ -289,7 +317,7 @@ class ItemList:
         ItemList.apply_flat_dict_rec(self.data, flat)
 
 
-if __name__ == '__main__':
+def test_itemlist():
     itemsLoc = "../static/data/items.json"
 
     flat = {'bleach': 3, 'cereal': 3, 'dental dams': 3}
@@ -309,3 +337,7 @@ if __name__ == '__main__':
 
     with open('../static/data/items_autogen.html', 'w+') as file:
         file.write(itemList.to_html())
+
+
+if __name__ == '__main__':
+    test_itemlist()

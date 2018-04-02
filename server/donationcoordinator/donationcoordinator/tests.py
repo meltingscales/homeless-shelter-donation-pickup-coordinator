@@ -1,8 +1,8 @@
-import django.db.models as models
+from datetime import datetime
+
 from django.test import TestCase
 
-from donator.models import User, Home, Profile
-from datetime import datetime
+from donator.models import User, Profile
 
 
 class TestExample(TestCase):
