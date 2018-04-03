@@ -1,0 +1,27 @@
+{
+	"_type": "Project",
+	"_id": "72FzE3G7ck2a6/gwHFr/IgAA",
+	"name": "Model",
+	"ownedElements": [
+		{
+			"_type": "ERDDataModel",
+			"_id": "AAAAAAFh3ek2VRMxuBI=",
+			"_parent": {
+				"$ref": "72FzE3G7ck2a6/gwHFr/IgAA"
+			},
+			"name": "Data Model",
+			"ownedElements": [
+				{
+					"_type": "ERDDiagram",
+					"_id": "AAAAAAFh3ek2VRMyAPA=",
+					"_parent": {
+						"$ref": "AAAAAAFh3ek2VRMxuBI="
+					},
+					"name": "ERD Diagram",
+					"visible": true,
+					"defaultDiagram": true
+				}
+			]
+		}
+	]
+}
