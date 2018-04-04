@@ -11,16 +11,15 @@ class Startup:
     set up my server for testing."""
 
     @staticmethod
-    def delete_all_objects(cls, *args):
+    def delete_all_objects(*args):
         """Delete all objects of an ORM class, or list of classes."""
-        if args:
-            cls = args
 
-        if islist(cls) or istuple(cls):
-            for aclass in cls:
+        if (islist(args) or istuple(args)) and len(args) > 1:
+            for aclass in list(args):
                 Startup.delete_all_objects(aclass)
 
         else:
+            cls = args[0]
             allclsobjects = cls.objects.all()
             print(f"Deleting these '{cls.__name__}'s:")
             pprint(allclsobjects)
