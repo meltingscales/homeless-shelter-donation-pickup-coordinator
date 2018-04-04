@@ -27,6 +27,50 @@
   </blockquote>
 </details>
 
+# Ideas
+- My initial idea for this application
+  - Extremely naive
+  - Essentially, it would contain a database full of homeless people so that their needs could be tracked and when someone saw that a person near them needed something, they would be able to go and give/buy that person the thing they needed
+  - Was made within the context of a world where everyone wanted to help oneanother
+  - Problems:
+    - What if a person doesn't want to be tracked?
+    - Homeless people don't have phones
+    - System could be abused to track people against their wishes
+    
+- How does an application enforce certain moral standards?
+  - Wording within application can suggest a way of thinking, i.e.
+    > "Charitable giving" or "help these poor people"
+
+    versus
+    
+    > "Help us do the job that the government is failing to do"
+    
+- Why should we aid homeless people?
+  - Pity? (feel bad for them)
+  - Charity?
+  - Enforcement of basic human rights?
+  - To make ourselves feel good?
+  
+- Why SHOULDN'T we help homeless people?
+  - x
+
+- What have charities done wrong?
+  - x
+
+- Is helping the homeless out of pity or selfishness more harmful long-term than helpful?
+  - That is, does someone helping out of pity propogate or reinforce the idea that we should help out of pity or charity, and does that outcome hinder progress so much that not donating out of pity would save us from social harm? 
+
+- Tools (i.e. my web app) and bias/ideas:
+  - Can tools carry ideas?
+  - Can tools spread ideas?
+  - Twitter being used for activism
+  - Twitter being used by nazis/hate groups
+  - Should the creator intervene?
+
+- Should I ever disallow a group from using my tool if I deem they're mis-using it?
+  - What is misuse?
+  - Should I change the liscense?
+
 # Reflection
 
 NYI
