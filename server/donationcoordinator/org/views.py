@@ -7,7 +7,7 @@ from django.views.generic import DetailView, ListView
 
 from donationcoordinator.views import CreateOrUpdateView
 from donator.models import User, Home
-from org.forms import OrgForm
+from org.forms import OrgForm, HomeSearchForm
 from org.models import Org
 
 
@@ -90,12 +90,31 @@ class OrgCreate(OrgCreateOrUpdate):
 
 class HomeList(ListView):
     model = Home
+    form_class = HomeSearchForm
+    context_object_name = 'home'
     template_name = 'org/home_list.html'
+    homes = []
+
+    def get_queryset(self):
+        form = self.form_class(self.request.GET)
+        if form.is_valid():
+
+            r = HomeSearchForm.Meta.default_miles
+
+            if 'miles' in form.cleaned_data:
+                r = form.cleaned_data['miles']
+
+            return Home.get_homes_locations_near(radius=r)
 
     def get_context_data(self, *, object_list=None, **kwargs):
+        GET = self.request.GET
         context = super().get_context_data(**kwargs)
 
-        GET = self.request.GET
+        self.form = HomeSearchForm(self.request.GET)
+        context['form'] = self.form
+
+        print("GET data:")
+        print(self.request.GET)
 
         print("user's org who wants HomeList:")
         print(self.request.user.org)

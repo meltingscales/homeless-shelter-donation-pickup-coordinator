@@ -1,4 +1,5 @@
 # Create your models here.
+from pprint import pprint
 
 from django.contrib.auth.models import AbstractUser
 from django.contrib.gis.geos import Point
@@ -165,12 +166,19 @@ class Home(LocationFields, models.Model):
         for homeLocation in homeLocations:  # construct return dict
             homepoint = homeLocation.location
 
+            print(bpoint)
+            print(homepoint)
+
             dist = bpoint.distance(homepoint)
+
+            dist = dist * 100  # idk man, magic numbers
 
             ret.append({
                 'home': homeLocation.get_home(),
                 'location': homeLocation,
                 'distance': dist,
             })
+
+        pprint(ret)
 
         return ret
