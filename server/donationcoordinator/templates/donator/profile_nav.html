@@ -1,9 +1,13 @@
+{% load activeurl %}
+
 {% if user.is_authenticated %}
 <nav>
+    {% activeurl %}
     <ul>
         <li><a href="{% url 'donator:home_list' %}">My homes</a></li>
         <li><a href="{% url 'password_change' %}">Change password</a></li>
         <li><a href="{% url 'donator:export_data' %}">Export data</a></li>
     </ul>
+    {% endactiveurl %}
 </nav>
 {% endif %}
