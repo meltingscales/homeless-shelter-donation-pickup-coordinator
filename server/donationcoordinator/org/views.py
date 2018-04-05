@@ -3,7 +3,7 @@ from django.core.exceptions import ValidationError
 from django.http import *
 from django.shortcuts import render
 from django.urls import reverse
-from django.views.generic import DetailView, ListView
+from django.views.generic import DetailView
 
 from donationcoordinator.views import CreateOrUpdateView
 from donator.models import User, Home
@@ -88,49 +88,29 @@ class OrgCreate(OrgCreateOrUpdate):
         return super(OrgCreateOrUpdate, self).form_valid(form)
 
 
-class HomeList(ListView):
-    model = Home
-    form_class = HomeSearchForm
-    context_object_name = 'home'
+def searchHomeList(request: HttpRequest):
     template_name = 'org/home_list.html'
-    homes = []
+    context = {}
 
-    def get_queryset(self):
-        form = self.form_class(self.request.GET)
-        if form.is_valid():
+    form = HomeSearchForm(request.GET or None)  # create form from GET data
 
-            r = HomeSearchForm.Meta.default_miles
+    if form.is_valid():  # if valid
+        context['form'] = form  # create form from that data
+    else:
+        context['form'] = HomeSearchForm()  # create blank form
 
-            if 'miles' in form.cleaned_data:
-                r = form.cleaned_data['miles']
+    miles = HomeSearchForm.Meta.default_miles
+    if 'miles' in request.GET:
+        miles = request.GET['miles']
 
-            return Home.get_homes_locations_near(radius=r)
+    homesResults = Home.get_homes_locations_near(radius=miles)
+    homesResults = sorted(homesResults, key=lambda d: d['distance'])  # sort by closest
 
-    def get_context_data(self, *, object_list=None, **kwargs):
-        GET = self.request.GET
-        context = super().get_context_data(**kwargs)
+    if len(request.GET.keys()) == 0:  # they did not give us any arguments
+        context['message'] = 'hi org! You didn\'t give this view any arguments! Here\'s a default view!'
+    elif 'miles' in request.GET:
+        context['message'] = 'OH SO U WANT ' + str(request.GET['miles'] + "MILES DO U??")
 
-        self.form = HomeSearchForm(self.request.GET)
-        context['form'] = self.form
+    context['homes_results'] = homesResults
 
-        print("GET data:")
-        print(self.request.GET)
-
-        print("user's org who wants HomeList:")
-        print(self.request.user.org)
-
-        if 'miles' in GET:
-            homesResults = Home.get_homes_locations_near(radius=GET['miles'])
-        else:
-            homesResults = Home.get_homes_locations_near()  # get near locations
-
-        homesResults = sorted(homesResults, key=lambda d: d['distance'])  # sort by closest
-
-        if len(self.request.GET.keys()) == 0:  # they did not give us any arguments
-            context['message'] = 'hi org! You didn\'t give this view any arguments! Here\'s a default view!'
-        elif 'miles' in self.request.GET:
-            context['message'] = 'OH SO U WANT ' + str(self.request.GET['miles'] + "MILES DO U??")
-
-        context['homes_results'] = homesResults
-
-        return context
+    return render(request, template_name, context)
