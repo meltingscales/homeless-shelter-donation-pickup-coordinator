@@ -16,3 +16,12 @@ class HomeSearchForm(forms.Form):
         default_miles = 5
 
     miles = forms.IntegerField(initial=Meta.default_miles)
+
+    def is_valid(self):
+        form_data = self.data
+
+        print(form_data)
+
+        print("asking if HomeSearchForm is valid.")
+
+        return super(HomeSearchForm, self).is_valid()
