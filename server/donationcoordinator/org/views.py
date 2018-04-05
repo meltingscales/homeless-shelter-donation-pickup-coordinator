@@ -87,7 +87,6 @@ class OrgCreate(OrgCreateOrUpdate):
 
         return super(OrgCreateOrUpdate, self).form_valid(form)
 
-
 def searchHomeList(request: HttpRequest):
     template_name = 'org/home_list.html'
     context = {}
@@ -103,14 +102,24 @@ def searchHomeList(request: HttpRequest):
     if 'miles' in request.GET:
         miles = request.GET['miles']
 
-    homesResults = Home.get_homes_locations_near(radius=miles)
+    org: Org = request.user.org_or_none()
+
+    if org is None:
+        return render(request, 'index.html', 'You need an Org to view a list of homes!')
+
+    homesResults = Home.get_homes_locations_near(
+        radius=miles,
+        lat=org.location.lat(),
+        lon=org.location.lon(),
+    )
     homesResults = sorted(homesResults, key=lambda d: d['distance'])  # sort by closest
+
+    context['homes_results'] = homesResults
 
     if len(request.GET.keys()) == 0:  # they did not give us any arguments
         context['message'] = 'hi org! You didn\'t give this view any arguments! Here\'s a default view!'
     elif 'miles' in request.GET:
         context['message'] = 'OH SO U WANT ' + str(request.GET['miles'] + "MILES DO U??")
 
-    context['homes_results'] = homesResults
 
     return render(request, template_name, context)

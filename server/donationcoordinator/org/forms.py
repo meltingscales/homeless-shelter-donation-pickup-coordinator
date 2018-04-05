@@ -15,7 +15,7 @@ class HomeSearchForm(forms.Form):
     class Meta:
         default_miles = 5
 
-    miles = forms.IntegerField(initial=Meta.default_miles)
+    miles = forms.FloatField(initial=Meta.default_miles)
 
     def is_valid(self):
         form_data = self.data

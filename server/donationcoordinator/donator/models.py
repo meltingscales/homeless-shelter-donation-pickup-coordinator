@@ -7,6 +7,7 @@ from django.contrib.gis.measure import Distance
 from django.db import models
 from jsonfield import JSONField
 
+from donationcoordinator.libs import calc_dist_p_miles
 from donationcoordinator.models import Location, LocationFields
 from .libs import ItemList
 
@@ -159,19 +160,21 @@ class Home(LocationFields, models.Model):
 
         ret = []  # return dict
 
+        dist = Distance(mi=radius)
+        print(dist)
+
         # all within x miles
-        homeLocations = HomeLocation.objects.filter(location__distance_lt=(bpoint, Distance(mi=radius)))
+        homeLocations = HomeLocation.objects.filter(
+            point__distance_lte=(bpoint, dist))
 
         homeLocation: HomeLocation
         for homeLocation in homeLocations:  # construct return dict
-            homepoint = homeLocation.location
+            homepoint = homeLocation.point
 
             print(bpoint)
             print(homepoint)
 
-            dist = bpoint.distance(homepoint)
-
-            dist = dist * 100  # idk man, magic numbers
+            dist = calc_dist_p_miles(bpoint, homepoint)
 
             ret.append({
                 'home': homeLocation.get_home(),

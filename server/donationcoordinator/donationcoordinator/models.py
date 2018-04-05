@@ -29,12 +29,12 @@ class Location(models.Model):
 
     recorded_at = models.DateTimeField(default=datetime.now)
     googlemapsjson = JSONField(default={})
-    location = geomodels.PointField()
+    point = geomodels.PointField()
 
     @staticmethod
     def from_lat_lon(_class, lat, lng, data=None):
         return _class.objects.create(
-            location=Point(x=lat, y=lng),
+            point=Point(x=lat, y=lng),
             googlemapsjson=data,
         )
 
@@ -53,9 +53,15 @@ class Location(models.Model):
 
     def to_lat_lon(self):
         return {
-            'lat': self.location.x,
-            'lon': self.location.y,
+            'lat': self.point.x,
+            'lon': self.point.y,
         }
+
+    def lat(self):
+        return self.point.x
+
+    def lon(self):
+        return self.point.y
 
     def save(self, *args, **kwargs):
         return super().save(*args, **kwargs)

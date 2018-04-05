@@ -51,4 +51,4 @@ if 'STARTUP_DATABASE_TASKS' in os.environ and os.environ['STARTUP_DATABASE_TASKS
         db.connections.close_all()
     except Exception as e:
         print("Couldn't do startup tasks.")
-        print(e)
+        print(e.with_traceback())
