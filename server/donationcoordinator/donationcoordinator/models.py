@@ -42,7 +42,7 @@ class Location(models.Model):
     def from_fields(_class, **kwargs):
         locString = ','.join(list(dict(kwargs).values()))
 
-        geo_result = GoogleMapsClient.lat_lon(locString)
+        geo_result = GoogleMapsClient.lat_lng(locString)
         geo_result = geo_result[0]  # just use 1st one
 
         return _class.from_lat_lng(

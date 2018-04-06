@@ -56,7 +56,7 @@ class GoogleMapsClient():
 
     @staticmethod
     @lru_cache(maxsize=1024)
-    def lat_lon(address_string):
+    def lat_lng(address_string):
         """Given an address, return a list of lat-lng pairs that belongs to that address."""
         results = GoogleMapsClient.results(address_string)
 
