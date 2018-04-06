@@ -14,6 +14,7 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 import os
+import traceback
 
 import django.contrib.auth.urls
 from django import db
@@ -52,3 +53,4 @@ if 'STARTUP_DATABASE_TASKS' in os.environ and os.environ['STARTUP_DATABASE_TASKS
     except Exception as e:
         print("Couldn't do startup tasks:")
         print(e)
+        traceback.print_exc()
