@@ -69,14 +69,14 @@ class Location(models.Model):
     def to_google_maps_uri(self):
         d = self.to_lat_lng()
 
-        return f"https://www.google.com/maps/search/?api=1&query={d['lat']},{d[lng]}"
+        return f"https://www.google.com/maps/search/?api=1&query={d['lat']},{d['lng']}"
 
     def to_google_maps_iframe(self):
         d = self.to_lat_lng()
         key = settings.GEOPOSITION_GOOGLE_MAPS_API_KEY
 
         ret = ''
-        src = f'https://www.google.com/maps/embed/v1/place?key={key}&q={d["lat"]},{d[lng]}'
+        src = f"https://www.google.com/maps/embed/v1/place?key={key}&q={d['lat']},{d['lng']}"
 
         ret = libs.wrap(ret, 'iframe', ['src'], [src])
 
