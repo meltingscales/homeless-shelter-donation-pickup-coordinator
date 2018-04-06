@@ -53,6 +53,7 @@ I am a one-man org. Woohoo!
             password="password123",
             org=henryOrg,
         )
+        henryUser.save()
 
         henryProfile = Profile(
             user=henryUser,
@@ -83,12 +84,14 @@ I am a one-man org. Woohoo!
             email="testuser@test.testing",
             password="testpassword123",
         )
+        testUser.save()
+
         testProfile = Profile(
             user=testUser,
             bio="I am a test user! Hi!",
             birth_date=datetime.now(),
         )
-        testUser.save()
+        testProfile.save()
 
         testUserHome = Home(
             user=testUser,
