@@ -3,12 +3,12 @@ from django.core.exceptions import ValidationError
 from django.http import *
 from django.shortcuts import render
 from django.urls import reverse
-from django.views.generic import DetailView
+from django.views.generic import DetailView, UpdateView
 
 from donationcoordinator.views import CreateOrUpdateView
 from donator.models import User, Home
-from org.forms import OrgForm, HomeSearchForm
-from org.models import Org
+from org.forms import OrgForm, HomeSearchForm, OrgItemsForm
+from org.models import Org, OrgItems
 
 
 # Create your views here.
@@ -87,6 +87,22 @@ class OrgCreate(OrgCreateOrUpdate):
 
         return super(OrgCreateOrUpdate, self).form_valid(form)
 
+
+class ItemsUpdate(UpdateView):
+    slug_field = \
+        slug_url_kwarg = 'pk'
+
+    model = OrgItems
+    template_name = 'org/items.html'
+    form_class = OrgItemsForm
+    illegal_keys = [  # keys we do NOT want in our form
+        'csrfmiddlewaretoken'
+    ]
+
+    def get_success_url(self):
+        return self.request.META.get('HTTP_REFERER', '/')
+
+
 def searchHomeList(request: HttpRequest):
     template_name = 'org/home_list.html'
     context = {}
@@ -110,7 +126,7 @@ def searchHomeList(request: HttpRequest):
     homesResults = Home.get_homes_locations_near(
         radius=miles,
         lat=org.location.lat(),
-        lon=org.location.lon(),
+        lng=org.location.lng(),
     )
     homesResults = sorted(homesResults, key=lambda d: d['distance'])  # sort by closest
 
@@ -120,6 +136,5 @@ def searchHomeList(request: HttpRequest):
         context['message'] = 'hi org! You didn\'t give this view any arguments! Here\'s a default view!'
     elif 'miles' in request.GET:
         context['message'] = 'OH SO U WANT ' + str(request.GET['miles'] + "MILES DO U??")
-
 
     return render(request, template_name, context)

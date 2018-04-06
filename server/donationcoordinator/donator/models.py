@@ -11,7 +11,7 @@ from donationcoordinator.libs import calc_dist_p_miles
 from donationcoordinator.models import Location, LocationFields
 from .libs import ItemList
 
-chicagolatlon = (41.8781, -87.6298,)
+chicagolatlng = (41.8781, -87.6298,)
 
 
 class User(AbstractUser):
@@ -124,7 +124,7 @@ class Home(LocationFields, models.Model):
         if self.items is None:  # if no items, make default one.
             self.items = Items.default_object()
 
-        self.location = HomeLocation.from_fields(  # unconditionally create new lat,lon from fields
+        self.location = HomeLocation.from_fields(  # unconditionally create new lat,lng from fields
             HomeLocation,
             street=self.street,
             city=self.city,
@@ -142,8 +142,8 @@ class Home(LocationFields, models.Model):
         return ret
 
     @staticmethod
-    def get_homes_locations_near(lat=chicagolatlon[0], lon=chicagolatlon[1], radius=5) -> models.QuerySet:
-        """Given `lat`, `lon`, and `radius`, return a list of dicts of
+    def get_homes_locations_near(lat=chicagolatlng[0], lng=chicagolatlng[1], radius=5) -> models.QuerySet:
+        """Given `lat`, `lng`, and `radius`, return a list of dicts of
 
         [
             {
@@ -154,9 +154,9 @@ class Home(LocationFields, models.Model):
             (...)
         ]
 
-        that are within `radius` miles of `lat`,`lon`.
+        that are within `radius` miles of `lat`,`lng`.
         """
-        bpoint = Point(x=lat, y=lon)
+        bpoint = Point(x=lat, y=lng)
 
         ret = []  # return dict
 

@@ -3,6 +3,7 @@ import os
 import markdown
 from django.conf import settings
 from django.db import models
+from jsonfield import JSONField
 
 from donationcoordinator.models import LocationFields, Location
 from donator.models import User
@@ -24,10 +25,15 @@ class OrgLocation(Location):
         return Org.objects.filter(location=self)
 
 
+class OrgItems(models.Model):
+    data = JSONField()
+
+
 class Org(LocationFields, models.Model):
     description = models.TextField(max_length=5000, blank=True, default=default_markdown)
     name = models.CharField(max_length=30, null=True, blank=True)
     location = models.OneToOneField(OrgLocation, blank=True, null=True, on_delete=models.CASCADE)
+    items = models.OneToOneField(OrgItems, blank=True, null=True, on_delete=models.CASCADE)
 
     def markdownify(self):
         return markdown.markdown(self.description,
@@ -52,7 +58,7 @@ class Org(LocationFields, models.Model):
 
     def save(self, *args, **kwargs):  # when Org is saved
 
-        self.location = OrgLocation.from_fields(  # unconditionally create new lat,lon from fields
+        self.location = OrgLocation.from_fields(  # unconditionally create new lat,lng from fields
             OrgLocation,
             street=self.street,
             city=self.city,
