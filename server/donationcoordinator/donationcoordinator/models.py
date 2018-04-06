@@ -32,7 +32,7 @@ class Location(models.Model):
     point = geomodels.PointField()
 
     @staticmethod
-    def from_lat_lon(_class, lat, lng, data=None):
+    def from_lat_lng(_class, lat, lng, data=None):
         return _class.objects.create(
             point=Point(x=lat, y=lng),
             googlemapsjson=data,
