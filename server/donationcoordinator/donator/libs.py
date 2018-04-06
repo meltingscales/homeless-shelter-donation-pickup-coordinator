@@ -4,13 +4,10 @@ import copy
 import json
 import os
 
+from bs4 import BeautifulSoup as bs
 from django.conf import settings
 
-if not settings.configured:
-    pass
-
 from donationcoordinator.libs import hashable_lru, wrap
-from bs4 import BeautifulSoup as bs
 
 default_items_json_path = r'data/items.json'
 default_items_json_path = os.path.join(settings.PROJECT_ROOT, settings.STATICFILES_DIRS[0], default_items_json_path)
@@ -315,29 +312,3 @@ class ItemList:
 
     def apply_flat_dict(self, flat):
         ItemList.apply_flat_dict_rec(self.data, flat)
-
-
-def test_itemlist():
-    itemsLoc = "../static/data/items.json"
-
-    flat = {'bleach': 3, 'cereal': 3, 'dental dams': 3}
-
-    itemList = ItemList(itemsLoc)  # initialize ItemsList from path
-
-    print("List of items ready for serializing into database:")
-    print(itemList.data)
-
-    print("Form elt:")
-    print(itemList.to_html())
-
-    itemList.apply_flat_dict(flat)
-
-    print("List of items after we apply a simulated JSON form's POST data")
-    print(itemList.data)
-
-    with open('../static/data/items_autogen.html', 'w+') as file:
-        file.write(itemList.to_html())
-
-
-if __name__ == '__main__':
-    test_itemlist()
