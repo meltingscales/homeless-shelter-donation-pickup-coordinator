@@ -26,12 +26,10 @@ class HomeSearchForm(forms.Form):
         print("asking if HomeSearchForm is valid.")
 
         if 'miles' in self.data:
-            print("Miles!")
             try:
                 var = float(self.data['miles'])
             except ValueError:
                 self.add_error('miles', 'Miles must be a number!')
-                print(self.errors)
                 return False
 
 
