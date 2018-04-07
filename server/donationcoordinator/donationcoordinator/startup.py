@@ -66,7 +66,11 @@ I am a one-man org. Woohoo!
 
         henryItems.apply_list({  # add some items
             'toilet paper': 3,
+            'lettuce': 4,
+            'bleach': 10,
         })
+
+        henryItems.save()
 
         henryHome1 = Home(
             user=henryUser,
@@ -76,6 +80,7 @@ I am a one-man org. Woohoo!
             zipCode='60660',
             state='IL',
             country='USA',
+            items=henryItems,
         )
         henryHome1.save()
 

@@ -69,7 +69,7 @@ class Items(models.Model):
     @staticmethod
     def default_object():
         return Items.objects.create(
-            data=ItemList.from_file()
+            data=ItemList().from_file()
         )
 
     def as_html(self):
@@ -77,12 +77,10 @@ class Items(models.Model):
 
     def apply_list(self, list):
         """Apply a key-value list of item:number pairs to self."""
-        itemsList = ItemList(self)  # make itemsList
-        newdata = itemsList.apply_flat_dict(list)
+        itemsList = ItemList(self.data)  # make itemsList
+        itemsList.apply_flat_dict(list)
 
-        self.data = newdata
-
-        self.save()
+        self.data = itemsList.data
 
 
 class HomeLocation(Location):
