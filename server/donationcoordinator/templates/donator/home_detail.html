@@ -53,7 +53,6 @@
 
 
     <section id="items">
-        {% if home.items %}
 
         <aside id="items-search">
             <ul>
@@ -76,9 +75,6 @@
                 </li>
             </ul>
         </form>
-        {% else %}
-        <p>u aint got no ITEMS!!! &gt;:(</p>
-        {% endif %}
     </section>
 
     <aside>
@@ -87,4 +83,8 @@
 
     <script src="{% static 'js/itemslist.js' %}"></script>
 </section>
+
+<link rel="stylesheet" href='{% static "style/items-base.css" %}'/>
+<link rel="stylesheet" href='{% static "style/items-donator.css" %}'/>
+
 {% endblock %}

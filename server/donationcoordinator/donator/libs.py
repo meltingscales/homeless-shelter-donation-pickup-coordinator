@@ -311,7 +311,7 @@ class OrgItemList(ItemList):
         safeName = item.replace(" ", self.space_replacer)  # cannot have spaces in CSS classes
         ret += wrap(item, "label")  # add label
 
-        max = OrgItemList.priority_categories
+        max = self.priority_categories
         for i in range(max):
             attrs = ["type", "name", "value"]
             vals = ["radio", safeName, i]

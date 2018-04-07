@@ -1,0 +1,4 @@
+form ul.items_list li {
+    display: grid;
+    grid-template-columns: 30% 1fr;
+}

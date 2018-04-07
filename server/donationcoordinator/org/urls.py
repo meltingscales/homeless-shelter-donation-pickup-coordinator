@@ -17,7 +17,7 @@ from django.contrib.auth.decorators import login_required
 from django.urls import path
 
 from . import views
-from .views import OrgDetail, OrgCreateOrUpdate, OrgCreate, searchHomeList, ItemsUpdate
+from .views import OrgDetail, OrgCreateOrUpdate, OrgCreate, searchHomeList, OrgItemsUpdate
 
 app_name = 'org'
 urlpatterns = [
@@ -62,9 +62,9 @@ urlpatterns = [
     # view or edit Org's items
     path(r'items/',
          login_required(
-             ItemsUpdate.as_view(),
+             OrgItemsUpdate.as_view(),
          ),
-         name='items'
+         name='org_items'
          ),
 
 ]

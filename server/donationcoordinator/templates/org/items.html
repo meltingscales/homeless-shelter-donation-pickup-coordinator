@@ -1,10 +1,27 @@
 {% extends "base.html" %}
+{% load staticfiles %}
 
 {% block content %}
 
 {% include "org/org_nav.html" %}
 
 <main>
-    <p>Welcome. This is your Organization's Inventory!</p>
+    <p>Welcome. This is {{ org.name }}'s Inventory!</p>
+
+    <form method="POST" action="update-items/" name="items">
+        {% csrf_token %}
+        <ul>
+            {{ org.items.as_html |safe }}
+            <li>
+                <input type="submit" value="Submit"/>
+            </li>
+        </ul>
+    </form>
+
 </main>
+
+<link rel="stylesheet" href='{% static "style/items-base.css" %}'/>
+<link rel="stylesheet" href='{% static "style/items-org.css" %}'/>
+
+
 {% endblock %}

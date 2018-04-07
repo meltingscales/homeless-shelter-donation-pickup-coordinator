@@ -1,0 +1,12 @@
+input[type="radio"] {
+
+}
+
+form ul.items_list label {
+    flex-basis: 100%;
+}
+
+form ul.items_list li {
+    display: flex;
+    justify-content: flex-end;
+}

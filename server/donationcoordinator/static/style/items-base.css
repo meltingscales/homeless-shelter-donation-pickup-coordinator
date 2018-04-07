@@ -20,20 +20,20 @@ ul.items_list.highlighted li:not(.hidden) {
     list-style-image:url('../media/plus10x10.png');
 }
 
-#items li {
+form li {
     padding: 0;
 }
 
-#items ul {
+form ul {
     padding-top: 0;
     padding-bottom: 0.611em; /* 11 / 18 = 0.61~ */
 }
 
-#items form {
+form {
     width: 100%;
 }
 
-#items a {
+form a {
     line-height: 2.444rem;
     background-color: darkmagenta;
     display: inline-block;
@@ -41,14 +41,9 @@ ul.items_list.highlighted li:not(.hidden) {
     vertical-align: middle;
 }
 
-#items a:hover {
+form a:hover {
     cursor: pointer;
     background-color: brown;
-}
-
-form ul.items_list li {
-    display: grid;
-    grid-template-columns: 30% 1fr;
 }
 
 form ul.items_list li:nth-of-type(2n+1) { /* every odd one */

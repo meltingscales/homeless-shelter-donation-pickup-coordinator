@@ -88,9 +88,7 @@ class OrgCreate(OrgCreateOrUpdate):
         return super(OrgCreateOrUpdate, self).form_valid(form)
 
 
-class ItemsUpdate(UpdateView):
-    slug_field = \
-        slug_url_kwarg = 'pk'
+class OrgItemsUpdate(UpdateView):
 
     model = OrgItems
     template_name = 'org/items.html'
@@ -101,6 +99,14 @@ class ItemsUpdate(UpdateView):
 
     def get_success_url(self):
         return self.request.META.get('HTTP_REFERER', '/')
+
+    def get_object(self, queryset=None):
+        return self.request.user.org
+
+    def get_context_data(self, **kwargs):
+        context = super(OrgItemsUpdate, self).get_context_data(**kwargs)
+        context['org'] = self.request.user.org
+        return context
 
 
 def searchHomeList(request: HttpRequest):

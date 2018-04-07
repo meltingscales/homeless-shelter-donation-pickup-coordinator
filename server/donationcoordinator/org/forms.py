@@ -7,7 +7,7 @@ from .models import Org, OrgItems
 class OrgForm(ModelForm):
     class Meta:
         model = Org
-        exclude = ('location',)
+        exclude = ('location', 'items')
 
 
 class HomeSearchForm(forms.Form):
