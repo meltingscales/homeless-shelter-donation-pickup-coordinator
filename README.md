@@ -20,6 +20,7 @@ each other over this platform.
 
 # Other pages
 - [Sketches](_sketches)
+- [Reflection about this app](_notes/reflection.md)
 - [Notes on shelters](_notes)
 
 # For those who dislike reading or have little time

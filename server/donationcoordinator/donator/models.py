@@ -1,4 +1,5 @@
 # Create your models here.
+from pprint import pprint
 
 from django.contrib.auth.models import AbstractUser
 from django.contrib.gis.geos import Point
@@ -6,10 +7,11 @@ from django.contrib.gis.measure import Distance
 from django.db import models
 from jsonfield import JSONField
 
+from donationcoordinator.libs import calc_dist_p_miles
 from donationcoordinator.models import Location, LocationFields
-from . import libs
+from .libs import ItemList
 
-chicagolatlon = (41.8781, -87.6298,)
+chicagolatlng = (41.8781, -87.6298,)
 
 
 class User(AbstractUser):
@@ -67,11 +69,18 @@ class Items(models.Model):
     @staticmethod
     def default_object():
         return Items.objects.create(
-            data=libs.ItemList.from_file()
+            data=ItemList().from_file()
         )
 
     def as_html(self):
-        return libs.ItemList(self.data).to_html()
+        return ItemList(self.data).to_html()
+
+    def apply_list(self, list):
+        """Apply a key-value list of item:number pairs to self."""
+        itemsList = ItemList(self.data)  # make itemsList
+        itemsList.apply_flat_dict(list)
+
+        self.data = itemsList.data
 
 
 class HomeLocation(Location):
@@ -113,7 +122,7 @@ class Home(LocationFields, models.Model):
         if self.items is None:  # if no items, make default one.
             self.items = Items.default_object()
 
-        self.location = HomeLocation.from_fields(  # unconditionally create new lat,lon from fields
+        self.location = HomeLocation.from_fields(  # unconditionally create new lat,lng from fields
             HomeLocation,
             street=self.street,
             city=self.city,
@@ -131,8 +140,8 @@ class Home(LocationFields, models.Model):
         return ret
 
     @staticmethod
-    def get_homes_locations_near(lat=chicagolatlon[0], lon=chicagolatlon[1], radius=5) -> models.QuerySet:
-        """Given `lat`, `lon`, and `radius`, return a list of dicts of
+    def get_homes_locations_near(lat=chicagolatlng[0], lng=chicagolatlng[1], radius=5) -> models.QuerySet:
+        """Given `lat`, `lng`, and `radius`, return a list of dicts of
 
         [
             {
@@ -143,25 +152,34 @@ class Home(LocationFields, models.Model):
             (...)
         ]
 
-        that are within `radius` miles of `lat`,`lon`.
+        that are within `radius` miles of `lat`,`lng`.
         """
-        bpoint = Point(x=lat, y=lon)
+        bpoint = Point(x=lat, y=lng)
 
         ret = []  # return dict
 
+        dist = Distance(mi=radius)
+        print(dist)
+
         # all within x miles
-        homeLocations = HomeLocation.objects.filter(location__distance_lt=(bpoint, Distance(mi=radius)))
+        homeLocations = HomeLocation.objects.filter(
+            point__distance_lte=(bpoint, dist))
 
         homeLocation: HomeLocation
         for homeLocation in homeLocations:  # construct return dict
-            homepoint = homeLocation.location
+            homepoint = homeLocation.point
 
-            dist = bpoint.distance(homepoint)
+            print(bpoint)
+            print(homepoint)
+
+            dist = calc_dist_p_miles(bpoint, homepoint)
 
             ret.append({
                 'home': homeLocation.get_home(),
                 'location': homeLocation,
                 'distance': dist,
             })
+
+        pprint(ret)
 
         return ret

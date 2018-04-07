@@ -3,8 +3,10 @@ import os
 import markdown
 from django.conf import settings
 from django.db import models
+from jsonfield import JSONField
 
 from donationcoordinator.models import LocationFields, Location
+from donator.libs import OrgItemList
 from donator.models import User
 
 default_markdown_file = os.path.join(settings.PROJECT_ROOT, settings.STATICFILES_DIRS[0],
@@ -24,10 +26,24 @@ class OrgLocation(Location):
         return Org.objects.filter(location=self)
 
 
+class OrgItems(models.Model):
+    data = JSONField()
+
+    @staticmethod
+    def default_object():
+        return OrgItems.objects.create(
+            data=OrgItemList().from_file()
+        )
+
+    def as_html(self):
+        return OrgItemList(self.data).to_html()
+
+
 class Org(LocationFields, models.Model):
     description = models.TextField(max_length=5000, blank=True, default=default_markdown)
     name = models.CharField(max_length=30, null=True, blank=True)
-    location = models.OneToOneField(OrgLocation, blank=True, null=True, on_delete=models.PROTECT)
+    location = models.OneToOneField(OrgLocation, blank=True, null=True, on_delete=models.CASCADE)
+    items = models.OneToOneField(OrgItems, null=True, on_delete=models.CASCADE)
 
     def markdownify(self):
         return markdown.markdown(self.description,
@@ -49,3 +65,19 @@ class Org(LocationFields, models.Model):
 
         user = userQS[0]  # get user from queryset
         return user.username
+
+    def save(self, *args, **kwargs):  # when Org is saved
+
+        if self.items is None:  # if no items, make default one.
+            self.items = OrgItems.default_object()
+
+        self.location = OrgLocation.from_fields(  # unconditionally create new lat,lng from fields
+            OrgLocation,
+            street=self.street,
+            city=self.city,
+            zipCode=self.zipCode,
+            state=self.state,
+            country=self.country,
+        )
+
+        super().save(*args, **kwargs)

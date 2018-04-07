@@ -1,0 +1,83 @@
+{
+  "cleaning supplies": {
+    "bleach": 0,
+    "drain cleaner": 0,
+    "paper towels": 0
+  },
+  "clothing": {
+    "legwear": {
+      "blouses": 0,
+      "dresses": 0,
+      "jeans": 0,
+      "shorts": 0,
+      "skirts": 0,
+      "sweatpants": 0,
+      "waders": 0
+    },
+    "shoes": {
+      "boots": 0,
+      "dress shoes": 0,
+      "heels": 0,
+      "slippers": 0,
+      "sneakers": 0,
+      "snow boots": 0,
+      "wader boots": 0
+    }
+  },
+  "food": {
+    "non-perishable": {
+      "canned meat": 0,
+      "canned soup": 0,
+      "canned vegetables": 0
+    },
+    "other": {
+      "bottled water": 0,
+      "coffee": 0,
+      "gum": 0,
+      "mints": 0,
+      "seltzer water": 0,
+      "soda": 0,
+      "sparkling water": 0,
+      "tea": 0
+    },
+    "perishable": {
+      "cereal": 0,
+      "chips": 0,
+      "donuts": 0,
+      "eggs": 0,
+      "fruit juice": 0,
+      "orange juice": 0
+    },
+    "produce": {
+      "eggplant": 0,
+      "lettuce": 0
+    }
+  },
+  "menstrual products": {
+    "cups": 0,
+    "liner pads": 0,
+    "pads": 0,
+    "tampons": 0
+  },
+  "pharmaceuticals": {
+    "antacid": 0,
+    "blood thinner": 0,
+    "laxative": 0,
+    "painkiller": 0
+  },
+  "sexual health": {
+    "condoms": 0,
+    "dental dams": 0,
+    "lube": 0
+  },
+  "toiletries": {
+    "baby wipes": 0,
+    "conditioner": 0,
+    "lipstick": 0,
+    "makeup": 0,
+    "shampoo": 0,
+    "shower gel": 0,
+    "skin lotion": 0,
+    "toilet paper": 0
+  }
+}

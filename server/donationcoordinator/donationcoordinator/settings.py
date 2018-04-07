@@ -110,6 +110,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.gis',
     'django_extensions',
+    'django_activeurl',
     'annoying',
     'donationcoordinator',
     'donator',
@@ -127,6 +128,11 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'donationcoordinator.urls'
+
+TEMPLATE_CONTEXT_PROCESSORS = (
+    'django.core.context_processors.request',
+)
+
 
 TEMPLATES = [
     {

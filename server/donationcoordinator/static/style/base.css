@@ -159,6 +159,10 @@ nav ul {
     padding: 0;
 }
 
+nav .active a {
+    background-color: blueviolet;
+}
+
 nav ul li {
     text-align: center;
     padding-bottom: 0;

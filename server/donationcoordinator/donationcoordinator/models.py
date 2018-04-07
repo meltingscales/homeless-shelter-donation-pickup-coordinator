@@ -29,12 +29,12 @@ class Location(models.Model):
 
     recorded_at = models.DateTimeField(default=datetime.now)
     googlemapsjson = JSONField(default={})
-    location = geomodels.PointField()
+    point = geomodels.PointField()
 
     @staticmethod
-    def from_lat_lon(_class, lat, lng, data=None):
+    def from_lat_lng(_class, lat, lng, data=None):
         return _class.objects.create(
-            location=Point(x=lat, y=lng),
+            point=Point(x=lat, y=lng),
             googlemapsjson=data,
         )
 
@@ -42,35 +42,41 @@ class Location(models.Model):
     def from_fields(_class, **kwargs):
         locString = ','.join(list(dict(kwargs).values()))
 
-        geo_result = GoogleMapsClient.lat_lon(locString)
+        geo_result = GoogleMapsClient.lat_lng(locString)
         geo_result = geo_result[0]  # just use 1st one
 
-        return _class.from_lat_lon(
+        return _class.from_lat_lng(
             _class,
             lat=geo_result[0],
             lng=geo_result[1],
         )
 
-    def to_lat_lon(self):
+    def to_lat_lng(self):
         return {
-            'lat': self.location.x,
-            'lon': self.location.y,
+            'lat': self.point.x,
+            'lng': self.point.y,
         }
+
+    def lat(self):
+        return self.point.x
+
+    def lng(self):
+        return self.point.y
 
     def save(self, *args, **kwargs):
         return super().save(*args, **kwargs)
 
     def to_google_maps_uri(self):
-        d = self.to_lat_lon()
+        d = self.to_lat_lng()
 
-        return f"https://www.google.com/maps/search/?api=1&query={d['lat']},{d['lon']}"
+        return f"https://www.google.com/maps/search/?api=1&query={d['lat']},{d['lng']}"
 
     def to_google_maps_iframe(self):
-        d = self.to_lat_lon()
+        d = self.to_lat_lng()
         key = settings.GEOPOSITION_GOOGLE_MAPS_API_KEY
 
         ret = ''
-        src = f'https://www.google.com/maps/embed/v1/place?key={key}&q={d["lat"]},{d["lon"]}'
+        src = f"https://www.google.com/maps/embed/v1/place?key={key}&q={d['lat']},{d['lng']}"
 
         ret = libs.wrap(ret, 'iframe', ['src'], [src])
 

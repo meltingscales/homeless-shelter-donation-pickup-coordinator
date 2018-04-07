@@ -9,13 +9,11 @@
 </h1>
 
 <section>
-    <form type="GET" action="">
+    <form method="GET" action="">
         <ul>
-            <li>
-                <label>Miles</label>
-                <input name="miles" type="number" value="5"/>
-            </li>
+            {{ form.as_ul }}
         </ul>
+        <input type="submit" value="Submit"/>
     </form>
 </section>
 
@@ -25,10 +23,10 @@
         {% for result in homes_results %}
         <ul>
             <li>{{ result.home }}</li>
-            <li>{{ result.distance }}</li>
+            <li>{{ result.distance |floatformat}} mi</li>
         </ul>
         {% empty %}
-        <li>No Homes created yet.</li>
+        <li>No Homes found matching your search criteria.</li>
         {% endfor %}
     </ul>
     {% endif %}

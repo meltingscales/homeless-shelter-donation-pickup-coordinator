@@ -2,14 +2,52 @@
 import functools
 import json
 from functools import (lru_cache)
+from math import sin, cos, radians, degrees, acos
 
 import googlemaps
 from django.conf import settings
+from django.contrib.gis.geos import Point
+
+
+def calc_dist_meters(lat_a, long_a, lat_b, long_b):
+    resToMile = calc_dist_miles(lat_a, long_a, lat_b, long_b)
+    resToMt = resToMile / 0.00062137119223733
+
+    return resToMt
+
+
+def calc_dist_miles(lat_a, long_a, lat_b, long_b):
+    lat_a = radians(lat_a)
+    lat_b = radians(lat_b)
+    long_diff = radians(long_a - long_b)
+    distance = (sin(lat_a) * sin(lat_b) +
+                cos(lat_a) * cos(lat_b) * cos(long_diff))
+    resToMile = degrees(acos(distance)) * 69.09
+    return resToMile
+
+
+def calc_dist_p_meters(p1: Point, p2: Point):
+    return calc_dist_meters(p1.x, p1.y, p2.x, p2.y)
+
+
+def calc_dist_p_miles(p1: Point, p2: Point):
+    return calc_dist_miles(p1.x, p1.y, p2.x, p2.y)
+
+
+def islist(o):
+    return type(o) == type([])
+
+
+def istuple(o):
+    return type(o) == type(())
 
 
 class GoogleMapsClient():
-    key = settings.GEOPOSITION_GOOGLE_MAPS_API_KEY
-    client = googlemaps.Client(key=key)
+    try:
+        key = settings.GEOPOSITION_GOOGLE_MAPS_API_KEY
+        client = googlemaps.Client(key=key)
+    except Exception as e:
+        pass
 
     @staticmethod
     @lru_cache(maxsize=1024)
@@ -18,8 +56,8 @@ class GoogleMapsClient():
 
     @staticmethod
     @lru_cache(maxsize=1024)
-    def lat_lon(address_string):
-        """Given an address, return a list of lat-lon pairs that belongs to that address."""
+    def lat_lng(address_string):
+        """Given an address, return a list of lat-lng pairs that belongs to that address."""
         results = GoogleMapsClient.results(address_string)
 
         latlons = []

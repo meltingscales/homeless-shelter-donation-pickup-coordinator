@@ -111,6 +111,13 @@ class HomeCreateOrUpdate(CreateOrUpdateView):
         return super(HomeCreateOrUpdate, self).form_valid(form)
 
 
+class HomeCreate(HomeCreateOrUpdate):
+    def form_valid(self, form: HomeForm):
+        user: User = self.request.user
+        form.instance.user = user
+        return super(HomeCreateOrUpdate, self).form_valid(form)
+
+
 class HomeDetail(DetailView):
     model = Home
     template_name = 'donator/home_detail.html'
