@@ -52,9 +52,14 @@
   - To make ourselves feel good?
   
 - Why SHOULDN'T we help homeless people?
-  - x
+  - They don't deserve it
+  - They are lazy
+  - Teaching a man to fish is more sustainable than giving him fish
 
 - What have charities done wrong?
+  - x
+
+- Why do charities exist?
   - x
 
 - Is helping the homeless out of pity or selfishness more harmful long-term than helpful?
@@ -69,7 +74,11 @@
 
 - Should I ever disallow a group from using my tool if I deem they're mis-using it?
   - What is misuse?
-  - Should I change the liscense?
+  - Should I change the license?
+  - Who am I to dictate who is 'allowed' to use my app?
+  - Do groups who force religion on homeless people get to use my app?
+  - Do groups who sell the donated items and take a cut not get to use my app?
+    - What's the threshhold?
 
 # Reflection
 
