@@ -84,10 +84,27 @@ I am a one-man org. Woohoo!
         )
         henryHome1.save()
 
+        testuserorg = Org(
+            name="Habitat for Test",
+            street='1634 W Warren Blvd',
+            city='Chicago',
+            zipCode='60612',
+            state='IL',
+            country='USA',
+            description="""
+        # Test User's Org
+
+        > I am a one-man org. Woohoo!
+
+        """,
+        )
+        testuserorg.save()
+
         testUser = User.objects.create_user(
             username="testuser",
             email="testuser@test.testing",
             password="testpassword123",
+            org=testuserorg,
         )
         testUser.save()
 
@@ -95,8 +112,19 @@ I am a one-man org. Woohoo!
             user=testUser,
             bio="I am a test user! Hi!",
             birth_date=datetime.now(),
+
         )
         testProfile.save()
+
+        testitems: Items = Items.default_object()
+
+        testitems.apply_list({  # add some items
+            'lettuce': 4,
+            'eggplant': 200,
+        })
+
+        testitems.save()
+
 
         testUserHome = Home(
             user=testUser,
@@ -106,5 +134,6 @@ I am a one-man org. Woohoo!
             zipCode='60609',
             state='IL',
             country='USA',
+            items=testitems,
         )
         testUserHome.save()
