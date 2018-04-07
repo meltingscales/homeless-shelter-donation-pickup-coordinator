@@ -1,5 +1,20 @@
 input[type="radio"] {
+    background-color: pink;
+    position: relative;
+    margin: 0;
+    padding: 0;
+    height: 1.222rem;
+    width: 1.222rem;
+    cursor: pointer;
+    -webkit-appearance: button;
+}
 
+input[type="radio"]:hover {
+    filter: brightness(85%);
+}
+
+input[type="radio"]:checked {
+    background-color: green;
 }
 
 form ul.items_list label {
