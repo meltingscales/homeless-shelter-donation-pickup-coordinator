@@ -12,11 +12,11 @@ ul.items_list.highlighted li:not(.hidden) {
 }
 
 
-#items form ul:not(.items_list) > li:not(.hidden) {
+form ul:not(.items_list) > li:not(.hidden) {
     list-style-image:url('../media/minus10x10.png');
 }
 
-#items form li.hidden {
+form li.hidden {
     list-style-image:url('../media/plus10x10.png');
 }
 
