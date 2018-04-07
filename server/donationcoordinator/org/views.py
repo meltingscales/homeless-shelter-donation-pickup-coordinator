@@ -109,14 +109,14 @@ def searchHomeList(request: HttpRequest):
 
     form = HomeSearchForm(request.GET or None)  # create form from GET data
 
-    if form.is_valid():  # if valid
-        context['form'] = form  # create form from that data
-    else:
-        context['form'] = HomeSearchForm()  # create blank form
+    context['form'] = form
+
+    if not form.is_valid():  # if not valid, stop.
+        return render(request, template_name, context)
 
     miles = HomeSearchForm.Meta.default_miles
-    if 'miles' in request.GET:
-        miles = request.GET['miles']
+    if 'miles' in form.data:
+        miles = form.data['miles'] or HomeSearchForm.Meta.default_miles
 
     org: Org = request.user.org_or_none()
 
