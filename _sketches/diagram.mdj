@@ -2015,6 +2015,30 @@
 											"width": 111,
 											"height": 13,
 											"autoResize": false
+										},
+										{
+											"_type": "ERDColumnView",
+											"_id": "AAAAAAFisE+5TNKPuLE=",
+											"_parent": {
+												"$ref": "AAAAAAFisBmHiR51vso="
+											},
+											"model": {
+												"$ref": "AAAAAAFisE+43dKMVDA="
+											},
+											"visible": true,
+											"enabled": true,
+											"lineColor": "#000000",
+											"fillColor": "#ffffff",
+											"fontColor": "#000000",
+											"font": "Arial;13;0",
+											"showShadow": true,
+											"containerChangeable": false,
+											"containerExtending": false,
+											"left": 469,
+											"top": 691,
+											"width": 111,
+											"height": 13,
+											"autoResize": false
 										}
 									],
 									"visible": true,
@@ -2029,7 +2053,7 @@
 									"left": 464,
 									"top": 671,
 									"width": 121,
-									"height": 23,
+									"height": 38,
 									"autoResize": false
 								}
 							],
@@ -2212,7 +2236,7 @@
 									"containerExtending": false,
 									"left": 672,
 									"top": 669,
-									"width": 123.20263671875,
+									"width": 138.341796875,
 									"height": 13,
 									"autoResize": false,
 									"underline": false,
@@ -2251,7 +2275,7 @@
 											"containerExtending": false,
 											"left": 677,
 											"top": 692,
-											"width": 113.20263671875,
+											"width": 128.341796875,
 											"height": 13,
 											"autoResize": false
 										},
@@ -2275,7 +2299,7 @@
 											"containerExtending": false,
 											"left": 677,
 											"top": 707,
-											"width": 113.20263671875,
+											"width": 128.341796875,
 											"height": 13,
 											"autoResize": false
 										},
@@ -2299,7 +2323,7 @@
 											"containerExtending": false,
 											"left": 677,
 											"top": 722,
-											"width": 113.20263671875,
+											"width": 128.341796875,
 											"height": 13,
 											"autoResize": false
 										},
@@ -2323,7 +2347,31 @@
 											"containerExtending": false,
 											"left": 677,
 											"top": 737,
-											"width": 113.20263671875,
+											"width": 128.341796875,
+											"height": 13,
+											"autoResize": false
+										},
+										{
+											"_type": "ERDColumnView",
+											"_id": "AAAAAAFisTU74dKZWgg=",
+											"_parent": {
+												"$ref": "AAAAAAFisCAZAB8NvCw="
+											},
+											"model": {
+												"$ref": "AAAAAAFisTU7p9KWw8c="
+											},
+											"visible": true,
+											"enabled": true,
+											"lineColor": "#000000",
+											"fillColor": "#ffffff",
+											"fontColor": "#000000",
+											"font": "Arial;13;0",
+											"showShadow": true,
+											"containerChangeable": false,
+											"containerExtending": false,
+											"left": 677,
+											"top": 752,
+											"width": 128.341796875,
 											"height": 13,
 											"autoResize": false
 										}
@@ -2339,8 +2387,8 @@
 									"containerExtending": false,
 									"left": 672,
 									"top": 687,
-									"width": 123.20263671875,
-									"height": 68,
+									"width": 138.341796875,
+									"height": 83,
 									"autoResize": false
 								}
 							],
@@ -2355,8 +2403,8 @@
 							"containerExtending": false,
 							"left": 672,
 							"top": 664,
-							"width": 123.20263671875,
-							"height": 91,
+							"width": 138.341796875,
+							"height": 106,
 							"autoResize": false,
 							"nameLabel": {
 								"$ref": "AAAAAAFisCAY/h8ME38="
@@ -3253,6 +3301,19 @@
 							"foreignKey": false,
 							"nullable": false,
 							"unique": false
+						},
+						{
+							"_type": "ERDColumn",
+							"_id": "AAAAAAFisE+43dKMVDA=",
+							"_parent": {
+								"$ref": "AAAAAAFisBmHhR5xVts="
+							},
+							"name": "enddate",
+							"length": 0,
+							"primaryKey": false,
+							"foreignKey": false,
+							"nullable": false,
+							"unique": false
 						}
 					]
 				},
@@ -3316,6 +3377,7 @@
 								"$ref": "AAAAAAFisCAY/B8Jgig="
 							},
 							"name": "showedUp",
+							"documentation": "If the Donator showed up.",
 							"length": 0,
 							"primaryKey": false,
 							"foreignKey": false,
@@ -3329,6 +3391,7 @@
 								"$ref": "AAAAAAFisCAY/B8Jgig="
 							},
 							"name": "itemsPromised",
+							"documentation": "Items the Donator said they would give.",
 							"length": 0,
 							"primaryKey": false,
 							"foreignKey": false,
@@ -3342,6 +3405,21 @@
 								"$ref": "AAAAAAFisCAY/B8Jgig="
 							},
 							"name": "itemsTaken",
+							"documentation": "Items the Donator gave.",
+							"length": 0,
+							"primaryKey": false,
+							"foreignKey": false,
+							"nullable": false,
+							"unique": false
+						},
+						{
+							"_type": "ERDColumn",
+							"_id": "AAAAAAFisTU7p9KWw8c=",
+							"_parent": {
+								"$ref": "AAAAAAFisCAY/B8Jgig="
+							},
+							"name": "donatorApproves",
+							"documentation": "Whether or not the Donator is OK with showing up for this specific Pickup.\n\nDonators will get notified a couple days or a week in advance.",
 							"length": 0,
 							"primaryKey": false,
 							"foreignKey": false,
