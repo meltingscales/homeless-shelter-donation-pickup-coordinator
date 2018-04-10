@@ -1,4 +1,5 @@
 import os
+from datetime import datetime
 
 import markdown
 from django.conf import settings
@@ -7,7 +8,7 @@ from jsonfield import JSONField
 
 from donationcoordinator.models import LocationFields, Location
 from donator.libs import OrgItemList
-from donator.models import User
+from donator.models import User, Home
 
 default_markdown_file = os.path.join(settings.PROJECT_ROOT, settings.STATICFILES_DIRS[0],
                                      'data/default_markdown.txt')
@@ -81,3 +82,21 @@ class Org(LocationFields, models.Model):
         )
 
         super().save(*args, **kwargs)
+
+
+class Route(models.Model):
+    """A ``Route`` that someone goes along with a vehicle and executes ``Pickup`` events from."""
+    org: Org = models.ForeignKey(Org, on_delete=models.PROTECT)
+    driver: User = models.OneToOneField(User, on_delete=models.PROTECT)
+    start_date = models.DateTimeField(default=datetime.now)
+    end_date = models.DateTimeField(null=True)
+
+
+class Pickup(models.Model):
+    """A single ``Pickup`` event occurring at a single ``Home``."""
+    route = models.ForeignKey(Route, on_delete=models.PROTECT)
+    home = models.ForeignKey(Home, on_delete=models.PROTECT)
+    showed_up: bool = models.BooleanField(default=True)
+    donator_approves: bool = models.BooleanField(default=True)
+    items_promised: JSONField()
+    items_taken: JSONField()
