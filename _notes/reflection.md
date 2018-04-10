@@ -82,4 +82,46 @@
 
 # Reflection
 
-NYI
+This project was conceived as a tool, a public service for other people to use.
+It wasn't imagined with a specific educational goal in mind, or to teach people
+anything. However, that doesn't mean that it carries no message or bias.
+
+It began as an idea that was wildly different from its current imagination: An
+application that would track the needs and locations of homeless people through
+a database and allow civilians to give them things they need to live, like food,
+clothing, toothpaste, etc.
+
+This idea came from good intentions, but was too naive and put too much trust in
+its users to work. Many issues like abuse of features, homeless people not
+having phones, and how widely adopted a flawed application like that would get
+all forced me to re-imagine this project.
+
+After having talked with my professor for COM 380, we discussed the act of
+donating things to homeless shelters and how it could be made easier for
+civilians. We thought, "If there were a way for donating to be painless, that
+would definitely encourage donations!".
+
+That is where the idea of **shelters coming to you** came from. If people could
+"donate while sitting on their butts", i.e. with minimal or no effort, perhaps
+that would encourage donations!
+
+The creation of an application like this also comes benefits, such as free
+organization, bookkeeping, tracking, centralization, standardization, and a
+framework for future applications similar to this that can be used, extended
+from, or simply looked at for reference.
+
+I began the development process by choosing a framework for the web app to use,
+beginning to create the application, and then interviewing shelters for their
+input on the app. I have interviewed two shelters, one small and one large,
+about the app. I told them about the app and then asked them what they thought
+of my idea, what it lacked, and if it would benefit them.
+
+From this, I gained valuable insight into the needs and limitations of homeless
+shelters. Not all have the same needs, and the needs vary by their type and
+size. Some contraints are space, the need for paperwork, the necessity of
+communicating unaccepted items to civilians, bookkeeping, and organization. I
+realized that the goods-donating part of their operations could greatly benefit
+from an automated tracking and donating system.
+
+Using their suggestions and the notes I took from the meetings, I have a better
+understanding of what this app should do for shelters, and what their needs are.
