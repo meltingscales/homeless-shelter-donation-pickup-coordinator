@@ -86,10 +86,27 @@ This project was conceived as a tool, a public service for other people to use.
 It wasn't imagined with a specific educational goal in mind, or to teach people
 anything. However, that doesn't mean that it carries no message or bias.
 
-It began as an idea that was wildly different from its current imagination: An
-application that would track the needs and locations of homeless people through
-a database and allow civilians to give them things they need to live, like food,
-clothing, toothpaste, etc.
+I created this app because of my personal opinions on homelessness and how
+society should handle welfare of citizens. I have very strong opinions on how
+people should be treated by the state, society they live in, or entity which
+governs them.
+
+The fact that homeless shelters exist or homelessness exists is a result of some
+sort of malfunction of the powers that be in respects to taking care of its
+citizens. Either through neglect, shifting blame, or willful blindness, people
+are on the streets. It is the U.S. government, and partially the long-standing
+culture of greed and indifference in the United States that helps cause this.
+
+In other words, I believe homeless shelters are attempting to do the job that
+the state has failed to do. This applies to poor people as well. They are a
+result of a dysfunction in the distribution of resources in our society.
+Homelessness does not need to exist, and neither does poverty. They are symptoms
+of a disease.
+
+In happier news, this project began as an idea that was wildly different from
+its current imagination: An application that would track the needs and locations
+of homeless people through a database and allow civilians to give them things
+they need to live, like food, clothing, toothpaste, etc.
 
 This idea came from good intentions, but was too naive and put too much trust in
 its users to work. Many issues like abuse of features, homeless people not
