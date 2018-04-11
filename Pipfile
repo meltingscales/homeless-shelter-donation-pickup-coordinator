@@ -44,6 +44,7 @@ watchdog = "==0.8.3"
 gunicorn = "*"
 django-heroku = "*"
 django-activeurl = "*"
+yattag = "*"
 
 [dev-packages]
 

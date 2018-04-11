@@ -6,6 +6,23 @@ input {
     box-shadow: inherit;
 }
 
+ul#priorities {
+    display: flex;
+    pointer-events: none;
+    list-style-type: none;
+    float: right;
+    margin-bottom: -2.444rem;
+}
+
+ul#priorities li {transform: rotate(90deg);padding: 0;margin: 0;}
+
+ul#priorities li a {
+    height: 1.222rem;
+    width: 1.222rem;
+    display: block;
+    background-color: red;
+}
+
 ul.items_list.highlighted li:not(.hidden) {
     /* background-color: red; */
     box-shadow: inset 0px 0px 10px 2px #FFC107;

@@ -319,7 +319,8 @@ class OrgItemList(ItemList):
         with tag('ul', id='priorities'):
             for priority in self.priority_descriptions:
                 with tag('li'):
-                    text(priority)
+                    with tag('a'):
+                        text(priority)
 
         return doc.getvalue()
 
