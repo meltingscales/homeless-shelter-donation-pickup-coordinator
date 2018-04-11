@@ -7,7 +7,9 @@
 
 <main>
     <p>Welcome. This is {{ org.name }}'s Inventory!</p>
-
+    <ul>
+        {{ priority_descriptions |safe }}
+    </ul>
     <form method="POST" name="items">
         {% csrf_token %}
         <ul>

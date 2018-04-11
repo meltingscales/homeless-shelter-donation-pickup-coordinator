@@ -105,7 +105,10 @@ class OrgItemsUpdate(ItemsUpdate, UpdateView):
 
     def get_context_data(self, **kwargs):
         context = super(OrgItemsUpdate, self).get_context_data(**kwargs)
+
         context['org'] = self.request.user.org
+        context['priority_descriptions'] = OrgItemList().generate_priority_descriptions()
+
         return context
 
     def form_valid(self, form):

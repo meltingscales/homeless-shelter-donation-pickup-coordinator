@@ -6,6 +6,7 @@ import os
 
 from bs4 import BeautifulSoup as bs
 from django.conf import settings
+from yattag import Doc
 
 from donationcoordinator.libs import wrap
 
@@ -303,6 +304,26 @@ class ItemList:
 
 class OrgItemList(ItemList):
     priority_categories = 5
+    priority_descriptions = [
+        'low',
+        '',
+        'medium',
+        '',
+        'high'
+    ]
+
+    def generate_priority_descriptions(self):
+
+        doc, tag, text = Doc().tagtext()
+
+        with tag('ul', id='priorities'):
+            for priority in self.priority_descriptions:
+                with tag('li'):
+                    text(priority)
+
+        return doc.getvalue()
+
+
 
     def itemToLI(self, item: str, selected):
 
