@@ -18,20 +18,19 @@ class HomeSearchForm(forms.Form):
 
     miles = forms.FloatField(initial=Meta.default_miles)
 
-    def is_valid(self):
-        form_data = self.data
-
-        print(form_data)
-
-        print("asking if HomeSearchForm is valid.")
-
+    def miles_valid(self):
         if 'miles' in self.data:
             try:
                 var = float(self.data['miles'])
+                return True
             except ValueError:
                 self.add_error('miles', 'Miles must be a number!')
                 return False
 
+    def is_valid(self):
+
+        if not self.miles_valid():
+            return False
 
         return super(HomeSearchForm, self).is_valid()
 

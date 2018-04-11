@@ -8,7 +8,7 @@
 <main>
     <p>Welcome. This is {{ org.name }}'s Inventory!</p>
 
-    <form method="POST" action="update-items/" name="items">
+    <form method="POST" name="items">
         {% csrf_token %}
         <ul>
             {{ org.items.as_html |safe }}

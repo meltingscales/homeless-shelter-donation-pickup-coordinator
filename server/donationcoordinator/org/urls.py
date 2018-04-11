@@ -67,4 +67,12 @@ urlpatterns = [
          name='org_items'
          ),
 
+    # update Org's items
+    path(r'items/update/',
+         login_required(
+             OrgItemsUpdate.as_view(),
+         ),
+         name='org_items_update',
+         ),
+
 ]

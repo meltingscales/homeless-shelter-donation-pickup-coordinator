@@ -1,12 +1,16 @@
+from pprint import pprint
+
 from django.contrib.auth.decorators import login_required
-from django.core.exceptions import ValidationError
+from django.core.exceptions import ValidationError, PermissionDenied
 from django.http import *
 from django.shortcuts import render
 from django.urls import reverse
 from django.views.generic import DetailView, UpdateView
 
 from donationcoordinator.views import CreateOrUpdateView
+from donator.libs import OrgItemList
 from donator.models import User, Home
+from donator.views import ItemsUpdate
 from org.forms import OrgForm, HomeSearchForm, OrgItemsForm
 from org.models import Org, OrgItems
 
@@ -88,17 +92,13 @@ class OrgCreate(OrgCreateOrUpdate):
         return super(OrgCreateOrUpdate, self).form_valid(form)
 
 
-class OrgItemsUpdate(UpdateView):
-
+class OrgItemsUpdate(ItemsUpdate, UpdateView):
     model = OrgItems
     template_name = 'org/items.html'
     form_class = OrgItemsForm
     illegal_keys = [  # keys we do NOT want in our form
         'csrfmiddlewaretoken'
     ]
-
-    def get_success_url(self):
-        return self.request.META.get('HTTP_REFERER', '/')
 
     def get_object(self, queryset=None):
         return self.request.user.org
@@ -107,6 +107,51 @@ class OrgItemsUpdate(UpdateView):
         context = super(OrgItemsUpdate, self).get_context_data(**kwargs)
         context['org'] = self.request.user.org
         return context
+
+    def form_valid(self, form):
+        user = self.request.user
+
+        self.org = self.get_object()
+
+        if not self.org.user == user:  # make sure they own the Org
+            raise PermissionDenied
+
+        return True
+
+    def clean_form(self) -> dict:
+        """Remove anything that isn't an {'item':number} value in
+        this form's POST data."""
+        d = {}
+
+        for key, val in self.request.POST.items():
+            if key not in self.illegal_keys:
+                try:
+                    key = key.replace(OrgItemList.space_replacer, ' ')
+                    val = int(val)
+
+                    d[key] = val
+                except:
+                    pass
+
+        return d
+
+    def post(self, request: HttpRequest, *args, **kwargs):
+
+        if self.form_valid(request):
+            il = OrgItemList()
+            formDict = self.clean_form()
+
+            pprint(formDict)
+
+            il.apply_flat_dict(formDict)
+
+            self.org.items.data = il.data
+            self.org.items.save()
+
+            return HttpResponseRedirect(self.get_success_url())
+        else:
+            return HttpResponse("ur items ar bad :(")
+        pass
 
 
 def searchHomeList(request: HttpRequest):
