@@ -9,6 +9,7 @@ services:
 install:
   - pip install pipenv
   - pipenv install
+  - sudo apt-get install -y postgresql-9.5-postgis-2.3
 
 activate:
   - pipenv shell -c
