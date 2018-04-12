@@ -15,7 +15,7 @@ sudo: true
 install:
   - pip install pipenv
   - pipenv install
-  - sudo apt-get install postgresql-9.5-postgis-2.3 postgis -y -q
+  - sudo apt-get install postgresql-9.5-postgis-2.3 -y -q
 
 activate:
   - pipenv shell -c
