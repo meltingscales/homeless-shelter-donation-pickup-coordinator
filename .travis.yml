@@ -16,6 +16,6 @@ activate:
 before_script:
   - psql -U postgres -c "CREATE DATABASE geodjango;"
   - psql -U postgres -c "CREATE USER geodjango WITH PASSWORD 'geodjango';"
-  - psql -U postgres -c "ALTER ROLE geodjango WITH SUPERUSER;
+  - psql -U postgres -c "ALTER ROLE geodjango WITH SUPERUSER;"
   - psql -U postgres -c "GRANT ALL PRIVILEGES ON DATABASE geodjango TO geodjango;"
   - psql -U geodjango -d geodjango -c "CREATE EXTENSION postgis;"
