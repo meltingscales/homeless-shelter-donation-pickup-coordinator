@@ -22,7 +22,7 @@ from .views import OrgDetail, OrgCreateOrUpdate, OrgCreate, searchHomeList, OrgI
 app_name = 'org'
 urlpatterns = [
     # view own org
-    path(r'',
+    path(r'my-org/',
          views.my_org,
          name='index'
          ),

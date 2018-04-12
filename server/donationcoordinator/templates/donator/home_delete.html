@@ -1,8 +1,6 @@
-{% extends "base.html" %}
+{% extends "donator/donator_base.html" %}
 
 {% block content %}
-{% include "donator/profile_nav.html" %}
-
 <h1>
     Delete {{ home.name }}?
 </h1>
@@ -23,5 +21,4 @@
         </li>
     </ul>
 </form>
-
 {% endblock %}

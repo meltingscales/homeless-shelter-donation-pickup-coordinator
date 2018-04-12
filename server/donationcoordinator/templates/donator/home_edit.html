@@ -1,7 +1,6 @@
-{% extends "base.html" %}
+{% extends "donator/donator_base.html" %}
 
 {% block content %}
-
 <form method="post" action="">
     {% csrf_token %}
     <ul>
@@ -9,5 +8,4 @@
     </ul>
     <input type="submit" value="Submit"/>
 </form>
-
 {% endblock %}

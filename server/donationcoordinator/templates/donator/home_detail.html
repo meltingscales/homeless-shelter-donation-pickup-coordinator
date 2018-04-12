@@ -1,11 +1,11 @@
-{% extends "base.html" %}
+{% extends "donator/donator_base.html" %}
 {% load staticfiles %}
 
-{% block title %} {{ home.name }} {% endblock %}
+{% block title %}
+{{ home.name }}
+{% endblock %}
 
 {% block content %}
-{% include "donator/profile_nav.html" %}
-
 <section id="home-detail">
     <h1>
         {{ home.name }}
@@ -86,5 +86,4 @@
 
 <link rel="stylesheet" href='{% static "style/items-base.css" %}'/>
 <link rel="stylesheet" href='{% static "style/items-donator.css" %}'/>
-
 {% endblock %}

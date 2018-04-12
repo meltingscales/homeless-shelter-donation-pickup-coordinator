@@ -1,10 +1,7 @@
-{% extends "base.html" %}
+{% extends "org/org_base.html" %}
 {% load staticfiles %}
 
 {% block content %}
-
-{% include "org/org_nav.html" %}
-
 <main>
     <p>Welcome. This is {{ org.name }}'s Inventory!</p>
     {{ priority_descriptions |safe }}
@@ -22,6 +19,4 @@
 
 <link rel="stylesheet" href='{% static "style/items-base.css" %}'/>
 <link rel="stylesheet" href='{% static "style/items-org.css" %}'/>
-
-
 {% endblock %}

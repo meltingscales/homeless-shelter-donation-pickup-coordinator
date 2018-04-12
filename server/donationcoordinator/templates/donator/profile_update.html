@@ -1,11 +1,10 @@
-{% extends "base.html" %}
+{% extends "donator/donator_base.html" %}
 
-{% block title %}My Profile{% endblock %}
+{% block title %}
+My Profile
+{% endblock %}
 
 {% block content %}
-
-{% include "donator/profile_nav.html" %}
-
 <form method="post">
     {% csrf_token %}
     <ul>
@@ -14,5 +13,4 @@
     </ul>
     <button type="submit">Save changes</button>
 </form>
-
 {% endblock %}

@@ -24,7 +24,7 @@ app_name = 'donator'
 urlpatterns = [
 
     # User's profile
-    path(r'', views.view_profile, name="profile_view"),
+    path(r'my-profile/', views.view_profile, name="profile_view"),
 
     # Update user's profile
     path(r'my-profile/update/', views.update_profile, name="profile_update"),

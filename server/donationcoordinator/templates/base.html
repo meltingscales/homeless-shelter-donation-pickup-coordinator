@@ -15,13 +15,18 @@
 
 <body>
 
-<nav>
-    {% block header %}
+{% block welcome %}
+<section>
     <p>
         {% if user.username %}Welcome, User '{{ user.username }}' {% endif %}
         {% if org.orgname %}with Org '{{ org.orgname }}'{% endif %}
         {% if user.username %} ! {% endif %}
     </p>
+</section>
+{% endblock %}
+
+<nav>
+    {% block nav %}
     {% activeurl %}
     <ul>
         <li><a href="{% url 'index' %}">Home</a></li>
@@ -36,6 +41,15 @@
     </ul>
     {% endactiveurl %}
     {% endblock %}
+</nav>
+
+<nav>
+    {% activeurl %}
+    <ul>
+        {% block subnav %}
+        {% endblock %}
+    </ul>
+    {% endactiveurl %}
 </nav>
 
 <div id="sidebar">
