@@ -40,7 +40,7 @@ urlpatterns = [
     path('org/', include(org.urls, namespace='org'), name='org'),
 ]
 
-if 'STARTUP_DATABASE_TASKS' in os.environ and os.environ['STARTUP_DATABASE_TASKS'].lower() != 'false':
+if 'STARTUP_DATABASE_TASKS' in os.environ and os.environ['STARTUP_DATABASE_TASKS'].lower() == 'true':
 
     print("Resetting database and populating it with default models!")
 
