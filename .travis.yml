@@ -30,4 +30,6 @@ before_script:
   - psql -U geodjango -d geodjango -c "CREATE EXTENSION postgis;"
 
 script:
+  - python server/donationcoordinator/manage.py makemigrations donationcoordinator org donator
+  - python server/donationcoordinator/manage.py migrate
   - python server/donationcoordinator/manage.py test donationcoordinator donator
