@@ -92,11 +92,11 @@ I am a one-man org. Woohoo!
             state='IL',
             country='USA',
             description="""
-        # Test User's Org
+# Test User's Org
 
-        > I am a one-man org. Woohoo!
+> I am a one-man org. Woohoo!
 
-        """,
+""",
         )
         testuserorg.save()
 

@@ -1,13 +1,16 @@
 {% extends "org/org_base.html" %}
+{% load staticfiles %}
 
 {% block content %}
 
 <form method="post" action="">
     {% csrf_token %}
-    <ul>
+    <ol>
         {{ form.as_ul }}
-    </ul>
+    </ol>
     <input type="submit" value="Submit"/>
 </form>
+
+<link rel="stylesheet" href='{% static "style/form.css" %}'/>
 
 {% endblock %}

@@ -1,4 +1,5 @@
 {% extends "donator/donator_base.html" %}
+{% load staticfiles %}
 
 {% block title %}
 My Profile
@@ -7,10 +8,13 @@ My Profile
 {% block content %}
 <form method="post">
     {% csrf_token %}
-    <ul>
+    <ol>
         {{ user_form.as_ul }}
         {{ profile_form.as_ul }}
-    </ul>
-    <button type="submit">Save changes</button>
+    </ol>
+    <input type="submit" value="submit"/>
 </form>
+
+<link rel="stylesheet" href='{% static "style/form.css" %}'/>
+
 {% endblock %}

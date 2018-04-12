@@ -1,0 +1,76 @@
+/* display input/label as block */
+input,
+label {
+  display: block;
+}
+
+textarea {
+  resize: none;
+  width:  100%;
+  display: inherit;
+  border: 0;
+  padding: 0;
+}
+
+/* fix input padding */
+input {
+  box-sizing: border-box; /* ensure padding subtracts from width */
+  width: 100%;
+  border: 0;
+  line-height: 1;
+  padding: 0.7222rem; /* {[44px(2*lineheight) - 18px(font)]px / 18} aka 13/18 = 0.72~ */
+  background-color: #e8e8e8;
+}
+
+input[type="file"] {
+    color: black;
+}
+
+form {
+  padding-top: 0.6111rem;
+  width: 100;
+}
+
+form > * {
+  width: 100%;
+  display: inline-block;
+}
+
+form ol, form li {
+  width: 100%;
+  padding-left: 0;
+  padding-right: 0;
+  margin-left: 0;
+  margin-right: 0;
+}
+
+@media screen and (min-width: 640px) {
+  body::before {
+    /* content: "Hello 640+ px user!" */
+  }
+  html {
+    font-size: 1.5em; /* 24 / 16 = 1.5 */
+    line-height: 1.52777rem; /* (22+33)/2 / 18 = 1.52777~ */
+  }
+
+  h1 {
+    font-size: 2.111rem; /* 38 / 18 = 2.25 */
+    line-height: 3.0555rem; /* 55 / 18 = 3.0555~ */
+  }
+
+  form > * {
+    display: grid;
+    grid-template-columns: 50fr 50fr;
+    grid-column-gap: 1rem;
+    grid-row-gap: 1rem;
+  }
+
+  form li:nth-child(2n + 1) { /* every odd one*/
+    grid-column: 1;
+  }
+
+  form li:nth-child(2n) { /* every even one*/
+    grid-column: 2;
+  }
+
+}

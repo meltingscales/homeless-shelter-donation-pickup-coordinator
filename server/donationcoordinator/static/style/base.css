@@ -1,3 +1,6 @@
+/* Forms, taken from CSS normalize. */
+[type=checkbox],[type=radio],legend{box-sizing:border-box;padding:0}button,input,optgroup,select,textarea{font-family:inherit;font-size:inherit;line-height:inherit;margin:0}button,input{overflow:visible}button,select{text-transform:none}[type=reset],[type=submit],button,html [type=button]{-webkit-appearance:button}[type=button]::-moz-focus-inner,[type=reset]::-moz-focus-inner,[type=submit]::-moz-focus-inner,button::-moz-focus-inner{border-style:none;padding:0}[type=button]:-moz-focusring,[type=reset]:-moz-focusring,[type=submit]:-moz-focusring,button:-moz-focusring{outline:ButtonText dotted 1px}fieldset{padding:.35em .75em .625em}legend{color:inherit;display:table;max-width:100%;white-space:normal}progress{display:inline-block;vertical-align:baseline}textarea{overflow:auto;}[type=number]::-webkit-inner-spin-button,[type=number]::-webkit-outer-spin-button{height:auto}[type=search]{-webkit-appearance:textfield;outline-offset:-2px}[type=search]::-webkit-search-cancel-button,[type=search]::-webkit-search-decoration{-webkit-appearance:none}::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}
+
 /* http://meyerweb.com/eric/tools/css/reset/
    v2.0 | 20110126
    License: none (public domain)
@@ -84,11 +87,6 @@ iframe {
     height: 100%;
 }
 
-form {
-    display: inline-block;
-}
-
-
 h1, h2, h3, h4, h5, h6, p, pre {
     padding-bottom: 1.222em;  /* 22 / 18 = 1.2~ */
 }
@@ -157,6 +155,10 @@ nav ul {
     display: table;
     list-style-type: none;
     padding: 0;
+}
+
+section#map iframe {
+    background-color: blanchedalmond;
 }
 
 nav .active a {
