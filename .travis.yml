@@ -28,3 +28,6 @@ before_script:
   - psql -U postgres -c "ALTER ROLE geodjango WITH SUPERUSER;"
   - psql -U postgres -c "GRANT ALL PRIVILEGES ON DATABASE geodjango TO geodjango;"
   - psql -U geodjango -d geodjango -c "CREATE EXTENSION postgis;"
+
+script:
+  - python server/donationcoordinator/manage.py test donationcoordinator donator
