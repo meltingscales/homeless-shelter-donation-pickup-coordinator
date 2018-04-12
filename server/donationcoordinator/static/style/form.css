@@ -45,18 +45,6 @@ form ol, form li {
 }
 
 @media screen and (min-width: 640px) {
-  body::before {
-    /* content: "Hello 640+ px user!" */
-  }
-  html {
-    font-size: 1.5em; /* 24 / 16 = 1.5 */
-    line-height: 1.52777rem; /* (22+33)/2 / 18 = 1.52777~ */
-  }
-
-  h1 {
-    font-size: 2.111rem; /* 38 / 18 = 2.25 */
-    line-height: 3.0555rem; /* 55 / 18 = 3.0555~ */
-  }
 
   form > * {
     display: grid;
