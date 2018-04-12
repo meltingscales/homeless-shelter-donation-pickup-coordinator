@@ -7,6 +7,6 @@ services:
   - postgresql
 
 before_script:
-  - psql -c 'CREATE DATABASE geodjango;' -U postgres
-  - psql -c 'CREATE USER geodjango WITH PASSWORD "geodjango"' -U postgres
-  - psql -U geodjango -c 'CREATE EXTENSION postgis'
+  - psql -c "CREATE DATABASE geodjango;" -U postgres
+  - psql -c "CREATE USER geodjango WITH PASSWORD 'geodjango';" -U postgres
+  - psql -U geodjango -c "CREATE EXTENSION postgis;"
