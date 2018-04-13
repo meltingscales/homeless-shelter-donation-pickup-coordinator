@@ -1,0 +1,35 @@
+language: python
+
+python:
+  - "3.6"
+
+services:
+  - postgresql
+
+addons:
+  postgresql: "9.5"
+  apt:
+    packages:
+      - postgresql-9.5-postgis-2.3
+
+sudo: true
+
+install:
+  - pip install pipenv
+  - pipenv install
+  - sudo service postgresql restart
+
+activate:
+  - pipenv shell -c
+
+before_script:
+  - psql -U postgres -c "CREATE DATABASE geodjango;"
+  - psql -U postgres -c "CREATE USER geodjango WITH PASSWORD 'geodjango';"
+  - psql -U postgres -c "ALTER ROLE geodjango WITH SUPERUSER;"
+  - psql -U postgres -c "GRANT ALL PRIVILEGES ON DATABASE geodjango TO geodjango;"
+  - psql -U geodjango -d geodjango -c "CREATE EXTENSION postgis;"
+
+script:
+  - python server/donationcoordinator/manage.py makemigrations donationcoordinator org donator
+  - python server/donationcoordinator/manage.py migrate
+  - python server/donationcoordinator/manage.py test donationcoordinator donator
