@@ -43,6 +43,8 @@ class TestItemList(TestCase):
         with open(self.html_output, 'w+') as file:  # open file to write test HTML
             file.write(itemList.to_html())
 
+        p.write_to_file(self.html_output + '.log')
+
 
 class TestOrgItemList(TestCase):
     # location of base datafile that dictates structure of all other files
@@ -78,3 +80,5 @@ class TestOrgItemList(TestCase):
 
         with open(self.html_output, 'w+') as file:  # open file to write test HTML
             file.write(org_items_list.to_html())
+
+        p.write_to_file(self.html_output + '.log')

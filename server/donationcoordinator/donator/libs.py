@@ -25,6 +25,11 @@ class DebugPrinter():
             print(*args, file=file)
         self.log.append((*args,))
 
+    def write_to_file(self, path):
+        with open(path, 'w') as f:
+            for line in self.log:
+                f.write(line)
+
 
 class ItemList:
     space_replacer = '_'  # what to replace spaces with in the HTML since CSS classes can't have spaces
