@@ -3,6 +3,7 @@
 import copy
 import json
 import os
+import sys
 
 from bs4 import BeautifulSoup as bs
 from django.conf import settings
@@ -12,6 +13,17 @@ from donationcoordinator.libs import wrap
 
 default_items_json_path = r'data/items.json'
 default_items_json_path = os.path.join(settings.PROJECT_ROOT, settings.STATICFILES_DIRS[0], default_items_json_path)
+
+
+class DebugPrinter():
+    def __init__(self, verbose=False):
+        self.verbose = verbose
+        self.log = []
+
+    def print(self, *args, override=False, file=sys.stdout):
+        if self.verbose or override:
+            print(*args, file=file)
+        self.log.append((*args,))
 
 
 class ItemList:
@@ -323,8 +335,6 @@ class OrgItemList(ItemList):
                         text(priority)
 
         return doc.getvalue()
-
-
 
     def itemToLI(self, item: str, selected):
 
