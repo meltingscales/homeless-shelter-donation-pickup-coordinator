@@ -1,6 +1,7 @@
 .idea/
 *.pyc
 *.sqlite3
+*.log
 migrations/
 *.password.*
 *.env
