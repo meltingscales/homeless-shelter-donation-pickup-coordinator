@@ -4,6 +4,7 @@ import copy
 import json
 import os
 import sys
+from pprint import pformat
 
 from bs4 import BeautifulSoup as bs
 from django.conf import settings
@@ -20,15 +21,25 @@ class DebugPrinter():
         self.verbose = verbose
         self.log = []
 
-    def print(self, *args, override=False, file=sys.stdout):
+    def print(self, *args, override=False, file=sys.stdout, end='\n'):
         if self.verbose or override:
-            print(*args, file=file)
+            print(*args, file=file, end=end)
         self.log.append((*args,))
 
     def write_to_file(self, path):
+
         with open(path, 'w') as f:
+
             for line in self.log:
-                f.write(line)
+
+                for tup in line:
+                    if isinstance(tup, dict):
+                        f.write(pformat(tup))
+                    elif isinstance(tup, list):
+                        f.write(pformat(tup))
+                    else:
+                        f.write(str(tup))
+                    f.write('\n')
 
 
 class ItemList:
