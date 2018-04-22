@@ -215,8 +215,7 @@ happen, especially with respects to how much I, as its creator:
 - Follow up with organizations
 - Keep them (the orgs) updated
 - Make sure I'm designing an app that meets **org requirements** and **org
-  needs**, not ***my
-  own potentially misguided ideas***
+  needs**, not ***my own potentially misguided ideas***
 - Update and maintain it
 - Ensure it meets UI/UX requirements and is reasonably easy to use
 
@@ -229,4 +228,5 @@ Because it 'sells itself' as such, it has the possiblity to either:
 
 - Become a base framework from which new yet similar-in-spirit tools are
   developed, or
-- 
+- Provoke the development of a similar solution or legislation which
+  accomplishes a similar outcome
