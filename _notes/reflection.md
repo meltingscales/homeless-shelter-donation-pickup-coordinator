@@ -50,6 +50,9 @@
   - Charity?
   - Enforcement of basic human rights?
   - To make ourselves feel good?
+
+- Do we have obligations to homeless people?
+- Do we have obligations to our fellow citizens?
   
 - Why SHOULDN'T we help homeless people?
   - They don't deserve it
@@ -80,11 +83,26 @@
   - Do groups who sell the donated items and take a cut not get to use my app?
     - What's the threshhold?
 
+- What is citizenship?
+  - Can it be bought?
+  - Does it come from owning property?
+  - Does it come from ethnicity?
+
+# Other notes
+
+## Indirect enforcement of biases, i.e. by actions or 'suggestions'
+Perhaps a piece of media, such as this app, can enforce certain 'agendas' or
+ideas even while not stating them explicitly.
+
+For example
+
 # Reflection
 
 This project was conceived as a tool, a public service for other people to use.
 It wasn't imagined with a specific educational goal in mind, or to teach people
 anything. However, that doesn't mean that it carries no message or bias.
+
+## My opinions on homelessness
 
 I created this app because of my personal opinions on homelessness and how
 society should handle welfare of citizens. I have very strong opinions on how
@@ -101,7 +119,18 @@ In other words, I believe homeless shelters are attempting to do the job that
 the state has failed to do. This applies to poor people as well. They are a
 result of a dysfunction in the distribution of resources in our society.
 Homelessness does not need to exist, and neither does poverty. They are symptoms
-of a disease.
+of a disease. The simplest way for me to put it would be:
+
+> Homelessness is everyone's problem but nobody wants to admit it's theirs. The
+> homeless aren't the problem, but the attitude and actions towards them and
+> their condition is.
+
+And, further,
+
+> Homelessness is a problem because of the way we treat homeless people and
+> how we view and interact with them.
+
+## The origin of this app
 
 In happier news, this project began as an idea that was wildly different from
 its current imagination: An application that would track the needs and locations
@@ -142,3 +171,61 @@ from an automated tracking and donating system.
 
 Using their suggestions and the notes I took from the meetings, I have a better
 understanding of what this app should do for shelters, and what their needs are.
+
+## How COM 380 relates
+
+I was, in part, inspired by the idea that people's opinions, actions, and
+possibly even public policy can be shaped by social movements or the actions of
+others.
+
+This is, in a way, a piece of interactive media that carries with it a message.
+Something like,
+> "I feel that the needs of my fellow citizens are not being met"  
+
+or more specifically,
+
+> "People are unnecessarily living in squalor, poverty, and suffering, which
+> necessitates the creation of tools like these. This application is in response
+> to the large amount of human suffering occurring."
+
+This idea of media created by ordinary citizens, like me, being able to shape
+the opinions of many and infuence large movements comes from "[Participatory
+Politics: Next-Generation Tactics to Remake Public
+Spheres](https://dmlhub.net/wp-content/uploads/files/9780262525770.pdf)"
+
+According to [Elizabeth
+Soep](https://dmlhub.net/wp-content/uploads/files/9780262525770.pdf), this web
+application is more than `ones` and `zeroes`,
+but a piece of media that can shape people's actions and ideas, and has the
+potential to change things in the 'real world', not just online.
+
+I see many great possibilities that could come from this web application, if
+done correctly. It could also vanish into another dead, unmaintained school
+project/abandoned application if either done wrong or if no-one wants to use it.
+
+Perhaps others would see what I am doing and adopt this app as a large,
+community-maintained project! Perhaps it could become a free community service
+nation-wide!
+
+Another possibity is that it would be not widely adopted, and it is a personal
+project that ends up being discarded and forgotted. This could very reasonably
+happen, especially with respects to how much I, as its creator:
+
+- Follow up with organizations
+- Keep them (the orgs) updated
+- Make sure I'm designing an app that meets **org requirements** and **org
+  needs**, not ***my
+  own potentially misguided ideas***
+- Update and maintain it
+- Ensure it meets UI/UX requirements and is reasonably easy to use
+
+If this does happen, all hope is not lost. This is an open-source project
+unburdened by allegiance to a particular organization, but one that attempts to
+serve itself as a tool to be used to combat poverty and starvation of resources
+in, ideally, any context.
+
+Because it 'sells itself' as such, it has the possiblity to either:
+
+- Become a base framework from which new yet similar-in-spirit tools are
+  developed, or
+- 
