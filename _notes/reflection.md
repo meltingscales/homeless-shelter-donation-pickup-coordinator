@@ -94,7 +94,12 @@
 Perhaps a piece of media, such as this app, can enforce certain 'agendas' or
 ideas even while not stating them explicitly.
 
-For example
+For example, one could argue that this application, simply by existing, is
+pro-homeless rights or at least has a humanitarian (pro-human welfare) agenda.
+
+The ways that this application applies and approaches policy regarding pricing
+of orgs, what data to store or use, how transparent it is about itself and
+organizations all reveal what 'agenda' the creator or admins of the tool have.
 
 # Reflection
 
