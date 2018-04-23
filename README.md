@@ -12,6 +12,7 @@
 		- [Optional (in my experience)](#optional-in-my-experience)
 	- [Database tasks](#database-tasks)
 	- [Everything is broken and awful! AAAAAHHHH!](#everything-is-broken-and-awful-aaaaahhhh)
+	- [Other important Notes](#other-important-notes)
 
 <!-- /TOC -->
 
@@ -148,3 +149,21 @@ If you get super stuck on something, either:
 - Email me at \[my_github_name\]@gmail.com
 - Contact Henry F.B. Post on facebook
 - Contact me on Skype
+
+## Other important Notes
+
+- What IDE do you use?
+  - I use [PyCharm](https://www.jetbrains.com/pycharm/). It's free and does what I need.  
+  All I use it for that a text editor can't do is essentially refactoring, IntelliSense-like features, debugging tools, etc.
+- How do you manage environment variables?  
+  All these env vars seem annoying and I have to set them up every time/run a batch file to set them/etc.
+  - I use a plugin for PyCharm called '[.env files support](https://plugins.jetbrains.com/plugin/9525--env-files-support)' that looks at any `.env` file and lets you run a Python program with those environment variables applied.  
+  Here's an example of what the file looks like:
+  ![](_sketches/env_vars.PNG)  
+  This also explains why I have `.env` in my `.gitignore` file.  
+  Here's what it looks like in the IDE settings:
+  ![](_sketches/env_vars_run.PNG)  
+- What does your run configuration look like?
+  - This:  
+  ![](_sketches/run_configs.PNG)  
+  
