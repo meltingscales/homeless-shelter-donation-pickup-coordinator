@@ -6,6 +6,12 @@
 - [For donaters](#for-donaters)
 - [For shelters](#for-shelters)
 - [For developers](#for-developers)
+	- [Basic libraries](#basic-libraries)
+	- [Environment variables](#environment-variables)
+		- [Required](#required)
+		- [Optional (in my experience)](#optional-in-my-experience)
+	- [Database tasks](#database-tasks)
+	- [Everything is broken and awful! AAAAAHHHH!](#everything-is-broken-and-awful-aaaaahhhh)
 
 <!-- /TOC -->
 
@@ -60,8 +66,11 @@ each other over this platform.
       - Produce
 
 # For developers
+
+## Basic libraries
+
 To develop or contribute for this project, you will need the following:
-- Python >= 3.6
+- [Python >= 3.6](https://www.python.org/downloads/)
   - pipenv (a virtual environment manager for Python)
   - See `Pipfile` for details
   - `pipenv install`
@@ -71,19 +80,55 @@ To develop or contribute for this project, you will need the following:
   - GEOS
   - GDAL
   - PROJ.4
-- Environment variables set up.
 
-  - `PYTHON_ROOT` = `C:\Program Files\Python3.6\`
-    - Where your Python installation lives.
-    - Essential for running Python programs.
+## Environment variables
 
-  - `OSGEO4W_ROOT` = `C:\OSGeo4W64\`
-    - Where GEOS, GDAL, PostGIS, PROJ.4 live. 
-    - Essential for `PostGIS` to work with `PostGreSQL`.
-    - Without it, we cannot use `Point` or `Geometry` and cannot store Geolocation data.
+### Required
 
-  - DJANGO_SETTINGS_MODULE = 
-    - The place where a bunch of constant vars live.
+- `PYTHON_ROOT` = `C:\Program Files\Python3.6\`
+  - Where your Python installation lives.
+  - Essential for running Python programs.
+
+- `SECRET_KEY` = [`a constant key used to sign cryptographic information`](https://docs.djangoproject.com/en/dev/ref/settings/#secret-key).
+  - Keep it safe and don't tell anyone it.
+  - Make sure NOT to print it out once in 'production mode'
+  - Changing this key will invalidate all of the following if made using a prior key:
+    - Sessions
+    - CookieStorage or FallbackStorage
+    - PasswordResetView tokens
+    - Any usage of cryptographic signing
+
+- `OSGEO4W_ROOT` = `C:\OSGeo4W64\`
+  - Where GEOS, GDAL, PostGIS, PROJ.4 live. 
+  - Essential for `PostGIS` to work with `PostGreSQL`.
+  - Without it, we cannot use `Point` or `Geometry` and cannot store Geolocation data.
+
+- `GEOPOSITION_GOOGLE_MAPS_API_KEY` = [`go get one from google!`](https://developers.google.com/maps/)
+  - Used to turn addresses into `(lat,lon)` tuples
+  - Used to embed pretty little maps
+
+### Optional (in my experience)
+
+- `STARTUP_DATABASE_TASKS` = `true | false`
+  - Whether or not to destroy all data in the database and replace it with test data.
+  - It is `false` by default, i.e. your database doesn't get reset by default.
+
+- `DJANGO_SETTINGS_MODULE` = `donationcoordinator.settings`
+  - The place where a bunch of constant vars live.
+
+- `GEOS_LIBRARY_PATH` = `P:/lib/OSGeo4W64/bin/geos_c.dll`
+  - Where the GEOS library lives, whatever that is.
+
+- `GDAL_LIBRARY_PATH` = `P:/lib/OSGeo4W64/bin/gdal111.dll`
+  - Where the GDAL library lives, whatever that is.
+
+- `GDAL_DATA` = `P:/lib/OSGeo4W64/share/gdal`
+  - Your guess is as good as mine. (I don't know.)
+
+- `PROJ_LIB` = `P:/lib/OSGeo4W64/share/proj`
+  - Also don't know.
+
+## Database tasks
 
 Because of the way Django handles database ORM, you will need to run these commands to migrate the objects into SQL schemas:
 - `py manage.py makemigrations`
@@ -91,9 +136,15 @@ Because of the way Django handles database ORM, you will need to run these comma
 
 To run, simply type `py manage.py runserver`.
 
+## Everything is broken and awful! AAAAAHHHH!
+
 If you get super stuck on something, either:
+
 - Look at these files:
   - `Procfile`, it contains the deployment instructions for Heroku,
   - `Profile.windows`, it contains some really old but possibly helpful deployment instructions for windowsx
   - `.travis.yml`, it contains the test-case setup commands and some SQL,
-- email me at \[my_github_name\]@gmail.com
+  - The [travis build logs](https://travis-ci.org/HenryFBP/homeless-shelter-donation-pickup-coordinator), which contain all sorts of debug goodness,
+- Email me at \[my_github_name\]@gmail.com
+- Contact Henry F.B. Post on facebook
+- Contact me on Skype
