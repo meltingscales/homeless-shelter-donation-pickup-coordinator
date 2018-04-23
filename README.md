@@ -62,17 +62,38 @@ each other over this platform.
 # For developers
 To develop or contribute for this project, you will need the following:
 - Python >= 3.6
-  - See `requirements.txt` for details
-  - `pip install -r requirements.txt`
+  - pipenv (a virtual environment manager for Python)
+  - See `Pipfile` for details
+  - `pipenv install`
 - PostGreSQL
 - [Geospatial libraries](https://docs.djangoproject.com/en/2.0/ref/contrib/gis/install/geolibs/)
   - PostGIS
   - GEOS
   - GDAL
   - PROJ.4
+- Environment variables set up.
+
+  - `PYTHON_ROOT` = `C:\Program Files\Python3.6\`
+    - Where your Python installation lives.
+    - Essential for running Python programs.
+
+  - `OSGEO4W_ROOT` = `C:\OSGeo4W64\`
+    - Where GEOS, GDAL, PostGIS, PROJ.4 live. 
+    - Essential for `PostGIS` to work with `PostGreSQL`.
+    - Without it, we cannot use `Point` or `Geometry` and cannot store Geolocation data.
+
+  - DJANGO_SETTINGS_MODULE = 
+    - The place where a bunch of constant vars live.
 
 Because of the way Django handles database ORM, you will need to run these commands to migrate the objects into SQL schemas:
 - `py manage.py makemigrations`
 - `py manage.py migrate`
 
-To run, simply type `py manage.py runserver`
+To run, simply type `py manage.py runserver`.
+
+If you get super stuck on something, either:
+- Look at these files:
+  - `Procfile`, it contains the deployment instructions for Heroku,
+  - `Profile.windows`, it contains some really old but possibly helpful deployment instructions for windowsx
+  - `.travis.yml`, it contains the test-case setup commands and some SQL,
+- email me at \[my_github_name\]@gmail.com
