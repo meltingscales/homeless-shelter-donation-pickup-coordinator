@@ -147,7 +147,7 @@ If you get super stuck on something, either:
   - `.travis.yml`, it contains the test-case setup commands and some SQL,
   - The [travis build logs](https://travis-ci.org/HenryFBP/homeless-shelter-donation-pickup-coordinator/builds), which contain all sorts of debug goodness,
 - Email me at \[my_github_name\]@gmail.com
-- Contact Henry F.B. Post on facebook
+- Contact [Henry Post](https://www.facebook.com/henryfidelbradleypost) on facebook
 - Contact me on Skype
 
 ## Other important Notes
