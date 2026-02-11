@@ -1,0 +1,25 @@
+[project]
+name = "shelter-pickup"
+version = "0.1.0"
+description = "Simplified donation pickup coordinator for homeless shelters"
+requires-python = ">=3.11"
+dependencies = [
+    "fastapi>=0.115.0",
+    "uvicorn[standard]>=0.32.0",
+    "sqlalchemy>=2.0.0",
+    "pydantic>=2.0.0",
+    "pydantic-settings>=2.0.0",
+    "email-validator>=2.0.0",
+    # PostGIS / Geospatial
+    "geoalchemy2>=0.14.0",
+    "psycopg2-binary>=2.9.0",
+    # Google Maps Geocoding
+    "requests>=2.31.0",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.uv]
+dev-dependencies = []
