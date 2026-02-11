@@ -34,53 +34,42 @@ This roadmap tracks the migration from the old Django/GeoDjango codebase (`old-c
 
 ---
 
-## Phase 2: Database & Geospatial (CURRENT)
+## Phase 2: Database & Geospatial ✅ COMPLETE
 
-### 2.1 PostGIS Integration 🔨 IN PROGRESS
+### 2.1 PostGIS Integration ✅ COMPLETE
 
-| Task | Priority | Effort |
-|------|----------|--------|
-| Switch from SQLite to PostgreSQL | High | 2h |
-| Add PostGIS extension to DB | High | 1h |
-| Install GeoAlchemy2 dependency | High | 30m |
-| Add `point` column to models | High | 2h |
-| Google Maps geocoding integration | High | 3h |
+| Task | Status | Notes |
+|------|--------|-------|
+| Switch from SQLite to PostgreSQL | ✅ | Toggle via `USE_POSTGIS` env var |
+| Add PostGIS extension to DB | ✅ | `init_postgis()` on startup |
+| Install GeoAlchemy2 dependency | ✅ | Added to pyproject.toml |
+| Add `point` column to models | ✅ | Geometry('POINT', srid=4326) |
+| Google Maps geocoding integration | ✅ | `app/core/geocoding.py` |
 
-**Action Items:**
-```bash
-# Add to pyproject.toml dependencies:
-# - "geoalchemy2>=0.14.0"
-# - "psycopg2-binary>=2.9.0"
-# - "requests>=2.31.0"  # for Google Maps API
+**Commits:** `50339d4`
+
+### 2.2 Geospatial Queries ✅ COMPLETE
+
+| Task | Status | Notes |
+|------|--------|-------|
+| Distance-based filtering (find donations near shelter) | ✅ | ST_DWithin queries |
+| Location search radius endpoints | ✅ | `/nearby` endpoints |
+| Map visualization data endpoints | ⚠️ | Data ready, frontend TBD |
+
+**API Endpoints Added:**
+```
+GET /api/donations/nearby?lat={lat}&lng={lng}&radius_miles={radius}
+GET /api/shelters/nearby?lat={lat}&lng={lng}&radius_miles={radius}
 ```
 
-**Model Changes Needed:**
-```python
-from geoalchemy2 import Geometry
-
-class Donation(Base):
-    # Add geospatial column
-    location = Column(Geometry('POINT', srid=4326))
-    # Remove: address, city, state, zip_code as separate columns?
-    # Or keep both for geocoding cache
-
-class Shelter(Base):
-    location = Column(Geometry('POINT', srid=4326))
-```
-
-### 2.2 Geospatial Queries 🔨 TODO
-
-| Task | Priority | Effort |
-|------|----------|--------|
-| Distance-based filtering (find donations near shelter) | High | 3h |
-| Location search radius endpoints | Medium | 2h |
-| Map visualization data endpoints | Medium | 3h |
-
-**API Endpoints to Add:**
-```
-GET /api/donations/near?lat={lat}&lng={lng}&radius_miles={radius}
-GET /api/shelters/near?lat={lat}&lng={lng}&radius_miles={radius}
-```
+**Completed Features:**
+- GeoAlchemy2 integration with PostGIS
+- Spatially-indexed `location` column on Donation and Shelter
+- `latitude`/`longitude` cache columns for easy access
+- SQLite fallback for local development (`USE_POSTGIS=false`)
+- Google Maps geocoding service (needs API key)
+- Distance-based queries with radius filtering
+- Results ordered by distance
 
 ---
 
@@ -230,16 +219,16 @@ class Pickup(Base):
 
 ## Legacy Feature Comparison
 
-| Feature | Old Django | New FastAPI | Migration Path |
-|---------|------------|-------------|----------------|
-| User authentication | Django Auth | ⚠️ Not implemented | Add FastAPI-Users or custom JWT |
-| Geospatial queries | PostGIS GeoDjango | ⚠️ Not implemented | Add GeoAlchemy2 |
-| Google Maps API | Integrated | ❌ Missing | Add geocoding service |
-| Route planning | Route + Pickup models | ❌ Missing | Implement in Phase 4 |
-| Item categories | JSONField system | ⚠️ Simplified to Text | Re-implement structured items |
-| Multiple locations per user | Home model | ❌ Missing | Add later if needed |
-| Profile images | ImageField | ❌ Missing | Add file upload handling |
-| Markdown descriptions | markdown library | ❌ Missing | Add if needed |
+| Feature | Old Django | New FastAPI | Status |
+|---------|------------|-------------|--------|
+| User authentication | Django Auth | ⚠️ Not implemented | Phase 3 |
+| Geospatial queries | PostGIS GeoDjango | ✅ GeoAlchemy2 | Complete |
+| Google Maps API | Integrated | ✅ Geocoding service | Complete |
+| Route planning | Route + Pickup models | ❌ Missing | Phase 4 |
+| Item categories | JSONField system | ⚠️ Simplified to Text | Phase 4 |
+| Multiple locations per user | Home model | ❌ Missing | Maybe later |
+| Profile images | ImageField | ❌ Missing | Maybe later |
+| Markdown descriptions | markdown library | ❌ Missing | Maybe later |
 
 ---
 
@@ -253,15 +242,15 @@ sqlalchemy>=2.0.0         ✅
 pydantic>=2.0.0           ✅
 pydantic-settings>=2.0.0  ✅
 email-validator>=2.0.0    ✅
+geoalchemy2>=0.14.0       ✅ PostGIS support
+psycopg2-binary>=2.9.0    ✅ PostgreSQL
+requests>=2.31.0          ✅ Google Maps API
 ```
 
 ### Still Needed
 ```
-geoalchemy2>=0.14.0       🔨 PostGIS support
-psycopg2-binary>=2.9.0    🔨 PostgreSQL
 python-jose[cryptography] 🔨 JWT auth
 passlib[bcrypt]>=1.7.4    🔨 Password hashing
-requests>=2.31.0          🔨 Google Maps API
 pytest>=7.0.0             🔨 Testing
 httpx>=0.24.0             🔨 Testing client
 ```
@@ -272,13 +261,13 @@ httpx>=0.24.0             🔨 Testing client
 
 ```
 Phase 1: Foundation         [████████████████████] 100% COMPLETE
-Phase 2: Database/Geospatial [███░░░░░░░░░░░░░░░░]  15% in progress
+Phase 2: Database/Geospatial [████████████████████] 100% COMPLETE
 Phase 3: Auth/Users         [░░░░░░░░░░░░░░░░░░░░]   0% TODO
 Phase 4: Advanced Features  [░░░░░░░░░░░░░░░░░░░░]   0% TODO
 Phase 5: Frontend/Deploy    [░░░░░░░░░░░░░░░░░░░░]   0% TODO
 Phase 6: Testing/Docs       [░░░░░░░░░░░░░░░░░░░░]   0% TODO
 
-Overall Progress:            [███░░░░░░░░░░░░░░░░░]  15%
+Overall Progress:            [███████░░░░░░░░░░░░░]  35%
 ```
 
 ---
