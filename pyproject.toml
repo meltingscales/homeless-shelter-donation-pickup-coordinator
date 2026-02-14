@@ -21,6 +21,13 @@ dependencies = [
     "python-multipart>=0.0.9",
 ]
 
+[tool.uv]
+dev-dependencies = [
+    "pytest>=7.0.0",
+    "httpx>=0.24.0",
+    "pytest-asyncio>=0.21.0",
+]
+
 [build-system]
 requires = ["hatchling"]
 build-backend = "hatchling.build"
