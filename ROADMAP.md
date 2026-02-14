@@ -73,38 +73,44 @@ GET /api/shelters/nearby?lat={lat}&lng={lng}&radius_miles={radius}
 
 ---
 
-## Phase 3: Authentication & Users
+## Phase 3: Authentication & Users ✅ COMPLETE
 
-### 3.1 User System 🔨 TODO
+### 3.1 User System ✅ COMPLETE
 
-| Task | Priority | Effort |
-|------|----------|--------|
-| User model (email, password, role) | High | 2h |
-| Password hashing (bcrypt/argon2) | High | 1h |
-| JWT token authentication | High | 3h |
-| Login/logout endpoints | High | 2h |
-| Protected route decorators | High | 1h |
-| User registration flow | Medium | 2h |
+| Task | Status | Notes |
+|------|--------|-------|
+| User model (email, password, role) | ✅ | User model with UserRole enum |
+| Password hashing (bcrypt/argon2) | ✅ | passlib with bcrypt |
+| JWT token authentication | ✅ | python-jose, 1 week expiry |
+| Login/logout endpoints | ✅ | /api/auth/register, /api/auth/login |
+| Protected route decorators | ✅ | get_current_user, get_current_donor, get_current_shelter_staff, get_current_admin |
+| User registration flow | ✅ | Email verification placeholder |
 
-**Dependencies:**
-```bash
-# - "fastapi-users>=13.0.0"  OR
-# - "python-jose[cryptography]>=3.3.0"
-# - "passlib[bcrypt]>=1.7.4"
-```
+**Commits:** `a6e6ba8`
 
-**User Roles (from old code):**
+**Dependencies Added:**
+- python-jose[cryptography] for JWT tokens
+- passlib[bcrypt] for password hashing
+- python-multipart for form data
+
+**User Roles:**
 - `donor`: Can create donations, manage their locations
 - `shelter_staff`: Can claim donations, manage shelter profile
 - `admin`: Full access
 
-### 3.2 Authorization 🔨 TODO
+### 3.2 Authorization ✅ COMPLETE
 
-| Task | Priority | Effort |
-|------|----------|--------|
-| Role-based access control | High | 2h |
-| Shelter ownership verification | High | 1h |
-| Donation ownership verification | High | 1h |
+| Task | Status | Notes |
+|------|--------|-------|
+| Role-based access control | ✅ | Dependency injectors for each role |
+| Shelter ownership verification | ✅ | shelter_staff can only claim for their shelter |
+| Donation ownership verification | ✅ | /api/donations/my-donations endpoint |
+
+**Protected Endpoints:**
+- `POST /api/donations` - Requires auth (links donation to user)
+- `GET /api/donations/my-donations` - Get current user's donations
+- `POST /api/donations/{id}/claim` - Requires shelter_staff role
+- `GET /api/auth/me` - Get current user profile
 
 ---
 
@@ -221,7 +227,7 @@ class Pickup(Base):
 
 | Feature | Old Django | New FastAPI | Status |
 |---------|------------|-------------|--------|
-| User authentication | Django Auth | ⚠️ Not implemented | Phase 3 |
+| User authentication | Django Auth | ✅ JWT + bcrypt | Complete |
 | Geospatial queries | PostGIS GeoDjango | ✅ GeoAlchemy2 | Complete |
 | Google Maps API | Integrated | ✅ Geocoding service | Complete |
 | Route planning | Route + Pickup models | ❌ Missing | Phase 4 |
@@ -245,12 +251,13 @@ email-validator>=2.0.0    ✅
 geoalchemy2>=0.14.0       ✅ PostGIS support
 psycopg2-binary>=2.9.0    ✅ PostgreSQL
 requests>=2.31.0          ✅ Google Maps API
+python-jose[cryptography] ✅ JWT auth
+passlib[bcrypt]>=1.7.4    ✅ Password hashing
+python-multipart>=0.0.9   ✅ Form data
 ```
 
 ### Still Needed
 ```
-python-jose[cryptography] 🔨 JWT auth
-passlib[bcrypt]>=1.7.4    🔨 Password hashing
 pytest>=7.0.0             🔨 Testing
 httpx>=0.24.0             🔨 Testing client
 ```
@@ -262,12 +269,12 @@ httpx>=0.24.0             🔨 Testing client
 ```
 Phase 1: Foundation         [████████████████████] 100% COMPLETE
 Phase 2: Database/Geospatial [████████████████████] 100% COMPLETE
-Phase 3: Auth/Users         [░░░░░░░░░░░░░░░░░░░░]   0% TODO
+Phase 3: Auth/Users         [████████████████████] 100% COMPLETE
 Phase 4: Advanced Features  [░░░░░░░░░░░░░░░░░░░░]   0% TODO
 Phase 5: Frontend/Deploy    [░░░░░░░░░░░░░░░░░░░░]   0% TODO
 Phase 6: Testing/Docs       [░░░░░░░░░░░░░░░░░░░░]   0% TODO
 
-Overall Progress:            [███████░░░░░░░░░░░░░]  35%
+Overall Progress:            [████████████░░░░░░░░]  50%
 ```
 
 ---
