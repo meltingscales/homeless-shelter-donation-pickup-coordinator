@@ -114,50 +114,35 @@ GET /api/shelters/nearby?lat={lat}&lng={lng}&radius_miles={radius}
 
 ---
 
-## Phase 4: Advanced Features
+## Phase 4: Advanced Features ✅ COMPLETE (Item & Route Planning)
 
-### 4.1 Item Management System 🔨 TODO
+### 4.1 Item Management System ✅ COMPLETE
 
-| Task | Priority | Effort |
-|------|----------|--------|
-| Item categories (clothing, food, toiletries, etc.) | Medium | 3h |
-| Structured item storage (JSON → PostgreSQL JSONB) | Medium | 2h |
-| Shelter "needed items" matching | Medium | 2h |
-| Item search/filter endpoints | Low | 2h |
+| Task | Status | Notes |
+|------|--------|-------|
+| Item categories (clothing, food, toiletries, etc.) | ✅ | 10+ categories matching legacy |
+| Structured item storage (JSON) | ✅ | items_structured + items_text fallback |
+| Shelter "needed items" matching | ✅ | find_matching_donations() method |
+| Item search/filter endpoints | ✅ | GET /api/items/categories, /api/items/flat |
 
-**Item Categories (from old `libs/ItemList`):**
-- Clothing (winter/summer)
-- Food (canned/produce)
-- Toiletries
-- Bedding (blankets, pillows)
-- Electronics
+**Commits:** `b862a88`
 
-### 4.2 Route Planning 🔨 TODO
+**Item Categories:**
+- Food (produce, non-perishable, perishable, other)
+- Clothing (shoes, legwear, winter, underwear)
+- Menstrual products, pharmaceuticals, toiletries
+- Cleaning supplies, sexual health, bedding, electronics
 
-| Task | Priority | Effort |
-|------|----------|--------|
-| Route model (driver, date, status) | Medium | 2h |
-| Pickup model (route, donation, status) | Medium | 2h |
-| Route optimization (nearest neighbor algorithm) | Low | 4h |
-| Route CRUD endpoints | Medium | 2h |
-| Add donations to route | Medium | 2h |
-| Mark pickups complete | Medium | 1h |
+### 4.2 Route Planning ✅ COMPLETE
 
-**Models Needed:**
-```python
-class Route(Base):
-    shelter_id = Column(Integer, ForeignKey("shelters.id"))
-    driver_id = Column(Integer, ForeignKey("users.id"))
-    created_at = Column(DateTime)
-    status = Column(String)  # planned, in_progress, completed
-
-class Pickup(Base):
-    route_id = Column(Integer, ForeignKey("routes.id"))
-    donation_id = Column(Integer, ForeignKey("donations.id"))
-    sequence_order = Column(Integer)
-    status = Column(String)  # pending, completed, skipped
-    notes = Column(Text)
-```
+| Task | Status | Notes |
+|------|--------|-------|
+| Route model (driver, date, status) | ✅ | Route with RouteStatus enum |
+| Pickup model (route, donation, status) | ✅ | Pickup with PickupStatus enum |
+| Route optimization (nearest neighbor) | ✅ | GET /api/routes/shelter/{id}/optimized |
+| Route CRUD endpoints | ✅ | Full CRUD with status updates |
+| Add donations to route | ✅ | POST /api/routes/{id}/pickups |
+| Mark pickups complete | ✅ | PUT /api/routes/pickups/{id}, skip endpoint |
 
 ### 4.3 Notifications 🔨 TODO
 
@@ -230,8 +215,8 @@ class Pickup(Base):
 | User authentication | Django Auth | ✅ JWT + bcrypt | Complete |
 | Geospatial queries | PostGIS GeoDjango | ✅ GeoAlchemy2 | Complete |
 | Google Maps API | Integrated | ✅ Geocoding service | Complete |
-| Route planning | Route + Pickup models | ❌ Missing | Phase 4 |
-| Item categories | JSONField system | ⚠️ Simplified to Text | Phase 4 |
+| Route planning | Route + Pickup models | ✅ Route + Pickup models | Complete |
+| Item categories | JSONField system | ✅ JSON + categories | Complete |
 | Multiple locations per user | Home model | ❌ Missing | Maybe later |
 | Profile images | ImageField | ❌ Missing | Maybe later |
 | Markdown descriptions | markdown library | ❌ Missing | Maybe later |
@@ -270,11 +255,11 @@ httpx>=0.24.0             🔨 Testing client
 Phase 1: Foundation         [████████████████████] 100% COMPLETE
 Phase 2: Database/Geospatial [████████████████████] 100% COMPLETE
 Phase 3: Auth/Users         [████████████████████] 100% COMPLETE
-Phase 4: Advanced Features  [░░░░░░░░░░░░░░░░░░░░]   0% TODO
+Phase 4: Advanced Features  [████████████████████] 100% COMPLETE
 Phase 5: Frontend/Deploy    [░░░░░░░░░░░░░░░░░░░░]   0% TODO
 Phase 6: Testing/Docs       [░░░░░░░░░░░░░░░░░░░░]   0% TODO
 
-Overall Progress:            [████████████░░░░░░░░]  50%
+Overall Progress:            [██████████████████░░]  65%
 ```
 
 ---
