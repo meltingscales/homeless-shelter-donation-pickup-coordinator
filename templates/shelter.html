@@ -5,193 +5,154 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Shelter Dashboard - Shelter Pickup Coordinator</title>
     <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="stylesheet" href="/static/css/auth.css">
 </head>
 <body>
     <div class="container">
         <header>
-            <a href="/" class="back-link">&larr; Back</a>
-            <h1>Available Donations</h1>
-            <p class="subtitle">Browse and claim donations for your shelter</p>
+            <a href="/" class="back-link">← Back to Home</a>
+            <h1>Shelter Dashboard</h1>
         </header>
 
         <main>
-            <div class="filters">
-                <div class="filter-group">
-                    <label for="zip-filter">Filter by ZIP Code:</label>
-                    <input type="text" id="zip-filter" placeholder="Enter ZIP code">
-                    <button id="clear-filter" class="btn btn-small">Clear</button>
+            <div class="dashboard-header">
+                <div class="dashboard-title">
+                    <h2>Welcome, <span id="shelterName">Shelter</span>!</h2>
+                </div>
+                <div class="dashboard-actions">
+                    <button class="btn btn-primary" onclick="showRegisterModal()">+ Register Shelter</button>
+                    <button class="btn btn-secondary" onclick="logout()">Logout</button>
                 </div>
             </div>
 
-            <div id="donations-list" class="donations-list">
-                <p class="loading">Loading donations...</p>
+            <!-- Stats -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-number" id="availableCount">0</div>
+                    <div class="stat-label">Available Nearby</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="claimedCount">0</div>
+                    <div class="stat-label">Claimed by Us</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="routesCount">0</div>
+                    <div class="stat-label">Active Routes</div>
+                </div>
+            </div>
+
+            <!-- Tabs -->
+            <div class="tabs">
+                <button class="tab-btn active" onclick="showTab('donations')">Available Donations</button>
+                <button class="tab-btn" onclick="showTab('claimed')">Our Claims</button>
+                <button class="tab-btn" onclick="showTab('routes')">Routes</button>
+            </div>
+
+            <!-- Donations Tab -->
+            <div id="donationsTab" class="tab-content">
+                <div class="filters">
+                    <div class="filter-group">
+                        <label>ZIP Code:</label>
+                        <input type="text" id="zipFilter" placeholder="Filter by ZIP">
+                    </div>
+                    <div class="filter-group">
+                        <label>Radius (miles):</label>
+                        <input type="number" id="radiusFilter" value="25" min="1" max="100">
+                    </div>
+                    <button class="btn btn-primary" onclick="loadNearbyDonations()">Search</button>
+                </div>
+                <div id="donationsList" class="donations-list">
+                    <div class="loading">Loading nearby donations...</div>
+                </div>
+            </div>
+
+            <!-- Claims Tab -->
+            <div id="claimedTab" class="tab-content" style="display: none;">
+                <div id="claimedList" class="donations-list">
+                    <div class="loading">Loading claimed donations...</div>
+                </div>
+            </div>
+
+            <!-- Routes Tab -->
+            <div id="routesTab" class="tab-content" style="display: none;">
+                <div class="form">
+                    <h2>Create New Route</h2>
+                    <form id="createRouteForm" onsubmit="handleCreateRoute(event)">
+                        <div class="form-group">
+                            <label>Route Name *</label>
+                            <input type="text" id="routeName" required placeholder="e.g., Friday Pickup Route">
+                        </div>
+                        <div class="form-group">
+                            <label>Description (optional)</label>
+                            <input type="text" id="routeDescription" placeholder="Optional notes">
+                        </div>
+                        <button type="submit" class="btn btn-primary">Create Route</button>
+                    </form>
+                </div>
+                <div id="routesList" class="donations-list">
+                    <div class="loading">Loading routes...</div>
+                </div>
             </div>
         </main>
     </div>
 
-    <!-- Claim Modal -->
-    <div id="claim-modal" class="modal" style="display: none;">
-        <div class="modal-content">
-            <span class="close">&times;</span>
-            <h2>Claim This Donation</h2>
-            <p>Enter your shelter information to claim this donation.</p>
-
-            <form id="claim-form">
+    <!-- Register Shelter Modal -->
+    <div id="registerModal" class="modal" style="display: none;">
+        <div class="modal-content" style="max-width: 600px;">
+            <span class="close" onclick="closeRegisterModal()">&times;</span>
+            <h2>Register Shelter</h2>
+            <form id="registerShelterForm" onsubmit="handleRegisterShelter(event)">
                 <div class="form-group">
-                    <label for="shelter_name">Shelter Name *</label>
-                    <input type="text" id="shelter_name" name="name" required>
-                </div>
-                <div class="form-group">
-                    <label for="contact_name">Contact Name *</label>
-                    <input type="text" id="contact_name" name="contact_name" required>
-                </div>
-                <div class="form-group">
-                    <label for="email">Email *</label>
-                    <input type="email" id="email" name="email" required>
-                </div>
-                <div class="form-group">
-                    <label for="phone">Phone</label>
-                    <input type="tel" id="phone" name="phone">
-                </div>
-                <div class="form-group">
-                    <label for="shelter_address">Address *</label>
-                    <input type="text" id="shelter_address" name="address" required>
+                    <label>Shelter Name *</label>
+                    <input type="text" id="shelterNameInput" required>
                 </div>
                 <div class="form-row">
                     <div class="form-group">
-                        <label for="shelter_city">City *</label>
-                        <input type="text" id="shelter_city" name="city" required>
+                        <label>Contact Name *</label>
+                        <input type="text" id="shelterContact" required>
                     </div>
                     <div class="form-group">
-                        <label for="shelter_state">State *</label>
-                        <input type="text" id="shelter_state" name="state" maxlength="2" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="shelter_zip">ZIP *</label>
-                        <input type="text" id="shelter_zip" name="zip_code" required>
+                        <label>Email *</label>
+                        <input type="email" id="shelterEmail" required>
                     </div>
                 </div>
-
-                <button type="submit" class="btn btn-primary">Claim Donation</button>
+                <div class="form-group">
+                    <label>Phone</label>
+                    <input type="tel" id="shelterPhone">
+                </div>
+                <div class="form-group">
+                    <label>Street Address *</label>
+                    <input type="text" id="shelterAddress" required>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>City *</label>
+                        <input type="text" id="shelterCity" required>
+                    </div>
+                    <div class="form-group">
+                        <label>State *</label>
+                        <input type="text" id="shelterState" required maxlength="2" placeholder="IL">
+                    </div>
+                    <div class="form-group">
+                        <label>ZIP Code *</label>
+                        <input type="text" id="shelterZip" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Description</label>
+                    <textarea id="shelterDescription" rows="2"></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Needed Items</label>
+                    <textarea id="shelterNeeds" rows="2" placeholder="e.g., blankets, coats, socks"></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary" style="width: 100%;">Register Shelter</button>
+                <p id="shelterError" class="error" style="display: none; margin-top: 10px;"></p>
             </form>
         </div>
     </div>
 
-    <script>
-        let currentDonationId = null;
-        let currentShelterId = null;
-
-        // Load donations on page load
-        loadDonations();
-
-        // Filter by ZIP
-        document.getElementById('zip-filter').addEventListener('input', (e) => {
-            const zip = e.target.value.trim();
-            if (zip.length >= 5) {
-                loadDonations(zip);
-            } else if (zip.length === 0) {
-                loadDonations();
-            }
-        });
-
-        document.getElementById('clear-filter').addEventListener('click', () => {
-            document.getElementById('zip-filter').value = '';
-            loadDonations();
-        });
-
-        // Modal controls
-        const modal = document.getElementById('claim-modal');
-        document.querySelector('.close').addEventListener('click', () => {
-            modal.style.display = 'none';
-        });
-
-        document.getElementById('claim-form').addEventListener('submit', async (e) => {
-            e.preventDefault();
-            await claimDonation();
-        });
-
-        async function loadDonations(zipFilter = null) {
-            const url = zipFilter
-                ? `/api/donations?status=available&zip_code=${zipFilter}`
-                : '/api/donations?status=available';
-
-            const response = await fetch(url);
-            const donations = await response.json();
-
-            const container = document.getElementById('donations-list');
-
-            if (donations.length === 0) {
-                container.innerHTML = '<p class="no-results">No donations found. Check back soon!</p>';
-                return;
-            }
-
-            container.innerHTML = donations.map(d => `
-                <div class="donation-card">
-                    <div class="donation-header">
-                        <span class="donation-id">#${d.id}</span>
-                        <span class="donation-date">${new Date(d.created_at).toLocaleDateString()}</span>
-                    </div>
-                    <div class="donation-items">${escapeHtml(d.items)}</div>
-                    ${d.notes ? `<div class="donation-notes"><strong>Notes:</strong> ${escapeHtml(d.notes)}</div>` : ''}
-                    <div class="donation-location">
-                        <strong>Location:</strong> ${escapeHtml(d.city)}, ${d.state} ${d.zip_code}
-                    </div>
-                    <button class="btn btn-primary" onclick='openClaimModal(${d.id})'>Claim Donation</button>
-                </div>
-            `).join('');
-        }
-
-        function openClaimModal(donationId) {
-            currentDonationId = donationId;
-            modal.style.display = 'block';
-        }
-
-        async function claimDonation() {
-            const formData = new FormData(document.getElementById('claim-form'));
-            const data = Object.fromEntries(formData);
-
-            // First, create or get the shelter
-            let shelterResponse = await fetch('/api/shelters', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(data)
-            });
-
-            if (shelterResponse.ok) {
-                const shelter = await shelterResponse.json();
-                currentShelterId = shelter.id;
-            } else {
-                // Shelter might already exist, try to find it by name
-                const sheltersResponse = await fetch('/api/shelters');
-                const shelters = await sheltersResponse.json();
-                const existing = shelters.find(s => s.name === data.name);
-                if (existing) {
-                    currentShelterId = existing.id;
-                } else {
-                    alert('Error registering shelter');
-                    return;
-                }
-            }
-
-            // Claim the donation
-            const claimResponse = await fetch(`/api/donations/${currentDonationId}/claim/${currentShelterId}`, {
-                method: 'POST'
-            });
-
-            if (claimResponse.ok) {
-                alert('Donation claimed successfully! Contact info will be shared with the donor.');
-                modal.style.display = 'none';
-                loadDonations(document.getElementById('zip-filter').value);
-            } else {
-                alert('Error claiming donation');
-            }
-        }
-
-        function escapeHtml(text) {
-            const div = document.createElement('div');
-            div.textContent = text;
-            return div.innerHTML;
-        }
-    </script>
+    <script src="/static/js/auth.js"></script>
+    <script src="/static/js/shelter-dashboard.js"></script>
 </body>
 </html>

@@ -1,0 +1,28 @@
+version: '3.8'
+
+services:
+  web:
+    build: .
+    ports:
+      - "8000:8000"
+    environment:
+      - USE_POSTGIS=true
+      - DATABASE_URL=postgresql://shelter_user:shelter_pass@db:5432/shelter_pickup
+      - SECRET_KEY=${SECRET_KEY:-change-this-in-production}
+    depends_on:
+      - db
+    volumes:
+      - static_volume:/app/static
+
+  db:
+    image: postgis/postgis:15-master
+    environment:
+      - POSTGRES_USER=shelter_user
+      - POSTGRES_PASSWORD=shelter_pass
+      - POSTGRES_DB=shelter_pickup
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:
+  static_volume:
