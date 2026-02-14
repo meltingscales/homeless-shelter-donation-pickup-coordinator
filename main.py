@@ -3,8 +3,8 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.responses import FileResponse
 from app.core.database import engine, init_postgis
 from app.core.config import settings
-from app.models import Donation, Shelter
-from app.api import donations, shelters
+from app.models import Donation, Shelter, User
+from app.api import donations, shelters, auth
 
 # Create tables
 from app.core.database import Base
@@ -25,6 +25,7 @@ async def startup_event():
 
 
 # API routes
+app.include_router(auth.router)
 app.include_router(donations.router)
 app.include_router(shelters.router)
 

@@ -16,5 +16,8 @@ class Settings(BaseSettings):
     # Use PostGIS if available (set to false to use SQLite)
     USE_POSTGIS: bool = True
 
+    # Authentication
+    SECRET_KEY: str = "change-this-in-production-use-openssl-rand-hex-32"
+
 
 settings = Settings()

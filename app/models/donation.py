@@ -15,7 +15,10 @@ class Donation(Base):
     id = Column(Integer, primary_key=True, index=True)
     created_at = Column(DateTime, default=datetime.utcnow)
 
-    # Donor info
+    # The user who created this donation (optional, for authenticated users)
+    donor_user_id = Column(Integer, ForeignKey("users.id"), nullable=True)
+
+    # Donor info (stored with donation for records)
     donor_name = Column(String(200), nullable=False)
     donor_email = Column(String(200), nullable=False)
     donor_phone = Column(String(50), nullable=True)

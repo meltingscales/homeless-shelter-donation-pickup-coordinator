@@ -5,7 +5,9 @@ from typing import List, Optional
 
 from app.core.database import get_db
 from app.core.config import settings
+from app.core.auth import get_current_user, get_current_shelter_staff
 from app.models.donation import Donation
+from app.models.user import User
 from app.schemas.donation import DonationCreate, DonationResponse
 
 router = APIRouter(prefix="/api/donations", tags=["donations"])
@@ -17,9 +19,16 @@ if settings.USE_POSTGIS:
 
 
 @router.post("", response_model=DonationResponse)
-def create_donation(donation: DonationCreate, db: Session = Depends(get_db)):
-    """Create a new donation listing."""
-    db_donation = Donation(**donation.model_dump())
+def create_donation(
+    donation: DonationCreate,
+    current_user: User = Depends(get_current_user),
+    db: Session = Depends(get_db)
+):
+    """Create a new donation listing (requires authentication)."""
+    db_donation = Donation(
+        **donation.model_dump(),
+        donor_user_id=current_user.id
+    )
     db.add(db_donation)
     db.commit()
     db.refresh(db_donation)
@@ -97,6 +106,17 @@ def list_nearby_donations(
     return query.all()
 
 
+@router.get("/my-donations", response_model=List[DonationResponse])
+def list_my_donations(
+    current_user: User = Depends(get_current_user),
+    db: Session = Depends(get_db)
+):
+    """List donations created by the current user."""
+    return db.query(Donation).filter(
+        Donation.donor_user_id == current_user.id
+    ).order_by(Donation.created_at.desc()).all()
+
+
 @router.get("/{donation_id}", response_model=DonationResponse)
 def get_donation(donation_id: int, db: Session = Depends(get_db)):
     """Get a specific donation by ID."""
@@ -106,18 +126,27 @@ def get_donation(donation_id: int, db: Session = Depends(get_db)):
     return donation
 
 
-@router.post("/{donation_id}/claim/{shelter_id}")
-def claim_donation(donation_id: int, shelter_id: int, db: Session = Depends(get_db)):
-    """Claim a donation for a shelter."""
+@router.post("/{donation_id}/claim")
+def claim_donation(
+    donation_id: int,
+    current_user: User = Depends(get_current_shelter_staff),
+    db: Session = Depends(get_db)
+):
+    """
+    Claim a donation for the current user's shelter.
+
+    Requires shelter_staff role.
+    """
     donation = db.query(Donation).filter(Donation.id == donation_id).first()
     if not donation:
         raise HTTPException(status_code=404, detail="Donation not found")
     if donation.status != "available":
         raise HTTPException(status_code=400, detail="Donation is not available")
 
+    # Use the shelter_id from the authenticated user
     from datetime import datetime
     donation.status = "claimed"
-    donation.claimed_by_id = shelter_id
+    donation.claimed_by_id = current_user.shelter_id
     donation.claimed_at = datetime.utcnow()
 
     db.commit()
