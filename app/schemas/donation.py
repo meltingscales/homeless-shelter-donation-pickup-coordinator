@@ -1,5 +1,6 @@
 from datetime import datetime
 from pydantic import BaseModel, EmailStr
+from typing import Optional, Dict, Any
 
 
 class DonationCreate(BaseModel):
@@ -10,7 +11,9 @@ class DonationCreate(BaseModel):
     city: str
     state: str  # Should be 2-letter state code
     zip_code: str
-    items: str  # Description of items being donated
+    # Items can be structured (JSON) or simple text
+    items_structured: Optional[Dict[str, Any]] = None
+    items_text: Optional[str] = None
     notes: str | None = None
 
 
@@ -26,7 +29,10 @@ class DonationResponse(BaseModel):
     zip_code: str
     latitude: str | None
     longitude: str | None
-    items: str
+    items_structured: Optional[Dict[str, Any]] = None
+    items_text: Optional[str] = None
+    items_summary: str  # Computed property
+    has_structured_items: bool  # Computed property
     notes: str | None
     status: str
     claimed_by_id: int | None

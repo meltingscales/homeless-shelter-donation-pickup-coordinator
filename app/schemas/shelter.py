@@ -1,5 +1,6 @@
 from datetime import datetime
 from pydantic import BaseModel, EmailStr, HttpUrl
+from typing import Optional, Dict, Any
 
 
 class ShelterCreate(BaseModel):
@@ -13,7 +14,9 @@ class ShelterCreate(BaseModel):
     zip_code: str
     description: str | None = None
     website: str | None = None
-    needed_items: str | None = None
+    # Needed items can be structured (JSON) or simple text
+    needed_items_structured: Optional[Dict[str, Any]] = None
+    needed_items_text: Optional[str] = None
 
 
 class ShelterResponse(BaseModel):
@@ -31,7 +34,10 @@ class ShelterResponse(BaseModel):
     longitude: str | None
     description: str | None
     website: str | None
-    needed_items: str | None
+    needed_items_structured: Optional[Dict[str, Any]] = None
+    needed_items_text: Optional[str] = None
+    needs_summary: str  # Computed property
+    has_structured_needs: bool  # Computed property
 
     class Config:
         from_attributes = True

@@ -1,5 +1,5 @@
 from datetime import datetime
-from sqlalchemy import Column, Integer, String, Text, DateTime
+from sqlalchemy import Column, Integer, String, Text, DateTime, JSON
 from sqlalchemy.orm import relationship
 from app.core.database import Base
 from app.core.config import settings
@@ -41,8 +41,9 @@ class Shelter(Base):
     description = Column(Text, nullable=True)
     website = Column(String(500), nullable=True)
 
-    # What items they need
-    needed_items = Column(Text, nullable=True)  # Free-text, e.g. "blankets, coats, socks"
+    # What items they need - structured (JSON) or free-text
+    needed_items_structured = Column(JSON, nullable=True)  # {"food": {"produce": {"lettuce": 10}}}
+    needed_items_text = Column(Text, nullable=True)  # Fallback for simple text
 
     # Relationships
     claimed_donations = relationship("Donation", back_populates="claimed_by")
@@ -53,6 +54,43 @@ class Shelter(Base):
         if self.latitude and self.longitude:
             return (float(self.latitude), float(self.longitude))
         return None
+
+    @property
+    def has_structured_needs(self) -> bool:
+        """Check if this shelter has structured needed items."""
+        return self.needed_items_structured is not None
+
+    @property
+    def needs_summary(self) -> str:
+        """Get a summary of needed items for display."""
+        if self.needed_items_structured:
+            from app.core.items import get_item_summary
+            summary = get_item_summary(self.needed_items_structured)
+            return ", ".join(summary[:10])  # Limit to first 10 items
+        return self.needed_items_text or "No specific needs listed"
+
+    def find_matching_donations(self, donations: list) -> list:
+        """Find donations that match this shelter's needs."""
+        if not self.needed_items_structured:
+            return []
+
+        matches = []
+        from app.core.items import find_matching_items
+
+        for donation in donations:
+            if donation.status != "available":
+                continue
+            if not donation.items_structured:
+                continue
+
+            matching = find_matching_items(self.needed_items_structured, donation.items_structured)
+            if matching:
+                matches.append({
+                    "donation": donation,
+                    "matches": matching
+                })
+
+        return matches
 
     def __repr__(self):
         return f"<Shelter {self.id}: {self.name}>"
