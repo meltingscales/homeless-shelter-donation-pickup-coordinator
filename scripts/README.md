@@ -34,8 +34,8 @@ After running the seed script, you can log in with these test accounts:
 - Email: `bob.wilson@example.com` / Password: `donor123`
 
 **Shelter Staff:**
-- Email: `staff1@downtownwomens.org` / Password: `staff123`
-- Email: `staff2@harborlight.org` / Password: `staff123`
+- Email: `staff1@downtown.org` / Password: `staff123`
+- Email: `staff2@harbor.org` / Password: `staff123`
 - Email: `staff3@youth.org` / Password: `staff123`
 
 ### Resetting the Database

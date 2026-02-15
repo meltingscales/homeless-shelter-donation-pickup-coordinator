@@ -152,9 +152,10 @@ def seed_database():
 
         # Create shelter staff users
         print("👤 Creating shelter staff...")
+        staff_domains = ["downtown.org", "harbor.org", "youth.org"]
         for i, shelter in enumerate(shelters):
             staff = User(
-                email=f"staff{i+1}@{shelter.name.split()[0].lower()}.org",
+                email=f"staff{i+1}@{staff_domains[i]}",
                 hashed_password=get_password_hash("staff123"),
                 name=shelter.contact_name,
                 phone=shelter.phone,
@@ -308,8 +309,8 @@ def seed_database():
         print("   Admin: admin@shelterpickup.org / admin123")
         print("   Donor: john.doe@example.com / donor123")
         print("   Donor: jane.smith@example.com / donor123")
-        print(f"   Staff 1: staff1@downtownwomens.org / staff123")
-        print(f"   Staff 2: staff2@harborlight.org / staff123")
+        print(f"   Staff 1: staff1@downtown.org / staff123")
+        print(f"   Staff 2: staff2@harbor.org / staff123")
 
     except Exception as e:
         print(f"\n❌ Error seeding database: {e}")
