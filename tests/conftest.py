@@ -1,12 +1,16 @@
 """
 Test configuration and fixtures.
 """
+import os
 import pytest
 from fastapi.testclient import TestClient
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
-from app.main import app
+# Disable PostGIS for tests (use SQLite)
+os.environ["USE_POSTGIS"] = "false"
+
+from main import app
 from app.core.database import Base, get_db
 
 
@@ -23,6 +27,8 @@ TestingSessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engin
 @pytest.fixture
 def db_session():
     """Create a fresh database for each test."""
+    print(f"DEBUG: Creating tables with engine: {engine}")
+    print(f"DEBUG: Tables in metadata: {list(Base.metadata.tables.keys())}")
     Base.metadata.create_all(bind=engine)
     db = TestingSessionLocal()
     try:

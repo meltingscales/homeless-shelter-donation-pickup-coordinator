@@ -1,4 +1,4 @@
-from sqlalchemy import create_engine
+from sqlalchemy import create_engine, text
 from sqlalchemy.orm import DeclarativeBase, sessionmaker
 from app.core.config import settings
 
@@ -38,5 +38,9 @@ def init_postgis():
 
     with engine.connect() as conn:
         # Enable PostGIS extension
-        conn.execute(conn.compile("CREATE EXTENSION IF NOT EXISTS postgis"))
+        conn.execute(text("CREATE EXTENSION IF NOT EXISTS postgis"))
         conn.commit()
+
+
+# Import models to register them with Base
+from app.models import user, shelter, donation, route  # noqa: E402, F401
