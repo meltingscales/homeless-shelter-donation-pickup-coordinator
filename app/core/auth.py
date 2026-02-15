@@ -15,7 +15,7 @@ from app.models.user import User, UserRole
 
 
 # JWT Settings
-SECRET_KEY = settings.model_extra.get("SECRET_KEY", "change-this-secret-key-in-production")
+SECRET_KEY = settings.SECRET_KEY
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 60 * 24 * 7  # 1 week
 
